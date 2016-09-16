@@ -31,23 +31,17 @@ class PartyDetails {
 	}
 
 	save(){
-		let where = {_id : this.partyId};
-		let set = {
-			$set : {
-				name : this.party.name,
-				description : this.party.description,
-				public : this.party.public
-			} 
-		};
-		let error = (error) => {
-      		if (error) {
-        		console.log('Oops, unable to update the party...');
-      		} else {
-        		console.log(this.party.name + ' updated!');
-      	}};
-
-		Parties.update(where, set, error);
+		Meteor.call('updateParty', this.partyId, this.party,
+			(error) => {
+				if (error) {
+					console.log('Oops, unable to update the party...');
+				} else {
+					console.log(this.party.name + ' updated!');
+				}
+			}
+		);
 	}
+
 };
 
 const name = 'partyDetails';

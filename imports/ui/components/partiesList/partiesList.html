@@ -1,4 +1,5 @@
 <party-add></party-add>
+<input type="search" ng-model="partiesList.searchText" placeholder="Search" />
 <ul>
 	<li ng-repeat="party in partiesList.parties">
 		<a ui-sref="partyDetails({partyId : party._id})">
