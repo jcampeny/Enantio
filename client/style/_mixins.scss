@@ -1,0 +1,77 @@
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+
+@mixin transition($time...) {
+  -webkit-transition: $time;
+     -moz-transition: $time;
+      -ms-transition: $time;
+          transition: $time;
+}
+
+@mixin animate($animate){
+  -webkit-animation: $animate;
+     -moz-animation: $animate;
+      -ms-animation: $animate;
+          animation: $animate;
+}
+
+@mixin transform($transform){
+  -webkit-transform: $transform;
+     -moz-transform: $transform;
+      -ms-transform: $transform;
+          transform: $transform;
+}
+
+@mixin opacity($opacity){
+  -webkit-opacity: $opacity;
+     -moz-opacity: $opacity;
+      -ms-opacity: $opacity;
+          opacity: $opacity;
+           filter: alpha(opacity=$opacity*100);
+}
+
+@mixin min-width($min-width){
+  -webkit-min-width: $min-width;
+     -moz-min-width: $min-width;
+      -ms-min-width: $min-width;
+          min-width: $min-width;
+}
+
+@mixin appearance($value){
+  -webkit-appearance: $value;
+  -moz-appearance:    $value;
+  appearance:         $value;
+}
+
+@mixin columns($columns, $gap){
+  -webkit-column-count: $columns;
+     -moz-column-count: $columns;
+          column-count: $columns;
+
+  -webkit-column-gap: $gap;
+     -moz-column-gap: $gap;
+          column-gap: $gap;
+
+  -webkit-column-fill: auto;
+     -moz-column-fill: auto;
+          column-fill: auto;
+}
+@mixin custom-scroll() {
+  &::-webkit-scrollbar {
+      width: 6px;
+      background-color: transparent;
+  }
+   
+  &::-webkit-scrollbar-track {
+      border-radius: 5px;
+  }
+   
+  &::-webkit-scrollbar-thumb {
+      border-radius: 5px;
+      background-color: $light-gray;
+  }
+}

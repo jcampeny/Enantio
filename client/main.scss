@@ -1,0 +1,9 @@
+@import 'style/_vars';
+@import 'style/_mixins';
+
+body {
+	background-color: $background-color !important;
+	color : $text-color !important;
+}
+
+  
