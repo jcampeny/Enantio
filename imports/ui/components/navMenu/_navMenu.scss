@@ -69,13 +69,26 @@ nav-menu {
 		    }
 			li{
 				cursor : pointer;
-				padding: 1.4em;
-				padding-left: 13px;
+				padding: 0 $margin;
 				opacity : 0;
 				@include transform(matrix(1, 0, 0, 1, 20, 0));
+				&.last-child {
+					margin-bottom : $margin*3; 
+				}
 			}
 			a{
 				display : inline-block;
+				float : right;
+				margin-right : $margin;
+			}
+			md-input-container{
+				width: 100%;
+				margin : 0;
+			}
+			div.title-fav {
+				background-color: $light-gray;
+				padding: 20px;
+				margin-bottom : $margin*3;
 			}
 		}
 	}

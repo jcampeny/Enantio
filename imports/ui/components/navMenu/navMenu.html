@@ -21,6 +21,7 @@
 
 <div class="body-black no-point" fav-menu ng-if="navMenu.menu == 'fav-menu'" ng-click="navMenu.stop($event)">
   <ul>
+    <div class="title-fav body-black">Guardar como Favorito</div>
     <li>  
       <md-input-container flex>
         <label>
@@ -29,7 +30,7 @@
         <input type="text" ng-model="navMenu.favoritos.name" class="body-dark"/>
       </md-input-container>
     </li>
-    <li>  
+    <li class="last-child">  
       <md-input-container flex>
         <label>
           Color
