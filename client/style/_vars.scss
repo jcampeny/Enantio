@@ -1,4 +1,13 @@
 @import '_mixins';
+//tipo
+@font-face {
+    font-family: Avenir;
+    src: url('fonts/Avenir.eot'); /* IE9 Compat Modes */
+    src: url('fonts/Avenir.woff2') format('woff2'), /* Super Modern Browsers */
+         url('fonts/Avenir.woff') format('woff'), /* Pretty Modern Browsers */
+         url('fonts/Avenir.ttf')  format('truetype'), /* Safari, Android, iOS */
+}
+$Avenir : Avenir, sans-serif;
 //media queries
 $mobile-v : '(max-width : 960px) and (max-height : 500px) and (min-width : 450px) and (min-height: 280px)';
 $xs    : '(max-width: 599px)';
@@ -189,6 +198,24 @@ $darkest-blue : #344257;
 	width: 100%;
 	text-align: center;
 	padding: 1.3em;
+	border: 1px solid $dark-blue;
+	cursor: pointer;
+	@include transition(all $transition);
+
+	@media #{$gt-sm} {
+		&:hover {
+			background-color: transparent;
+			color : $dark-blue;
+		}
+	}
+}
+
+//BUTTONS
+.btn-dark-blue {
+	background-color: $dark-blue;
+	@extend .body-white;
+	text-align: center;
+	padding: 0.4em 1em;
 	border: 1px solid $dark-blue;
 	cursor: pointer;
 	@include transition(all $transition);

@@ -43,4 +43,43 @@ nav-menu {
 			}
 		}
 	}
+
+	[fav-menu] {
+		position: absolute;
+		width: 150%;
+		top: 100%;
+		left: 0;
+		overflow : hidden;
+		ul{
+			list-style: none;
+		    padding: 0;
+		    margin: 0;
+		    background-color: #FFFFFF;
+		    overflow : hidden;
+		    @include transform(translateY(-100%));
+		    @media (max-width: 960px) {
+	    	    position: fixed;
+	    	    top: 60px;
+	    	    left: 0px;
+	    	    width: 100%;
+	    	    height: calc(0% - 60px);
+	    	    overflow-y : scroll;
+	    	    @include custom-scroll();
+	    	    @include transform(translateY(0%));
+		    }
+			li{
+				cursor : pointer;
+				padding: 1.4em;
+				padding-left: 13px;
+				opacity : 0;
+				@include transform(matrix(1, 0, 0, 1, 20, 0));
+			}
+			a{
+				display : inline-block;
+			}
+		}
+	}
+	.no-point{
+		pointer-events: none;
+	}
 }

@@ -24,10 +24,12 @@ class NavMenu {
 		this.state = $state;
 		this.menuState = false;
 
+		
 		$('html').click((e) =>{
 			this.menuState = false;
 			this.onMenuCall(this.menuState);
 		});
+		
 
 		this.root.$on('toggleMenu', (event, data) => {
 			if(data.menu == this.menu) {
@@ -45,7 +47,9 @@ class NavMenu {
 		    this.onResize(match);
 		});
 	}
-
+	stop(e){
+		e.stopPropagation();
+	}
 	onResize (match){
 		this.isDesktop = !match;
 		this.isMobile = match;
@@ -61,9 +65,12 @@ class NavMenu {
 
 	openMenu () {
 		let css = (this.isMobile) ? {'height' : 'calc(100% - 60px)'} : {'transform' : 'translateY(0%)'};
+		let identifier = (this.menu == 'fav-menu') ? '['+this.menu+'] > ul' : '[nav-menu]['+this.menu+'] > ul';
+
+		$('['+this.menu+']').removeClass('no-point');
 
 		TweenMax.fromTo(
-			'[nav-menu]['+this.menu+'] > ul', 
+			identifier, 
 			1, //duration
 			{
 				css : {'height' : 'calc(0% - 60px)', 'transform' : 'translateY(-100%)'}
@@ -74,7 +81,7 @@ class NavMenu {
 			}
 		);
 		TweenMax.staggerTo(
-			"[nav-menu]["+this.menu+"] > ul > li", 
+			identifier + " > li", 
 			0.7, //duration each
 			{ease: Power3.easeOut, opacity:1, x:0 }, 
 			.1 //delay between each
@@ -83,8 +90,12 @@ class NavMenu {
 
 	closeMenu () {
 		let css = (this.isMobile) ? {'height' : 'calc(0% - 60px)'} : {'transform' : 'translateY(-100%)'};
+		let identifier = (this.menu == 'fav-menu') ? '['+this.menu+'] > ul' : '[nav-menu]['+this.menu+'] > ul';
+
+		$('['+this.menu+']').addClass('no-point');
+
 		TweenMax.to(
-			'[nav-menu]['+this.menu+'] > ul', 
+			identifier, 
 			1, //duration
 			{//to
 				delay : 0.1,
@@ -93,7 +104,7 @@ class NavMenu {
 			}
 		);
 		TweenMax.staggerTo(
-			"[nav-menu]["+this.menu+"] > ul > li", 
+			identifier + " > li", 
 			0.5, //duration each
 			{ease: Power3.easeIn, opacity:0, x:20 }, 
 			-.1, //delay between each
