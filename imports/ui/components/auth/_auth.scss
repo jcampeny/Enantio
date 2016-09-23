@@ -1,0 +1,166 @@
+auth{
+	background-color: $dark-blue;
+	display: block;
+	width: 100%;
+	height: 100%;
+	width: 100vw;
+	height: 100vh;
+	position: relative;
+	.auth-container{
+		position: absolute;
+		background-color: white;
+		padding: $margin*2;
+		max-width: 360px;
+		width: 100%;
+		max-height: 600px;
+		height: 100%;
+		top: 50%;
+		left: 50%;
+		@include transform(translate(-50%, -50%));
+		@media #{$mobile-v} { 			
+			max-width: 100%;
+			max-height: 100%;
+			padding-top: 0px;
+		}
+	}
+	login, register{
+		picture{ 
+			display: block;
+			width: 100%;
+			height: 40px;
+			background-image : url(/img/logo.png);
+			background-position: center;
+			background-repeat: no-repeat;
+
+			margin-bottom: $margin*4;
+			margin-top: $margin;
+
+			@media #{$gt-sm} { margin-top: $margin*4; }
+			@media #{$mobile-v} { 			
+				margin-bottom: $margin;
+				margin-top: $margin; 
+			}
+			
+		}
+		div.error {
+			position: absolute;
+			top: 140px;
+			//opacity : 0.5;
+			color : $magenta;
+			@media #{$gt-sm} { top: 390px; }
+			@media #{$mobile-v} { top: 215px; }
+		}
+		md-input-container{
+			margin-top: 0px;
+			@media #{$mobile-v} { margin-bottom: 0px; }
+			input{
+				border-bottom-width: 1px !important;
+			}
+		}
+		a{
+			margin-top: $margin;
+			@media #{$gt-sm} { margin-top: $margin*3; }
+			@media #{$mobile-v} {
+				margin: 0 0 0 auto !important;
+				&.has-error {
+					width: 170px !important;
+				}
+			}
+
+		}
+		section.footer{
+			position: absolute;
+		    width: 100%;
+		    bottom: 0px;
+		    left: 0px;
+		    padding: $margin $margin*2;
+			div:first-child {
+				text-align : left;
+				float : left;
+				opacity : 0.5;
+			}
+			div:last-child {
+				text-align : right;
+				float : right;
+				cursor : pointer;
+				@include transition(all $transition);
+				@media #{$gt-sm} {
+					&:hover {
+						opacity : 0.5;
+					}
+				}
+			}
+		}
+		section.header{
+			position: absolute;
+			top : 0px; left : 0px;
+			width: 100%;
+			background-color : $light-gray;
+			color : $dark-blue;
+			padding : 0 $margin;
+			h2{
+				float : left;
+				margin : $margin 0px;
+			}
+			div {
+				float: right;
+    			margin: 15px 0;
+    			cursor : pointer;
+				span{
+					font-size: 25px;
+				}				
+			}
+		}
+		form[name="registerForm"] {
+			margin-top: 20px;
+			picture{
+				margin: 20px 0px;
+				height: 60px;
+				background-image : url(/img/profile-img.png);
+				background-size: auto 100%;
+				@media #{$gt-sm} { height: 100px; background-size: auto 80%;}
+			}
+			a{
+				margin-top: $margin;
+				&.has-error {
+					margin-top: 40px;
+				} 
+				@media #{$gt-sm} { 
+					margin-top: $margin*2;
+					&.has-error {
+						margin-top: $margin*2;
+					} 
+				}
+				@media #{$mobile-v} {
+					margin: 0 0 0 auto !important;
+					&.has-error {
+						width: 170px !important;
+					}
+				}
+			}
+			md-input-container{
+				margin: 0px;
+				@media #{$gt-sm} { margin-bottom: 18px;}
+				@media #{$mobile-v} {margin : 0px;}
+			}
+			@media #{$mobile-v} {
+				picture{
+					margin-top: 50px;					
+				}
+				a{margin-bottom: 50px !important;}
+			}
+		}
+	}
+	register{
+		section.footer{
+			@media #{$mobile-v} {
+				bottom: -120px;
+			}
+		}
+		div.error{
+			top: 334px;
+			@media #{$gt-sm} {top: 420px;}
+			@media #{$mobile-v} {top: 340px;}
+		}
+	}
+}

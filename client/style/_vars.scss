@@ -1,2 +1,203 @@
-$background-color: #666;
-$text-color : white;
+@import '_mixins';
+//media queries
+$mobile-v : '(max-width : 960px) and (max-height : 500px) and (min-width : 450px) and (min-height: 280px)';
+$xs    : '(max-width: 599px)';
+$gt-xs : '(min-width: 600px)';
+$sm    : '(min-width: 600px) and (max-width: 959px)';
+$gt-sm : '(min-width: 960px)';
+$md    : '(min-width: 960px) and (max-width: 1279px)';
+$gt-md : '(min-width: 1280px)';
+$lg    : '(min-width: 1280px) and (max-width: 1919px)';
+$gt-lg : '(min-width: 1920px)';
+$xl    : '(min-width: 1920px)';
+//@media #{$gt-sm} 
+// transition
+$transition : ease-in 0.2s;
+//MARGINS
+$margin: 20px;
+//COLORS
+$light-gray: #F4F4F4;
+$gray : #CECECE;
+$dark-blue : #3A4A61;
+$blue : #45AFE3;
+$turquoise : #50D2C2;
+$green : #48BA6C;
+$purple : #9184C5;
+$magenta : #ED1852;
+$yellow : #FBB827;
+//COLOR TEXT
+$dark-gray : #9B9B9B;
+$darkest-gray : #4A4A4A;
+$darkest-blue : #344257;
+//TEXT STYLE
+
+.body {
+	font-size: 14px;
+	color : $dark-gray;
+	letter-spacing: 0.5px;
+	line-height: 18px;
+}
+.body-dark {
+	font-size: 14px;
+	color : $dark-blue;
+	letter-spacing: 0.5px;
+	line-height: 18px;
+}
+.body-white {
+	font-size: 14px;
+	color : #FFFFFF;
+	letter-spacing: 0.5px;
+	line-height: 18px;
+}
+.caption {
+	font-size: 10px;
+	color : $darkest-blue;
+	letter-spacing: 0.5px;
+	line-height: 18px;	
+}
+.caption-dark-centered {
+	font-size: 10px;
+	color : $darkest-blue;
+	text-align: center;
+	letter-spacing: 0.5px;
+	line-height: 18px;
+}
+.caption-left-align {
+	font-size: 10px;
+	color : $dark-gray;
+	letter-spacing: 0.5px;
+	line-height: 18px;
+}
+.drop-list {
+	font-size: 14px;
+	color : $darkest-gray;
+	letter-spacing: 0px;
+	line-height: 20px;
+}
+.favorite-style {
+	font-size: 14px;
+	color : $darkest-gray;
+	letter-spacing: 0.81px;
+	line-height: 36px;
+}
+.fechas-calendario-white {
+	font-size: 11px;
+	color : #FFFFFF;
+	text-align: center;
+	letter-spacing: 0.61px;
+	line-height: 16px;
+}
+.graph-info-horizontal {
+	font-size: 10px;
+	color : $dark-gray;
+	text-align: center;
+	letter-spacing: 0.42px;
+	line-height: 14px;
+}
+.graph-into-left-side {
+	font-size: 10px;
+	color : $dark-gray;
+	text-align: right;
+	letter-spacing: 0.42px;
+	line-height: 14px;
+}
+.h1-dark{
+	font-size: 20px;
+	color : $dark-blue;
+	letter-spacing: 0.5px;
+	line-height: 22px;
+}
+.h2-dark{
+	font-size: 16px;
+	color : $dark-blue;
+	letter-spacing: 0.5px;
+	line-height: 18px;
+}
+.h2-white {
+	font-size: 16px;
+	color : #FFFFFF;
+	letter-spacing: 0.5px;
+	line-height: 18px;
+}
+.indice-producto-numeros {
+	font-size: 12px;
+	color : $dark-blue;
+	text-align: right;
+	letter-spacing: 0px;
+	line-height: 16px;
+}
+.label-text {
+	font-size: 10px;
+	color : $gray;
+	letter-spacing: 0.58px;
+	line-height: 14px;
+}
+.label-text-dark {
+	font-size: 10px;
+	color : $darkest-blue;
+	letter-spacing: 0.49px;
+	line-height: 14px;
+}
+.list-productos-filtro {
+	font-size: 12px;
+	color : $dark-blue;
+	letter-spacing: 0px;
+	line-height: 16px;
+}
+.list-productos-filtro {
+	font-size: 12px;
+	color : #FFFFFF;
+	letter-spacing: 0px;
+	line-height: 18px;
+}
+.material-desktop-light {
+	font-size: 14px;
+	color : $dark-gray;
+	letter-spacing: 1.05px;
+	line-height: 20px;
+}
+.menu-desktop-14pt{
+	font-size: 14px;
+	color : $darkest-gray;
+	letter-spacing: 0.8px;
+	line-height: 18px;
+}
+.mini{
+	font-size: 8px;
+	color : $dark-blue;
+	text-align: center;
+	letter-spacing: 0.5px;
+	line-height: 18px;
+}
+.page-title{
+	font-size: 14px;
+	color : $dark-blue;
+	letter-spacing: 0.8px;
+	line-height: 16px;
+}
+.tool-tips{
+	font-size: 10px;
+	color : $dark-gray;
+	letter-spacing: 0px;
+	line-height: 14px;
+}
+
+//BUTTONS
+.btn-dark-blue-100 {
+	background-color: $dark-blue;
+	@extend .body-white;
+	width: 100%;
+	text-align: center;
+	padding: 1.3em;
+	border: 1px solid $dark-blue;
+	cursor: pointer;
+	@include transition(all $transition);
+
+	@media #{$gt-sm} {
+		&:hover {
+			background-color: transparent;
+			color : $dark-blue;
+		}
+	}
+
+}

@@ -1,5 +1,5 @@
 {
-  "name": "socially",
+  "name": "enantio",
   "private": true,
   "scripts": {
     "start": "meteor run",
@@ -10,10 +10,17 @@
     "angular-animate": "^1.5.8",
     "angular-aria": "^1.5.8",
     "angular-material": "^1.1.1",
+    "angular-media-queries": "^0.6.1",
     "angular-meteor": "^1.3.9",
-    "angular-ui-router": "^1.0.0-beta.2",
+    "angular-ui-router": "^0.2.18",
     "bcrypt": "^0.8.7",
-    "meteor-node-stubs": "~0.2.0"
+    "gm": "^1.22.0",
+    "match-media": "^0.2.0",
+    "meteor-node-stubs": "~0.2.0",
+    "ng-file-upload": "^12.0.4",
+    "ng-img-crop": "^0.2.0",
+    "spawn-sync": "^1.0.15",
+    "try-thread-sleep": "^1.0.0"
   },
   "devDependencies": {
     "angular-mocks": "^1.5.3"

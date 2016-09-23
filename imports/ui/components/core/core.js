@@ -5,8 +5,9 @@ import uiRouter from 'angular-ui-router';
 
 import template from './core.html';
 import {name as Navigation} from '../navigation/navigation';
-import {name as PartiesList} from '../partiesList/partiesList';
-import {name as PartyDetails} from '../partyDetails/partyDetails';
+
+import {name as Auth} from '../auth/auth';
+import {name as Home} from '../home/home';
 
 class App {};
 
@@ -15,11 +16,12 @@ const name = 'app';
 export default angular.module(name, [
 	angularMeteor,
 	ngMaterial, 
-	uiRouter,
+	Auth,
+	Home,
 	'accounts.ui',
 	Navigation,
-	PartiesList,
-	PartyDetails
+	uiRouter
+
 ]).component(name, {
 	template,
 	controllerAs : name,
@@ -28,12 +30,12 @@ export default angular.module(name, [
 .config(config)
 .run(run);
 
-function config($locationProvider, $urlRouterProvider, $stateProvider, $mdIconProvider) {
+function config($locationProvider, $urlRouterProvider, $stateProvider, $mdIconProvider, $mdThemingProvider) {
 	'ngInject';
 
 	$locationProvider.html5Mode(true);
 
-	$urlRouterProvider.otherwise('/parties');
+	$urlRouterProvider.otherwise('/');
 
 	//Angular material icons 
 	//http://google.github.io/material-design-icons/
@@ -54,6 +56,33 @@ function config($locationProvider, $urlRouterProvider, $stateProvider, $mdIconPr
 	    iconPath + 'svg-sprite-navigation.svg')
 	  .iconSet('image',
 	    iconPath + 'svg-sprite-image.svg');
+
+
+	  $mdThemingProvider.definePalette('enantioPaletteName', {
+	    '50': 'ffebee',
+	    '100': 'ffcdd2',
+	    '200': 'ef9a9a',
+	    '300': 'e57373',
+	    '400': 'ef5350',
+	    '500': '3A4A61', //input bottom color on hover
+	    '600': 'e53935',
+	    '700': 'd32f2f',
+	    '800': 'c62828',
+	    '900': 'b71c1c',
+	    'A100': 'ff8a80',
+	    'A200': 'ff5252',
+	    'A400': 'ff1744',
+	    'A700': 'd50000',
+	    'contrastDefaultColor': 'light',    // whether, by default, text (contrast)
+	                                        // on this palette should be dark or light
+
+	    'contrastDarkColors': ['50', '100', //hues which contrast should be 'dark' by default
+	     '200', '300', '400', 'A100'],
+	    'contrastLightColors': undefined    // could also specify this if default was 'dark'
+	  });
+
+	  $mdThemingProvider.theme('default')
+	    .primaryPalette('enantioPaletteName')
 }
 
 function run($rootScope, $state){
@@ -62,8 +91,12 @@ function run($rootScope, $state){
 	$rootScope.$on('$stateChangeError',
 		(event, toState, toParams, fromState, fromParams, error) => {
 	    	if (error === 'AUTH_REQUIRED') {
-	      		$state.go('parties');
+	      		$state.go('auth');
 	      		console.log('AUTH_REQUIRED');
+	    	}
+	    	if (error === 'LOGGED') {
+	    		$state.go('home.resumen');
+	    		console.log('LOGGED');
 	    	}
 	  	}
 	);

@@ -1,0 +1,46 @@
+nav-menu {
+	[nav-menu] {
+		position: absolute;
+		width: 100%;
+		top: 100%;
+		left: 0;
+		overflow : hidden;
+		ul{
+			list-style: none;
+		    padding: 0;
+		    margin: 0;
+		    background-color: $dark-blue;
+		    overflow : hidden;
+		    @include transform(translateY(-100%));
+		    @media (max-width: 960px) {
+	    	    position: fixed;
+	    	    top: 60px;
+	    	    left: 0px;
+	    	    width: 100%;
+	    	    height: calc(0% - 60px);
+	    	    overflow-y : scroll;
+	    	    @include custom-scroll();
+	    	    @include transform(translateY(0%));
+		    }
+			li{
+				cursor : pointer;
+				border-left: 4px solid transparent;
+				padding: 1.4em;
+				padding-left: 13px;
+				border-bottom: 1px solid $darkest-blue;
+				opacity : 0;
+				@include transform(matrix(1, 0, 0, 1, 20, 0));
+				@include transition(border $transition, background $transition);
+				&.active, &:hover{
+					background-color: $darkest-blue;
+					&:nth-child(1) {border-left: 4px solid $turquoise;}
+					&:nth-child(2) {border-left: 4px solid $green;}
+					&:nth-child(3) {border-left: 4px solid $blue;}
+					&:nth-child(4) {border-left: 4px solid $purple;}
+					&:nth-child(5) {border-left: 4px solid $magenta;}
+					&:nth-child(6) {border-left: 4px solid $yellow;}
+				}
+			}
+		}
+	}
+}

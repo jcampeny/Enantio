@@ -6,6 +6,8 @@ import { Meteor } from 'meteor/meteor';
 import template from './partyAdd.html';
 import { Parties } from '../../../api/parties/index';
 
+import { name as AvatarUpload } from '../avatarUpload/avatarUpload';
+
 class PartyAdd {
 	constructor(){
 		this.party = {};
@@ -25,7 +27,8 @@ class PartyAdd {
 const name = 'partyAdd';
 
 export default angular.module(name, [
-	angularMeteor
+	angularMeteor,
+	AvatarUpload
 ]).component(name, {
 	template,
 	controllerAs : name,

@@ -6,6 +6,7 @@ import { Meteor } from 'meteor/meteor';
 
 import template from './partyDetails.html';
 import { Parties } from '../../../api/parties/index';
+import { Thumbs, upload } from '../../../api/images';
 
 class PartyDetails {
 	constructor($stateParams, $scope, $reactive){
@@ -17,6 +18,9 @@ class PartyDetails {
 
 		this.subscribe('parties');
 		this.subscribe('users');
+		this.subscribe('thumbs', () => [
+		  this.getReactively('files', true) || []
+		]);
 
 		this.helpers({
 			party(){
@@ -26,6 +30,11 @@ class PartyDetails {
 			},
 			users(){
 				return Meteor.users.find({});
+			},
+			thumbs() {
+				return Thumbs.find({
+				  originalId: '29SYunCngMCd8pbmF'
+				});
 			}
 		});
 	}

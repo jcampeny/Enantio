@@ -1,0 +1,8 @@
+<section ng-class="{'active' : navigationInputs.sectionSelected}">
+	<div ng-click="navigationInputs.onSectionSelected('producto')" 
+	ng-class="{ 'active' : (navigationInputs.sectionSelected == 'producto')}">Producto</div>
+	<div ng-click="navigationInputs.onSectionSelected('importador')" 
+	ng-class="{ 'active' : (navigationInputs.sectionSelected == 'importador')}">Importador</div>
+	<div ng-click="navigationInputs.onSectionSelected('exportador')" 
+	ng-class="{ 'active' : (navigationInputs.sectionSelected == 'exportador')}">Exportador</div>	
+</section>

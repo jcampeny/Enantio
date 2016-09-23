@@ -1,9 +1,15 @@
 @import 'style/_vars';
 @import 'style/_mixins';
+@import '../imports/ui/components/auth/auth';
+@import '../imports/ui/components/navigation/navigation';
+@import '../imports/ui/components/navigationInputs/navigationInputs';
+@import '../imports/ui/components/navMenu/navMenu';
+* {
+	box-sizing: border-box;
+}
 
 body {
-	background-color: $background-color !important;
-	color : $text-color !important;
+	@extend .body;
 }
 
   

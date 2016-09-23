@@ -1,0 +1,20 @@
+
+<div class="body-white" nav-menu page-navigation ng-if="navMenu.menu == 'page-navigation'">
+  <ul>
+    <li>Resumen</li>
+    <li>Importadores</li>
+    <li>Exportadores</li>
+    <li>Productos</li>
+    <li>Precios</li>
+    <li>Favoritos</li>
+  </ul>
+</div>
+
+<div class="body-white" nav-menu user-options ng-if="navMenu.menu == 'user-options'">
+  <ul>
+    <li>Usuario <br> {{navMenu.currentUser.username}}</li>
+    <li>Perfil y cuenta</li>
+    <li>Preferencias</li>
+    <li ng-click="navMenu.logout()">Log out</li>
+  </ul>
+</div>

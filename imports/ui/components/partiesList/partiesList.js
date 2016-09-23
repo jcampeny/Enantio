@@ -5,6 +5,8 @@ import template from './partiesList.html';
 import { Parties } from '../../../api/parties/index';
 import {name as PartyAdd} from '../partyAdd/partyAdd';
 import {name as PartyRemove} from '../partyRemove/partyRemove';
+import {name as PartyImage} from '../partyImage/partyImage';
+
 
 class PartiesList {
 	constructor($scope, $reactive) {
@@ -27,6 +29,9 @@ class PartiesList {
 			}, this.getReactively('searchText')
 		]);
 
+		this.subscribe('users');
+		this.subscribe('images');
+
 		this.helpers({
 			parties() {
 				return Parties.find({}, {
@@ -34,6 +39,7 @@ class PartiesList {
 				});
 			}
 		});
+
 	}
 }
 
@@ -43,7 +49,8 @@ const name = 'partiesList';
 export default angular.module(name, [
 	angularMeteor, 
 	PartyAdd,
-	PartyRemove
+	PartyRemove,
+	PartyImage
 ]).component(name, {
 	template,
 	controllerAs : name,

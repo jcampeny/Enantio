@@ -1,0 +1,26 @@
+<picture></picture>
+
+<div ng-show="login.error" class="error"><span class="lnr lnr-warning"></span> {{ login.error.reason }}</div>
+
+<form name="loginForm" layout="column">
+  <md-input-container flex>
+    <label>
+      Usuario
+    </label>
+    <input type="text" ng-model="login.credentials.email" class="body-dark"/>
+  </md-input-container>
+
+  <md-input-container flex>
+    <label>
+      Contraseña
+    </label>
+    <input type="password" ng-model="login.credentials.password" class="body-dark"/>
+  </md-input-container>
+
+  <a class="btn-dark-blue-100" ng-class="{'has-error' : login.error}" ng-click="login.login()" flex >Iniciar sesión</a>
+</form>
+
+<section  class="footer">
+  <div class="caption-dark-centered">AUN NO TIENES UNA CUENTA?</div>
+  <div class="caption-dark-centered" ng-click="login.toggleView('register')">REGISTRARSE</div>
+</section>
