@@ -2,8 +2,13 @@
 @import 'style/_mixins';
 @import '../imports/ui/components/auth/auth';
 @import '../imports/ui/components/navigation/navigation';
+@import '../imports/ui/components/home/home';
 @import '../imports/ui/components/navigationInputs/navigationInputs';
 @import '../imports/ui/components/navMenu/navMenu';
+@import '../imports/ui/components/popUp/popUp';
+@import '../imports/ui/components/resume/resume';
+@import '../imports/ui/components/favoritos/favoritos';
+
 * {
 	box-sizing: border-box;
 	font-family: $Avenir;
@@ -11,6 +16,7 @@
 
 body {
 	@extend .body;
+	background-color : $light-gray !important;
 }
 
   

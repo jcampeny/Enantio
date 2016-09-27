@@ -63,8 +63,8 @@ nav-menu {
 	    	    left: 0px;
 	    	    width: 100%;
 	    	    height: calc(0% - 60px);
-	    	    overflow-y : scroll;
-	    	    @include custom-scroll();
+	    	    //overflow-y : scroll;
+	    	    //@include custom-scroll();
 	    	    @include transform(translateY(0%));
 		    }
 			li{
@@ -73,13 +73,42 @@ nav-menu {
 				opacity : 0;
 				@include transform(matrix(1, 0, 0, 1, 20, 0));
 				&.last-child {
-					margin-bottom : $margin*3; 
+					padding-left: $margin+4;
+					margin-bottom : $margin*3;
+					div.caption-left-align{
+						margin-bottom: $margin/2;
+						@media #{$gt-sm} { margin-bottom: $margin/4; }
+					}
+					div.colors{
+						border-bottom : 1px solid rgba(0,0,0,0.12);
+						@media #{$gt-sm} {padding-bottom: 5px;}
+						div{
+							display : inline-block;
+							width : $margin;
+							height : $margin;
+							margin-right : $margin/2;
+							border-radius : 100%;
+							@media #{$gt-sm} {
+								width: $margin / 1.5;
+								height: $margin / 1.5;
+							}
+
+							&[turquoise]{background-color : $turquoise;}
+							&[purple]{background-color : $purple;}
+							&[magenta]{background-color : $magenta;}
+							&[yellow]{background-color : $yellow;}
+							&[blue]{background-color : $blue;}
+							&.unselected {opacity : 0.5;}
+						}
+					} 
 				}
 			}
 			a{
 				display : inline-block;
 				float : right;
-				margin-right : $margin;
+				&:last-child{ margin-right : $margin;}
+				margin-bottom: $margin;
+				@media (max-width: 960px) {display : none;}
 			}
 			md-input-container{
 				width: 100%;
@@ -88,7 +117,27 @@ nav-menu {
 			div.title-fav {
 				background-color: $light-gray;
 				padding: 20px;
-				margin-bottom : $margin*3;
+				margin-bottom: $margin*2.5;
+				span{
+					float : right;
+					position: relative;
+					top: -5px;
+					@media #{$gt-sm} {display : none;}
+				}
+			}
+			li.create-favorite{
+				position: absolute;
+				bottom: -60px; left: 0;
+				width: 100%;
+				height: $margin*3;
+				background-color : $dark-blue;
+				text-align : center;
+				@include transition(bottom $transition-long);
+				@media #{$gt-sm} {display : none;}
+
+				&.show{ bottom: 0px;}
+
+				img{ margin: $margin; }
 			}
 		}
 	}

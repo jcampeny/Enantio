@@ -7,14 +7,18 @@ import { Accounts } from 'meteor/accounts-base';
 import template from './home.html';
 
 import {name as Navigation} from '../navigation/navigation';
+import {name as Resume} from '../resume/resume';
+import {name as Favoritos} from '../favoritos/favoritos';
+import {name as PopUp} from '../popUp/popUp';
 
 class Home {
-	constructor ($scope, $reactive, $rootScope) {
+	constructor ($scope, $reactive, $rootScope, $state) {
 		'ngInject';
 
 		$reactive(this).attach($scope);
 
 		this.root = $rootScope;
+		this.state = $state;
 
 		this.root.variables = {
 			productos : '',
@@ -28,13 +32,31 @@ class Home {
 	logout(){
 		Accounts.logout();
 	}
+
+	addFavorite (event, menu) {
+		event.stopPropagation();
+		this.root.$broadcast('toggleMenu', {
+		    menu : menu
+		});
+	}
+
+	scrollToTop () {
+		var scrollTop = $('body').scrollTop();
+		
+		$('html,body').animate({
+		    scrollTop: 0
+		},  scrollTop / 1.5);
+	}
 };
 
 const name = 'home';
 
 export default angular.module(name, [
 	angularMeteor,
-	Navigation
+	Navigation,
+	Resume,
+	Favoritos,
+	PopUp
 ]).component(name, {
 	template,
 	controllerAs : name,
@@ -62,32 +84,37 @@ function config ($stateProvider) {
 
 	.state('home.resumen', {
 		url : '',
-		template : 'resumen'
+		template : '<resume></resume>'
 	})
 
 	.state('home.favoritos', {
 		url : 'favoritos',
-		template : 'favoritos'
+		template : '<favoritos></favoritos>'
+	})
+
+	.state('home.fecha', {
+		url : 'fecha',
+		template : '<fecha></fecha>'
 	})
 
 	.state('home.importadores', {
 		url : 'importadores',
-		template : 'importadores'
+		template : '<importadores></importadores>'
 	})
 
 	.state('home.exportadores', {
 		url : 'exportadores',
-		template : 'exportadores'
+		template : '<exportadores></exportadores>'
 	})
 
-	.state('home.productos', {
-		url : 'productos',
-		template : 'productos'
+	.state('home.codigo', {
+		url : 'codigo',
+		template : '<codigo></codigo>'
 	})
 
 	.state('home.precios', {
 		url : 'precios',
-		template : 'precios'
+		template : '<precios></precios>'
 	});
 }
 

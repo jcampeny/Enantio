@@ -1,0 +1,22 @@
+<section layout="row" layout-align="space-between center">
+
+  <section flex viz-name>
+    <div ng-if="vizHeader.vizController.name !== null">{{vizHeader.vizController.name}}</div>
+  </section>
+
+  <section flex layout="row" layout-align="end center" viz-options>
+    <div date ng-if="vizHeader.vizController.date !== null">{{vizHeader.vizController.date.start}} - {{vizHeader.vizController.date.start}} <span class="lnr lnr-calendar-full"></span></div> 
+    <div lock ng-if="vizHeader.vizController.lock !== null" 
+              ng-click="vizHeader.vizController.lock = !vizHeader.vizController.lock" 
+              ng-class="{'unlocked' : !vizHeader.vizController.lock}"><span class="lnr lnr-lock" ></span><div></div></div>
+    <div ng-if="vizHeader.vizController.refresh !== null"
+         ng-click="vizHeader.refresh()"><span class="lnr lnr-sync"></span></div>
+    <div ng-if="vizHeader.vizController.fullscreen !== null"
+         ng-click="vizHeader.expand()"><span class="lnr lnr-frame-expand"></span></div>
+    <div ng-if="vizHeader.vizController.collapsed !== null" 
+         ng-click="vizHeader.vizController.collapsed = !vizHeader.vizController.collapsed">
+      <span class="lnr" ng-class="vizHeader.vizController.collapsed ? 'lnr-chevron-up' : 'lnr-chevron-down'"></span>
+    </div>
+  </section>
+
+</section>

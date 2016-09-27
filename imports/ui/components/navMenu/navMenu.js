@@ -9,10 +9,11 @@ import template from './navMenu.html';
 
 
 class NavMenu {
-	constructor ($scope, $reactive, $rootScope, screenSize, $state) {
+	constructor ($scope, $reactive, $rootScope, screenSize, $state, $timeout) {
 		'ngInject';
 
 		$reactive(this).attach($scope);
+
 
 		this.helpers({
 			currentUser(){
@@ -22,6 +23,8 @@ class NavMenu {
 
 		this.root = $rootScope;
 		this.state = $state;
+		this.timeout = $timeout;
+
 		this.menuState = false;
 
 		
@@ -32,12 +35,7 @@ class NavMenu {
 		
 
 		this.root.$on('toggleMenu', (event, data) => {
-			if(data.menu == this.menu) {
-				this.menuState = !this.menuState;
-			}else{
-				this.menuState = false;
-			}
-			this.onMenuCall(this.menuState, data.menu);
+			this.toggleMenu (data)
 		});
 
 		this.isMobile = screenSize.is('xs, sm');
@@ -46,10 +44,26 @@ class NavMenu {
 		screenSize.on('xs, sm',(match) =>{
 		    this.onResize(match);
 		});
+
+		this.favoritos = {
+			name : 'Favorito A',
+			color : ''
+		};
 	}
+
+	toggleMenu (data = {menu : this.menu}){
+		if(data.menu == this.menu) {
+			this.menuState = !this.menuState;
+		}else{
+			this.menuState = false;
+		}
+		this.onMenuCall(this.menuState, data.menu);
+	}
+
 	stop(e){
 		e.stopPropagation();
 	}
+
 	onResize (match){
 		this.isDesktop = !match;
 		this.isMobile = match;
@@ -69,6 +83,9 @@ class NavMenu {
 
 		$('['+this.menu+']').removeClass('no-point');
 
+		if(this.isDesktop)
+			this.timeout(() => { $('#home-view').addClass('menu-active'); },100);
+
 		TweenMax.fromTo(
 			identifier, 
 			1, //duration
@@ -77,9 +94,13 @@ class NavMenu {
 			},
 			{//to
 				ease: Power3.easeOut, 
-				css
-			}
+				css,
+				onComplete : () => {
+					$('#home-view').addClass('menu-active');
+				}
+			},
 		);
+
 		TweenMax.staggerTo(
 			identifier + " > li", 
 			0.7, //duration each
@@ -93,6 +114,7 @@ class NavMenu {
 		let identifier = (this.menu == 'fav-menu') ? '['+this.menu+'] > ul' : '[nav-menu]['+this.menu+'] > ul';
 
 		$('['+this.menu+']').addClass('no-point');
+		$('#home-view').removeClass('menu-active');
 
 		TweenMax.to(
 			identifier, 

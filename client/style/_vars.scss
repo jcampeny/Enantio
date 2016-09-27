@@ -22,6 +22,7 @@ $xl    : '(min-width: 1920px)';
 //@media #{$gt-sm} 
 // transition
 $transition : ease-in 0.2s;
+$transition-long : ease-in-out 0.4s;
 //MARGINS
 $margin: 20px;
 //COLORS
@@ -38,6 +39,16 @@ $yellow : #FBB827;
 $dark-gray : #9B9B9B;
 $darkest-gray : #4A4A4A;
 $darkest-blue : #344257;
+
+[color="turquoise"]{background-color : $turquoise;}
+[color="purple"]{background-color : $purple;}
+[color="magenta"]{background-color : $magenta;}
+[color="yellow"]{background-color : $yellow;}
+[color="blue"]{background-color : $blue;}
+
+//Shadows
+$shadow : 0px 2px 4px 0px rgba(206,206,206,0.2);
+$shadow-blur : 0px 2px 8px 0px rgba(206,206,206,0.2);
 //TEXT STYLE
 
 .body {
@@ -195,11 +206,13 @@ $darkest-blue : #344257;
 .btn-dark-blue-100 {
 	background-color: $dark-blue;
 	@extend .body-white;
+	font-size : 12px;
 	width: 100%;
 	text-align: center;
 	padding: 1.3em;
 	border: 1px solid $dark-blue;
 	cursor: pointer;
+	text-transform : uppercase;
 	@include transition(all $transition);
 
 	@media #{$gt-sm} {
@@ -210,10 +223,11 @@ $darkest-blue : #344257;
 	}
 }
 
-//BUTTONS
+
 .btn-dark-blue {
 	background-color: $dark-blue;
 	@extend .body-white;
+	font-size : 12px;
 	text-align: center;
 	padding: 0.4em 1em;
 	border: 1px solid $dark-blue;
@@ -226,5 +240,35 @@ $darkest-blue : #344257;
 			color : $dark-blue;
 		}
 	}
+}
 
+.btn-transparent {
+	background-color: transparent;
+	@extend .body-dark;
+	font-size : 12px;
+	text-align: center;
+	padding: 0.4em 1em;
+	border: 1px solid $dark-blue;
+	cursor: pointer;
+	@include transition(all $transition);
+
+	@media #{$gt-sm} {
+		&:hover {
+			background-color: $dark-blue;
+			color : white;
+		}
+	}
+}
+
+.btn-dark-blue-uppercase {
+	@extend .btn-dark-blue;
+	text-transform : uppercase;
+	font-size : 9px;
+	padding: 0.8em 1.8em;
+}
+.btn-transparent-uppercase {
+	@extend .btn-transparent;
+	font-size : 9px;
+	padding: 0.8em 1.8em;
+	text-transform : uppercase;
 }

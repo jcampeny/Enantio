@@ -1,0 +1,26 @@
+<div favoritos-container>
+  <div class="favoritos-header">
+    <h2 class="h2-dark">Favoritos</h2>
+    <a class="btn-dark-blue-uppercase">nombre</a>
+    <a class="btn-transparent-uppercase">color</a>
+  </div>
+  <div ng-repeat="favorito in favoritos.favorites" 
+       md-swipe-left="favoritos.onSwipeLeft($event)" 
+       md-swipe-right="favoritos.onSwipeRight($event)"
+       id="{{favorito.id}}">
+    <div color="{{favorito.color}}"></div>
+    <div date>
+      <span class="h1-dark">{{favorito.day.number}}</span>
+      <br>
+      <span class="caption-dark-centered">{{favorito.day.text}}</span>
+    </div>
+    <div name class="body-dark">{{favorito.name}}</div>
+    <div delete ng-click="favoritos.onDeleteFavorite(favorito)">
+      <span class="lnr lnr-cross"></span>
+    </div>
+    <div options-desktop>
+      <a>Usar Favorito</a>
+      <span ng-click="favoritos.onDeleteFavorite(favorito)" class="lnr lnr-trash"></span>
+    </div>
+  </div>
+</div>

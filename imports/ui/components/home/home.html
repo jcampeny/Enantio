@@ -1,6 +1,17 @@
 <navigation></navigation>
-<button ng-click="home.logout()">wefwef</button>
-<button ui-sref="home.resumen">home</button>
-<button ui-sref="home.favoritos">fav</button>
-<div ui-view=""></div>
--{{home.root.variables.productos}}-
+
+<div ui-view="" id="home-view"></div>
+
+<div id="fixed-buttons" ng-if="home.state.current.name == 'home.resumen'">
+	<div class="fav" ng-click="home.addFavorite($event, 'fav-menu')">
+		<span class="lnr lnr-star"></span>
+	</div>
+	<div class="download">
+		<span class="lnr lnr-download"></span>
+	</div>
+	<div class="back-to-top" ng-click="home.scrollToTop()">
+		<span class="lnr lnr-arrow-up"></span>
+	</div>
+</div>
+
+<pop-up></pop-up>

@@ -6,7 +6,7 @@
     <li>Exportadores</li>
     <li>Productos</li>
     <li>Precios</li>
-    <li>Favoritos</li>
+    <li ui-sref="home.favoritos">Favoritos</li>
   </ul>
 </div>
 
@@ -21,7 +21,9 @@
 
 <div class="body-black no-point" fav-menu ng-if="navMenu.menu == 'fav-menu'" ng-click="navMenu.stop($event)">
   <ul>
-    <div class="title-fav body-black">Guardar como Favorito</div>
+    <div class="title-fav body-black">Guardar como Favorito
+      <span class="lnr lnr-cross"  ng-click="navMenu.toggleMenu()"></span>
+    </div>
     <li>  
       <md-input-container flex>
         <label>
@@ -31,14 +33,24 @@
       </md-input-container>
     </li>
     <li class="last-child">  
-      <md-input-container flex>
-        <label>
-          Color
-        </label>
-        <input type="text" ng-model="navMenu.favoritos.color" class="body-dark"/>
-      </md-input-container>
+      <div class="caption-left-align">Color</div>
+      <div class="colors">
+        <div ng-click="navMenu.favoritos.color = 'turquoise'" turquoise ng-class="{'unselected' : (navMenu.favoritos.color != '' && navMenu.favoritos.color != 'turquoise')}"></div>
+        <div ng-click="navMenu.favoritos.color = 'purple'" purple ng-class="{'unselected' : (navMenu.favoritos.color != '' && navMenu.favoritos.color != 'purple')}"></div>
+        <div ng-click="navMenu.favoritos.color = 'magenta'" magenta ng-class="{'unselected' : (navMenu.favoritos.color != '' && navMenu.favoritos.color != 'magenta')}"></div>
+        <div ng-click="navMenu.favoritos.color = 'yellow'" yellow ng-class="{'unselected' : (navMenu.favoritos.color != '' && navMenu.favoritos.color != 'yellow')}"></div>
+        <div ng-click="navMenu.favoritos.color = 'blue'" blue ng-class="{'unselected' : (navMenu.favoritos.color != '' && navMenu.favoritos.color != 'blue')}"></div>
+      </div>
     </li>
-    <a class="btn-dark-blue" flex >Guardar</a>
-    <a class="btn-dark-blue" flex ng-click="navMenu.closeMenu()">Cancelar</a>
+    <li>
+      <a class="btn-dark-blue" flex >Guardar</a>
+      <a class="btn-dark-blue" flex ng-click="navMenu.toggleMenu()">Cancelar</a>      
+    </li>
+    <li class="create-favorite" ng-class="{'show' : navMenu.favoritos.name}">
+
+        <img src="img/checkmark.png">
+          
+    </li>
+
   </ul>
 </div>

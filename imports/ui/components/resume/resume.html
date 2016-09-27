@@ -1,0 +1,23 @@
+<div layout="row" layout-wrap layout-margin main-container>
+  <div flex="100" viz="fecha" ng-class="{'collapsed' : resume.fecha.collapsed}">
+    <viz-header viz-controller="resume.fecha"></viz-header>
+  </div>
+
+  <div layout="row" layout-wrap flex="100" layout-align="space-between start" countries>
+    <div flex="100" flex-gt-sm="50" viz="importadores" ng-class="{'collapsed' : resume.importadores.collapsed}">
+      <viz-header viz-controller="resume.importadores"></viz-header>
+    </div>
+
+    <div flex="100" flex-gt-sm="50" viz="exportadores" ng-class="{'collapsed' : resume.exportadores.collapsed}">
+      <viz-header viz-controller="resume.exportadores"></viz-header>
+    </div>
+  </div>
+
+  <div flex="100" viz="codigo" ng-class="{'collapsed' : resume.codigo.collapsed}">
+    <viz-header viz-controller="resume.codigo"></viz-header>
+  </div>
+
+  <div flex="100" viz="precio" ng-class="{'collapsed' : resume.precio.collapsed}">
+    <viz-header viz-controller="resume.precio"></viz-header>
+  </div>
+</div>
