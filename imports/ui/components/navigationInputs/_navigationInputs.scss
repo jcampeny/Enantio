@@ -4,20 +4,25 @@ navigation-inputs{
 		width : 100%;
 		overflow : hidden;
 		text-align : center;
+
 		@include transition(all $transition);
 		&.active {
-			width: 150%;
-			@include transform ( translateX(-16%));
-			div{
-				width: 13%;
-				padding-left: $margin;
-				&:first-child {
-					padding-left: 6%;
-				}
+			@media (max-width: 960px) {
+				width: 150%;
+				@include transform ( translateX(-16%));
+				div{
+					width: 13%;
+					padding-left: $margin;
+					&:first-child {
+						padding-left: 6%;
+					}
+				}				
 			}
+
 		}
+		input.md-input{ border-bottom-color: white !important;}
 		div {
-			line-height: 60px;
+			//line-height: 60px;
 			width: 32%;
 			display : inline-block;
 			text-align : center;
@@ -25,7 +30,7 @@ navigation-inputs{
 			overflow : hidden;
 			@include transition(all $transition);
 			@media #{$gt-sm} { 
-				line-height: 80px;
+				//line-height: 80px;
 				text-align : left;
 				padding-left : $margin;
 			}
@@ -34,7 +39,8 @@ navigation-inputs{
 				border-left: 1px solid $light-gray;
 			}
 			&.active {
-				width: 50% !important;
+				input.md-input{ border-bottom-color: $light-gray !important;}
+				@media (max-width: 960px) {width: 50% !important;}
 			}
 		}
 	}

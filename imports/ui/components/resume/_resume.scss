@@ -13,78 +13,38 @@ resume {
 		margin: 0;
 
 		div[viz] {
-			height: 300px;
+			//height: 300px;
 			background-color: white;
 			@include box-shadow($shadow);
 			@include transition(all $transition-long);
 			&.collapsed {
-				height: 30px;
+				/*height: 30px;
 				@media #{$gt-sm} {
 					height: 45px;
-				}
+				}*/
+				fecha, importadores, exportadores, codigo, precios{padding-top: 0%;}
 			}
-			viz-header{
+
+			/********************************
+					FOR PROTOTYPE
+			********************************/
+			fecha, importadores, exportadores, codigo, precios{
 				display : block;
-				border-bottom: 1px solid $light-gray;
-				section {
-					height: 30px;
-					line-height: 30px;
-					color : $dark-gray;
-					@media #{$gt-sm} {
-						height: 45px;
-						line-height: 45px;
-					}
-					&[viz-name]{
-						div{
-							padding-left : $margin/2;
-							@media #{$gt-sm} {padding-left : $margin;}
-						}
-					}
-					&[viz-options] {
-						div[ng-if]{
-							border-left : 1px solid $light-gray;
-							text-align : center;
-							min-width : 40px;
-							cursor : pointer;
-							@include transition(all $transition);
-							@media #{$gt-sm} {
-								border-left : none;
-								min-width : 45px;
-								&:hover{color : $dark-blue;}
-							}	
-							span {
-								line-height: 30px;
-								@media #{$gt-sm} {
-									height: 45px;
-									line-height: 45px;
-								}
-							}	
-							&[date]{
-								min-width: 130px;
-								padding-left : $margin/2;
-								white-space: nowrap;
-								span {
-									padding: 0px $margin/2;
-								}
-							}		
-							&[lock]{
-								position: relative;
-								div{
-									position: absolute;
-									background-color: white;
-									width: 4px;
-									height: 10px;
-									top: 3px; left: 12px;
-									@media #{$gt-sm} { top: 10px; left: 15px;}
-									@include transition(all $transition);
-								}
-								&.unlocked{
-									div{width: 6px;}
-								}
-							}
-						}
-					}
-				}
+				overflow: hidden;
+				background-size: contain;
+				background-repeat: no-repeat;
+				background-position: center;
+				background-image : url(/img/Barras.png);
+				@include transition(all $transition);
+			}
+			fecha {background-image : url(/img/Barras-mobile.png); padding-top: 59%;}
+			importadores {background-image : url(/img/Importadores.png); padding-top: 60%;}
+			exportadores {background-image : url(/img/Exportadores.png); padding-top: 60%;}
+			codigo {background-image : url(/img/Treemap-mobile.png); padding-top: 170%;}
+
+			@media #{$gt-sm} {
+				fecha {background-image : url(/img/Barras.png); padding-top: 20%;}
+				codigo {background-image : url(/img/Treemap.png); padding-top: 20%;}
 			}
 		}
 

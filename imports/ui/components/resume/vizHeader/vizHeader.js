@@ -1,79 +1,50 @@
 import angular from 'angular';
 import angularMeteor from 'angular-meteor';
 
+import {name as VizHeaderService} from './vizHeaderService';
+
 import template from './vizHeader.html';
 
 class VizHeader {
-	constructor ($scope, $reactive, $state) {
+	constructor ($scope, $reactive, $state, vizHeaderServices) {
 		'ngInject';
 
 		$reactive(this).attach($scope);
 
 		this.state = $state;
-			
+		this.service = vizHeaderServices;
+		
+		this.viewFrameState = 'contracted';//expanded, changing
 	}
-
+ 
 	refresh () {
 		this.vizController.refresh(this.vizController.name);
 	}
 
+	changeViewFrame () {
+		if(this.viewFrameState != 'changing'){
+			
+			if(this.viewFrameState == 'contracted'){
+				this.expand();
+			} else {
+				this.contract();
+			}
+
+			this.viewFrameState = 'changing';
+		}
+	}
 	expand () {
-		const e = $('[viz="'+this.vizController.id+'"]');
-		const startW = e.width();
-		const startH = e.height();
-		const documentW = $(document).width();
-		const documentH = $(document).height();
-		const windowH = $(window).height();
-		const originalMargin = 20;
-		var margin = originalMargin;
-		var offset = e.offset();//left,top
+		this.service.expand(this.vizController.id)
+			.then((succes) => {
+				this.viewFrameState = succes;
+			});
+	}
 
-		margin = (documentH > windowH ) ? margin : margin*2; //has scroll
-
-		const css = {
-			'top': 110 - originalMargin + 'px',
-			'left': 20 - originalMargin + 'px',
-			'max-width' : (documentW - margin) + 'px',
-			'margin' :originalMargin + 'px',
-			'position' : 'fixed'
-		};
-
-		$('[viz]').css({'opacity' : '0'});
-		e.css({'opacity' : '1'});
-
-		$('html,body')
-			.delay(400)
-			.animate({
-			    scrollTop: 0
-			},  500);
-
-		TweenMax.fromTo(
-			e, 
-			1, //duration
-			{
-				css : {			
-					'width' : '100%',
-					'max-width' : startW + 'px',
-					'top' : offset.top - originalMargin + 'px',
-					'left' : offset.left - originalMargin + 'px',
-					'transition' : 'none'
-				}
-			},
-			{//to
-				delay : 0.4,
-				ease: Power3.easeOut, 
-				css,
-				onComplete : () => {
-					$('[viz], [countries]').not('[viz="'+this.vizController.id+'"]').css({'display' : 'none'});
-					e.css({
-						'transition' : '',
-						'max-width' : 'calc(100% - ' + originalMargin * 2 + 'px)',
-						'position' : ''
-					});
-				}
-			},
-		);
-		
+	contract () {
+		this.service.contract(this.vizController.id)
+			.then((succes) => {
+				this.viewFrameState = succes;
+			});
 	}
 
 };
@@ -81,7 +52,8 @@ class VizHeader {
 const name = 'vizHeader';
 
 export default angular.module(name, [
-	angularMeteor
+	angularMeteor,
+	VizHeaderService
 ]).component(name, {
 	template,
 	bindings : {

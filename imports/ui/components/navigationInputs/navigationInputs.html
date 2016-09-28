@@ -1,8 +1,29 @@
-<section ng-class="{'active' : navigationInputs.sectionSelected}">
+<section >
 	<div ng-click="navigationInputs.onSectionSelected('producto')" 
-	ng-class="{ 'active' : (navigationInputs.sectionSelected == 'producto')}">Producto</div>
+	ng-class="{ 'active' : (navigationInputs.sectionSelected == 'producto')}">
+		<md-input-container flex>
+		  <label>
+		    Producto
+		  </label>
+		  <input type="text"  class="body-dark"/>
+		</md-input-container>
+	</div>
 	<div ng-click="navigationInputs.onSectionSelected('importador')" 
-	ng-class="{ 'active' : (navigationInputs.sectionSelected == 'importador')}">Importador</div>
+	ng-class="{ 'active' : (navigationInputs.sectionSelected == 'importador')}">
+		<md-input-container flex>
+		  <label>
+		    Importador
+		  </label>
+		  <input type="text"  class="body-dark"/>
+		</md-input-container>
+	</div>
 	<div ng-click="navigationInputs.onSectionSelected('exportador')" 
-	ng-class="{ 'active' : (navigationInputs.sectionSelected == 'exportador')}">Exportador</div>	
+	ng-class="{ 'active' : (navigationInputs.sectionSelected == 'exportador')}">
+		<md-input-container flex>
+		  <label>
+		    Exportador
+		  </label>
+		  <input type="text"  class="body-dark"/>
+		</md-input-container>
+	</div>	
 </section>

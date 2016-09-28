@@ -7,6 +7,7 @@
 @import '../imports/ui/components/navMenu/navMenu';
 @import '../imports/ui/components/popUp/popUp';
 @import '../imports/ui/components/resume/resume';
+@import '../imports/ui/components/resume/vizHeader/vizHeader';
 @import '../imports/ui/components/favoritos/favoritos';
 
 * {
@@ -17,6 +18,10 @@
 body {
 	@extend .body;
 	background-color : $light-gray !important;
+}
+input.md-input{
+	font-family: $Avenir !important;
+	border-bottom-width: 1px !important;
 }
 
   

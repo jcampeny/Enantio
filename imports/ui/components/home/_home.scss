@@ -1,4 +1,6 @@
 home {
+	display : block;
+	position : relative;
 	#home-view{
 		@include transition(all $transition);
 		&.menu-active{
@@ -8,25 +10,25 @@ home {
 				position: relative;
 			}
 			&:after {
-				width: 100%; 
-				height:100%;
 			    opacity: 1;
+			    pointer-events: all;
 			}
 		}
 		&:after {
 		    content: '\A';
 		    position: absolute;
-		    width: 0%; 
-		    height:0%;
+			width: 100%; 
+			height:100%;
 		    top:0; 
 		    left:0;
 		    background:rgba(74,74,74, 0.1);
 		    @include transition(opacity $transition-long);
 		    opacity: 0;
+		    pointer-events: none;
 		}
 	}
 	#fixed-buttons {
-		position: fixed;
+		position: absolute;
 		bottom: 0; left: 0;
 		padding : $margin;
 		@media #{$gt-sm} {display : none;}

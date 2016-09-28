@@ -39,7 +39,10 @@ favoritos {
 				float: right;
 				position: relative;
 				top: - ($margin / 2.5);
-				&:last-child{margin-right: $margin;}
+				&:last-child{
+					width: 73px;
+					margin-right: $margin;
+				}
 			}
 			
 		}
@@ -51,10 +54,18 @@ favoritos {
 			@include transition(all $transition);
 			@media #{$gt-sm} {
 				&:hover{
-					background-color: $dark-blue;
-					div[date] span {color : white !important;}
-					div[name] {color : white !important;}
-					div[options-desktop] {display : inline-block; opacity: 1;}
+					//background-color: $dark-blue;
+					//div[date] span {color : white !important;}
+					//div[name] {color : white !important;}
+					div[options-desktop] {display : inline-block; opacity: 1;
+						a {
+							color : $dark-blue ;
+							border-color : $dark-blue !important;
+						}
+						span {
+							color : $dark-blue !important;
+						}
+					}
 				}
 			}
 			&.remove{
@@ -68,11 +79,11 @@ favoritos {
 			}
 			div[color]{
 				opacity: 1;
-				width:15px;height: 15px;
+				width:10px;height: 10px;
 				border-radius : 100%;
 				position: absolute;
 				top: 47%;
-				left: 23px;
+				left: 25px;
 				@include transition(all $transition);
 				@include transform(translateY(-50%));
 			}
@@ -110,7 +121,7 @@ favoritos {
 				@include transition(all $transition);
 			}
 			div[options-desktop]{
-				display : none;
+				@media (max-width: 960px) {display : none;}
 				color: white;
 				opacity: 0;
 				float: right;
@@ -122,16 +133,18 @@ favoritos {
 					cursor: pointer;
 					font-size: 22px;
 					margin-left: $margin*1.5;
+					@include transition(all $transition);
 				}
 				a{
+					@include transition(all $transition);
 					position: relative;
 					top: -5px;
 					@extend .btn-transparent;
 					border-color: #FFFFFF;
 					color : #FFFFFF;    
 					&:hover{
-						background-color: #FFFFFF;
-						color : $dark-blue;
+						background-color: $dark-blue;
+						color : #FFFFFF;
 					}
 				}
 			}

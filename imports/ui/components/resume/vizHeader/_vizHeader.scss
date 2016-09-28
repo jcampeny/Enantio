@@ -1,0 +1,91 @@
+viz-header{
+	display : block;
+	section {
+		height: 35px;
+		line-height: 35px;
+		color : $dark-blue;
+		border-bottom: 1px solid $light-gray;
+		@media #{$gt-sm} {
+			height: 45px;
+			line-height: 45px;
+		}
+		&[viz-name]{
+			div{
+				padding-left : $margin/2;
+				@media #{$gt-sm} {padding-left : $margin;}
+			}
+		}
+		&[viz-options] {
+			div[ng-if]{
+				border-left : 1px solid $light-gray;
+				text-align : center;
+				min-width : 40px;
+				cursor : pointer;
+				@include transition(all $transition);
+				@media #{$gt-sm} {
+					border-left : none;
+					min-width : 45px;
+					&:hover{color : $dark-gray;}
+				}	
+				span {
+					line-height: 30px;
+					@media #{$gt-sm} {
+						height: 45px;
+						line-height: 45px;
+					}
+				}	
+				&[date]{
+					min-width: 130px;
+					padding-left : $margin/2;
+					white-space: nowrap;
+					span {
+						padding: 0px $margin/2;
+					}
+				}		
+				&[lock]{
+					position: relative;
+					div{
+						position: absolute;
+						background-color: white;
+						width: 4px;
+						height: 10px;
+						top: 3px; left: 12px;
+						@media #{$gt-sm} { top: 10px; left: 15px;}
+						@include transition(all $transition);
+					}
+					&.unlocked{
+						div{width: 6px;}
+					}
+				}
+			}
+		}
+	}
+	section[nav-menu]{
+		@media #{$gt-sm} { display : none;}
+		position : relative;
+		overflow : hidden;
+		height : 0px;
+		border-bottom-color: transparent;
+		@include transition(all $transition);
+		div[flex]{
+			display : inline-block;
+			max-width: 70px;
+			padding-left: $margin/2;
+		}
+		div[bottom-bar]{
+			position: absolute;
+			width: 56px; height: 2px;
+			bottom: 0px;
+			left: 0px;
+			background-color: $dark-blue;
+			@include transition(all $transition);
+			&.in-tabla {
+				div[bottom-bar]{left: 70px;}
+			}
+		}
+		&.expanded {
+			border-bottom-color: $light-gray;
+			height : 35px;
+		}
+	}
+}
