@@ -4,6 +4,7 @@
 @import '../imports/ui/components/navigation/navigation';
 @import '../imports/ui/components/home/home';
 @import '../imports/ui/components/navigationInputs/navigationInputs';
+@import '../imports/ui/components/navigationInputs/inputTag/inputTag'; 
 @import '../imports/ui/components/navMenu/navMenu';
 @import '../imports/ui/components/popUp/popUp';
 @import '../imports/ui/components/resume/resume';
@@ -19,6 +20,7 @@ body {
 	@extend .body;
 	background-color : $light-gray !important;
 }
+
 input.md-input{
 	font-family: $Avenir !important;
 	border-bottom-width: 1px !important;

@@ -20,6 +20,7 @@ class VizHeaderService
 		var deferred = this.q.defer();
 
 		const e = $('[viz="'+id+'"]');
+    const fadeUp = (this.isMobile) ? '0px' : '50px';
 		const css = {
 			'opacity' : '1',
 			'transition' : '',
@@ -50,7 +51,7 @@ class VizHeaderService
 						'display' : '',
 						'opacity' : '0',
 						'transition' : 'none',
-						'top' : '50px'
+						'top' : fadeUp
 					}
 				},
 				{//to

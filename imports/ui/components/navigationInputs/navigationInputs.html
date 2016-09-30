@@ -1,29 +1,15 @@
-<section >
+<section ng-class="{ 'active' : navigationInputs.sectionSelected}" slide-move>
 	<div ng-click="navigationInputs.onSectionSelected('producto')" 
-	ng-class="{ 'active' : (navigationInputs.sectionSelected == 'producto')}">
-		<md-input-container flex>
-		  <label>
-		    Producto
-		  </label>
-		  <input type="text"  class="body-dark"/>
-		</md-input-container>
+		 ng-class="{ 'active' : (navigationInputs.sectionSelected == 'producto')}" nav-option>
+		 <input-tag name="producto" selected="navigationInputs.producto" ></input-tag>
 	</div>
 	<div ng-click="navigationInputs.onSectionSelected('importador')" 
-	ng-class="{ 'active' : (navigationInputs.sectionSelected == 'importador')}">
-		<md-input-container flex>
-		  <label>
-		    Importador
-		  </label>
-		  <input type="text"  class="body-dark"/>
-		</md-input-container>
+		 ng-class="{ 'active' : (navigationInputs.sectionSelected == 'importador')}" nav-option>
+		 <input-tag name="importador" selected="navigationInputs.importador" ></input-tag>
 	</div>
 	<div ng-click="navigationInputs.onSectionSelected('exportador')" 
-	ng-class="{ 'active' : (navigationInputs.sectionSelected == 'exportador')}">
-		<md-input-container flex>
-		  <label>
-		    Exportador
-		  </label>
-		  <input type="text"  class="body-dark"/>
-		</md-input-container>
+		 ng-class="{ 'active' : (navigationInputs.sectionSelected == 'exportador')}" nav-option>
+		<input-tag name="exportador" selected="navigationInputs.exportador" ></input-tag>
 	</div>	
 </section>
+

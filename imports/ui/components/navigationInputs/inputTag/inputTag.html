@@ -1,0 +1,10 @@
+<div input-container>
+  <label>{{inputTag.name | capitalize}}</label>
+  <input id="input-{{inputTag.name}}" type="" name="" ng-model="inputTag.searchText">
+</div>
+<div select-options ng-class="inputTag.name">
+  <div ng-repeat="country in inputTag.countries" 
+       country-type="{{inputTag.name}}" 
+       ng-click="inputTag.selectCountry(country)">{{country.name}}</div>
+</div>
+

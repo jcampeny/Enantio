@@ -1,0 +1,56 @@
+input-tag {
+	div[input-container] {	
+		line-height: 20px;
+		text-align : left;
+		label{
+			display: block;
+			position: relative;
+			font-size: 14px;
+			top: 20px;
+			transform-origin: left top;
+			@include transform(scale(1));
+			@include transition(all $transition-angular);
+		}
+		input{
+			border-color : transparent;
+			background-color: transparent;
+			&:focus{outline: none;}
+		}		
+	}
+	div[select-options]{
+		position: absolute;
+		top : 120px;  
+		left : 15%;
+		opacity : 0;
+		height: 0%;
+		overflow : hidden ; 
+		@include transition(all $transition);
+		&.importador{
+			left : 34%;
+		}
+		&.exportador{
+			left : 53%;
+		}
+	}
+
+}
+
+div.active{
+	div[input-container]{
+		label{
+			@include transform(scale(0.75));
+			top: 0px;
+			color : $gray;
+		}
+
+		input {
+			border-bottom: 1px solid $light-gray;
+		}		
+	}
+	div[select-options]{
+		position: absolute;
+		opacity : 1;
+		height: 100%;
+	}
+
+}

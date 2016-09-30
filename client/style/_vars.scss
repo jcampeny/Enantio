@@ -23,6 +23,7 @@ $xl    : '(min-width: 1920px)';
 // transition
 $transition : ease-in 0.2s;
 $transition-long : ease-in-out 0.4s;
+$transition-angular : cubic-bezier(.25,.8,.25,1) 0.4s; 
 //MARGINS
 $margin: 20px;
 //COLORS
