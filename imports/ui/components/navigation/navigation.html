@@ -8,7 +8,7 @@
 		<navigation-inputs></navigation-inputs>
 	</div>
 <!-- MENU -->
-	<div flex="20" flex-gt-sm="15" flex-order="2" flex-order-gt-sm="3" layout="row" layout-align="space-around center" menu-navigation>
+	<div flex="20" flex-gt-sm="15" flex-order="2" flex-order-gt-sm="3" layout="row" layout-align="space-around start" menu-navigation>
 		<span flex-gt-sm="33" hide show-gt-sm class="lnr lnr-star" ng-click="navigation.toggleMenu($event, 'fav-menu')" class="lnr lnr-menu"></span>
 		<span flex-gt-sm="33" hide show-gt-sm class="lnr lnr-download"></span>
 		<span flex-gt-sm="33" flex="100" ng-click="navigation.toggleMenu($event, 'page-navigation')" class="lnr lnr-menu"></span>
@@ -16,7 +16,7 @@
 		<nav-menu flex="0" menu="fav-menu"></nav-menu>
 	</div>
 <!-- USER -->
-	<div hide show-gt-sm flex-gt-sm="15" flex-order="4" flex-order-gt-sm="4" layout="row" layout-align="center center" user-navigation ng-click="navigation.toggleMenu($event, 'user-options')">
+	<div hide show-gt-sm flex-gt-sm="15" flex-order="4" flex-order-gt-sm="4" layout="row" layout-align="center start" user-navigation ng-click="navigation.toggleMenu($event, 'user-options')">
 		<img src="img/avatar.png">
 		<span class="body-dark">{{navigation.currentUser.username}}</span>
 		<nav-menu flex="0" menu="user-options"></nav-menu>

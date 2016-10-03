@@ -1,10 +1,35 @@
 <div input-container>
-  <label>{{inputTag.name | capitalize}}</label>
-  <input id="input-{{inputTag.name}}" type="" name="" ng-model="inputTag.searchText">
+  <label ng-class="{'country-selected' : (inputTag.selected.length > 0 || inputTag.searchText !== '')}">{{inputTag.name | capitalize}}</label>
+  <!-- Countries selected tags-->
+  <div country-tags>
+  	  <!--expanded-->
+	  <div expanded countries-selected="{{inputTag.name}}" 
+	  	ng-if="inputTag.selected.length > 0 && inputTag.expanded"
+	  	ng-repeat="country in inputTag.selected">
+	  		{{country.name}}
+	  		<span class="lnr lnr-cross" ng-click="inputTag.removeCountry(inputTag.selected[0])"></span>
+	  </div>
+	  <!-- not expanded -->
+	  <div countries-selected="{{inputTag.name}}" 
+	  	   ng-if="inputTag.selected.length > 0 && !inputTag.expanded">
+	  			{{inputTag.selected[0].name}}
+	  			<span class="lnr lnr-cross" ng-click="inputTag.removeCountry(inputTag.selected[0])">
+	  	</span>
+	  </div>
+	  <div more-countries="{{inputTag.name}}" ng-if="inputTag.selected.length > 1 && !inputTag.expanded" class="caption-white-centered" ng-click="inputTag.expandHeader($event)">+{{inputTag.selected.length - 1}}</div>  	
+  </div>
+
+  <!-- Input to select Countries -->
+  <input id="input-{{inputTag.name}}" type="" name="" 
+  		ng-model="inputTag.searchText"
+  		ng-class="{'expanded' : inputTag.expanded}">
+
 </div>
-<div select-options ng-class="inputTag.name">
+<!-- countries list -->
+<div input-select-options="{{inputTag.name}}" ng-class="inputTag.name" class="body-dark">
   <div ng-repeat="country in inputTag.countries" 
-       country-type="{{inputTag.name}}" 
-       ng-click="inputTag.selectCountry(country)">{{country.name}}</div>
+       country-item="{{inputTag.name}}" 
+       ng-click="inputTag.selectCountry(country, $event)"
+       ng-if="!inputTag.countryAreSelected(country).found">{{country.name}}</div>
 </div>
 

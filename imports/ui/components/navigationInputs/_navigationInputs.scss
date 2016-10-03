@@ -19,16 +19,16 @@ navigation-inputs{
 
 		}
 		div[nav-option]{
-			height: 60px;
+			height: 100%;
 			width: 32%;
 			display : inline-block;
 			text-align : center;
 			cursor : pointer;
 			overflow : hidden;
-			padding-top: 10px;//
+			//padding-top: 10px;//
 			@include transition(all $transition);
 			@media #{$gt-sm} { 
-				height: 80px;
+				//height: 80px;
 				text-align : left;
 				padding-left : $margin;
 				padding-top: 15px;//

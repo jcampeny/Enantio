@@ -1,6 +1,7 @@
 home {
 	display : block;
 	position : relative;
+	overflow: hidden;
 	#home-view{
 		@include transition(all $transition);
 		&.menu-active{

@@ -7,6 +7,7 @@ navigation{
 		border-bottom: 1px solid $light-gray;
 		background-color: white;
 		z-index: 20;
+		@include transition(all $transition);
 		@media #{$gt-sm} {
 			height: 80px;
 			@include box-shadow($shadow);
@@ -28,16 +29,18 @@ navigation{
 		}
 		[navigation-inputs] {
 			border-top: 1px solid $light-gray;
+			height: 100%;
+			max-height: calc(100% - 60px) !important;
 
 			@include box-shadow($shadow);
 			@media #{$gt-sm} { 
+				max-height: 100% !important;
 				border-top: 0px solid transparent; 
 				@include box-shadow(0px 0px 0px 0px rgba(206,206,206,0));
 			}
 			navigation-inputs {
 				display : block;
-				height: 60px;
-				@media #{$gt-sm} { height: 80px; }
+				height: 100%;
 			}
 		}
 		[menu-navigation] {
@@ -47,10 +50,12 @@ navigation{
 				text-align: center;
 				color : $dark-blue;
 				cursor : pointer;
+				margin-top: 15px;
 			}
 			@media #{$gt-sm} { 
 				border-left: 1px solid $light-gray;
 				border-right: 1px solid $light-gray;
+				span.lnr { margin-top: 25px; }
 			}
 		}
 		[user-navigation] {
@@ -61,6 +66,10 @@ navigation{
 		    	height: 40px;
 		    	border-radius: 100%;
 		    	margin-right: 10px;
+		    	margin-top: 20px;
+			}
+			span { margin-top: 32px; }
+			@media #{$gt-sm} {
 			}
 		}
 	}

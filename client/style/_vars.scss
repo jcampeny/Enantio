@@ -83,6 +83,11 @@ $shadow-blur : 0px 2px 8px 0px rgba(206,206,206,0.2);
 	letter-spacing: 0.5px;
 	line-height: 18px;
 }
+.caption-white-centered {
+	@extend .caption-dark-centered;
+	font-size: 12px;
+	color : #FFFFFF;
+}
 .caption-left-align {
 	font-size: 10px;
 	color : $dark-gray;
