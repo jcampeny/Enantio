@@ -37,15 +37,7 @@ class InputTag {
 			$scope.$apply();
 		});
 
-		this.root.$on('expandedHeader', (event, data) => {
-			if(data.name == this.name)
-				this.expanded = true;
-		});
-
-		this.root.$on('contractedHeader', (event, data) => {console.log(data);
-			this.expanded = false;
-		});
-
+		this.catchRootEvents();
 	}
 
 	selectCountry (country, event) {
@@ -93,6 +85,17 @@ class InputTag {
 		this.root.$broadcast('contractHeader', {
 			name : this.name,
 			event : event
+		});
+	}
+
+	catchRootEvents () {
+		this.root.$on('expandedHeader', (event, data) => {
+			if(data.name == this.name)
+				this.expanded = true;
+		});
+
+		this.root.$on('contractedHeader', (event, data) => {
+			this.expanded = false;
 		});
 	}
 

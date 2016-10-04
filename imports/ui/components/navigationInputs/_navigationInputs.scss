@@ -39,6 +39,7 @@ navigation-inputs{
 			}
 			&.active {
 				input.md-input{ border-bottom-color: $light-gray !important;}
+				@media #{$gt-sm} { padding-top: 5px;}
 				@media (max-width: 960px) {
 					width: 58% !important;
 				}

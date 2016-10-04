@@ -11,7 +11,10 @@ input-tag {
 			transform-origin: left top;
 			@include transform(scale(1));
 			@include transition(all $transition-angular);
-			&.country-selected { @extend label.activated; }
+			&.country-selected { 
+				@extend label.activated; 
+			}
+			@media (max-width: 960px) { text-align: center; }
 		}
 		input{
 			border-color : transparent;
@@ -29,10 +32,19 @@ input-tag {
 				background-color : $dark-blue;
 				color: white;
 				padding: 2px 7px 0px 7px;
-				span{
+				@media (max-width: 960px) { margin-top: 4px; }
+				span.lnr{
 					position: relative;
 					top: 1px;
-					padding-left: 8px;
+					padding-left: 0px;
+				}
+				span.contracted-mobile {
+					@media (max-width: 960px) {
+						overflow: hidden;
+						max-width: 30px;
+						text-overflow: ellipsis;
+						display: inline-block;
+					}
 				}
 			}	
 			div[more-countries] {
@@ -49,7 +61,15 @@ input-tag {
 			div[expanded]{
 				display: block;
 				margin-top: 10px;
-				span { float: right; }
+				span.lnr { float: right; }
+				span.contracted-mobile {
+					@media (max-width: 960px) {
+						overflow: hidden;
+						max-width: 50px;
+						text-overflow: ellipsis;
+						display: inline-block;
+					}
+				}
 			}		
 		}
 
@@ -61,7 +81,11 @@ input-tag {
 		opacity : 0;
 		height: 0%;
 		pointer-events: none;
-		@include transition(all $transition);
+		@include transition(
+			width 0.2s ease-in 0.2s, 
+			left 0.2s ease-in 0.2s, 
+			opacity 0.2s ease-in 0s,
+			height 0.2s ease-in 0s);
 
 		@media #{$gt-sm} {
 			top: 80px;
@@ -88,7 +112,10 @@ input-tag {
 
 div.active{
 	div[input-container]{
-		label{ @extend label.activated;}
+		label{ 
+			@extend label.activated;
+			opacity : 1 !important;
+		}
 		input { border-bottom: 1px solid $light-gray; }		
 	}
 
@@ -97,6 +124,18 @@ div.active{
 		opacity : 1;
 		height: 300%;
 		pointer-events: all;
+		@include transition(
+			width 0s ease-in, 
+			left 0s ease-in, 
+			opacity 0.2s ease-in .4s,
+			height 0.2s ease-in 0s);
+	}
+
+	.contracted-mobile {
+		@media (max-width: 960px) {
+			max-width: 80px !important;
+
+		}
 	}
 
 }
@@ -105,4 +144,8 @@ label.activated {
 	@include transform(scale(0.75));
 	top: 0px;
 	color : $gray;
+	text-align: left !important;
+	@media (max-width: 960px)  {
+		opacity : 0;
+	}
 }

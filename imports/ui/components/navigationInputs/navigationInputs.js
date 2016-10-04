@@ -38,18 +38,7 @@ class NavigationInputs {
 		this.importador = [];
 		this.exportador = [];
 
-		this.root.$on('expandHeader', (event, data) => {
-			this.expandHeader(data.name, data.event);
-		});
-
-		this.root.$on('contractHeader', (event, data) => {
-			this.contractHeader(data.name, data.event);
-		});
-
-		this.root.$on('closeCountries', (event, data) => {
-			this.onSectionSelected('', data.event);
-		});
-		
+		this.catchRootEvents();	
 	}
 
 	onSectionSelected (section = '', event) {
@@ -75,6 +64,9 @@ class NavigationInputs {
 		});
 
 		this.onSectionSelected('', event);
+
+		this.sectionSelected = name;
+
 		this.timeout(() => {this.resizeInputs();}, 400);
 
 		this.root.$broadcast('expandedHeader', { name : name });
@@ -126,6 +118,20 @@ class NavigationInputs {
 			'width': widthExportador, 
 			'left' : offsetExportador.left,
 			'top' : offsetExportador.top + heightExportador
+		});
+	}
+
+	catchRootEvents () {
+		this.root.$on('expandHeader', (event, data) => {
+			this.expandHeader(data.name, data.event);
+		});
+
+		this.root.$on('contractHeader', (event, data) => {
+			this.contractHeader(data.name, data.event);
+		});
+
+		this.root.$on('closeCountries', (event, data) => {
+			this.onSectionSelected('', data.event);
 		});
 	}
 };
