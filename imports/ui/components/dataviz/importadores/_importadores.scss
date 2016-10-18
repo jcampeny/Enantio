@@ -1,0 +1,20 @@
+importadores {
+	position: relative;
+	svg{
+		width: 100% !important;
+	    height: 100% !important;
+	    position: absolute !important;
+	    top: 0 !important;
+	    left: 0 !important;
+	    .land {
+	      fill: #ddd;
+	    }
+
+	    .border {
+	      fill: none;
+	      stroke: #fff;
+	      stroke-linejoin: round;
+	      stroke-linecap: round;
+	    }
+	}
+}

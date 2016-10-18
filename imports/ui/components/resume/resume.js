@@ -3,7 +3,8 @@ import angularMeteor from 'angular-meteor';
 
 import template from './resume.html';
 
-import { name as VizHeader} from './vizHeader/vizHeader';
+import { name as VizHeader } from './vizHeader/vizHeader';
+import { name as Importadores } from '../dataviz/importadores/importadores';
 
 class Resume {
 	constructor ($scope, $reactive) {
@@ -43,7 +44,8 @@ const name = 'resume';
 
 export default angular.module(name, [
 	angularMeteor,
-	VizHeader
+	VizHeader,
+	Importadores
 ]).component(name, {
 	template,
 	controllerAs : name,

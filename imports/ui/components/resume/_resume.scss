@@ -38,7 +38,8 @@ resume {
 				@include transition(all $transition);
 			}
 			fecha {background-image : url(/img/Barras-mobile.png); padding-top: 59%;}
-			importadores {background-image : url(/img/Importadores.png); padding-top: 60%;}
+			//importadores {background-image : url(/img/Importadores.png); padding-top: 60%;}
+			importadores {background-image : none; padding-top: 60%;}
 			exportadores {background-image : url(/img/Exportadores.png); padding-top: 60%;}
 			codigo {background-image : url(/img/Treemap-mobile.png); padding-top: 170%;}
 
