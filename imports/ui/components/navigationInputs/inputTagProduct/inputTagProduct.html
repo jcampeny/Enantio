@@ -1,34 +1,32 @@
-<div input-container>
-  <label ng-class="{'country-selected' : (inputTagProduct.selected.length > 0 || inputTagProduct.searchText !== '')}">{{inputTagProduct.name | capitalize}}</label>
-  <!-- Countries selected tags-->
-  <div country-tags>
+<div input-container ng-class="{'on-load-mobile' : inputTagProduct.unSelected}">
+  <label ng-class="{'product-selected' : ((inputTagProduct.selected && inputTagProduct.selected.code) || inputTagProduct.searchText !== '')}">{{inputTagProduct.name | capitalize}}</label>
+  <!-- products selected tags-->
+  <div product-tags>
   	  <!--expanded-->
-	  <div expanded countries-selected="{{inputTagProduct.name}}" 
-	  	ng-if="inputTagProduct.selected.length > 0 && inputTagProduct.expanded"
-	  	ng-repeat="product in inputTagProduct.selected">
-	  		<span class="contracted-mobile">{{product.name_es | capitalize}}</span>
-	  		<span class="lnr lnr-cross" ng-click="inputTagProduct.removeProduct(inputTagProduct.selected[0])"></span>
+	  <div expanded products-selected="{{inputTagProduct.name}}" 
+	  	ng-if="inputTagProduct.expanded && inputTagProduct.selected && inputTagProduct.selected.code">
+	  		<span class="contracted-mobile" ng-if="inputTagProduct.searchText == ''">{{inputTagProduct.selected.code | insertPoints}} &nbsp;{{inputTagProduct.selected.name_es | capitalize}}</span>
 	  </div>
 	  <!-- not expanded -->
-	  <div countries-selected="{{inputTagProduct.name}}" 
-	  	   ng-if="inputTagProduct.selected.length > 0 && !inputTagProduct.expanded">
-	  			<span class="contracted-mobile">{{inputTagProduct.selected[0].name_es | capitalize}}</span>
-	  			<span class="lnr lnr-cross" ng-click="inputTagProduct.removeCountry(inputTagProduct.selected[0])">
+	  <div products-selected="{{inputTagProduct.name}}" 
+	  	   ng-if="!inputTagProduct.expanded && inputTagProduct.selected && inputTagProduct.selected.code">
+	  			<span class="contracted-mobile" ng-if="inputTagProduct.searchText == ''">{{inputTagProduct.selected.code | insertPoints}} &nbsp;{{inputTagProduct.selected.name_es | capitalize}}</span>
 	  	</span>
 	  </div>
-	  <div more-countries="{{inputTagProduct.name}}" ng-if="inputTagProduct.selected.length > 1 && !inputTagProduct.expanded" class="caption-white-centered" ng-click="inputTagProduct.expandHeader($event)">+{{inputTagProduct.selected.length - 1}}</div>  	
+	  <!-- Input to select products -->
+	  <input id="input-{{inputTagProduct.name}}" type="" name="" 
+	  		ng-class="{'ajust-desktop' : (inputTagProduct.selected && inputTagProduct.selected.code)}"
+	  		ng-model="inputTagProduct.searchText"> 	
   </div>
 
-  <!-- Input to select Countries -->
-  <input id="input-{{inputTagProduct.name}}" type="" name="" 
-  		ng-model="inputTagProduct.searchText"
-  		ng-class="{'expanded' : inputTagProduct.expanded}">
+
 </div>
-<!-- countries list -->
+<!-- product list -->
 <div input-select-options="{{inputTagProduct.name}}" ng-class="inputTagProduct.name" class="body-dark">
-  <div ng-repeat="product in inputTagProduct.products" 
-       country-item="{{inputTagProduct.name}}" 
+  	<div ng-repeat="product in inputTagProduct.products" 
+       product-item="{{inputTagProduct.name}}" 
        ng-click="inputTagProduct.selectProduct(product, $event)"
-       ng-if="!inputTagProduct.countryAreSelected(product).found">{{product.name_es | capitalize}}</div>
+       ng-if="!inputTagProduct.productAreSelected(product).found"><span code>{{product.code | insertPoints}}</span><span name>{{product.name_es | capitalize}}</span></div>
+	<div class="search-in-index">Buscar en Índice</div>
 </div>
 

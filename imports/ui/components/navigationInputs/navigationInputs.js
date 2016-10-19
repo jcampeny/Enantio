@@ -89,7 +89,7 @@ class NavigationInputs {
 
 	resizeInputs () {
 		const marginLeft = 20;
-		const marginTop = (this.isMobile) ? 10 : 15;
+		const marginTop = (this.isMobile) ? 10 : 5;
 
 		const widthProducto   = $('[nav-option="'+'producto'+'"]').width() + marginLeft;
 		const widthImportador = $('[nav-option="'+'importador'+'"]').width() + marginLeft;
@@ -104,8 +104,8 @@ class NavigationInputs {
 		const offsetExportador = $('[nav-option="'+'exportador'+'"]').offset();
 
 		$('[input-select-options="'+'producto'+'"]').css({
-			'width': widthProducto, 
-			'left' : offsetProducto.left,
+			'width': (this.isMobile) ? '100%': (widthProducto * 3), 
+			'left' : (this.isMobile) ? '0' : offsetProducto.left,
 			'top' : offsetProducto.top + heightProducto
 		});
 
@@ -151,9 +151,38 @@ export default angular.module(name, [
 	controller : NavigationInputs
 }).filter('capitalize', function() {
     return function(input) {
-      return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
+    	return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
+    }
+}).filter('insertPoints', function() {
+    return function(str, n = 2) {
+    	var ret = [];
+    	var i;
+    	var len;
+
+    	for(i = 0, len = str.length; i < len; i += n) {
+    	   ret.push(str.substr(i, n))
+    	}
+
+    	return ret.join('.') + '.';
     }
 }).config(config);
+
+
+
+
+function chunk(str, n) {
+    var ret = [];
+    var i;
+    var len;
+
+    for(i = 0, len = str.length; i < len; i += n) {
+       ret.push(str.substr(i, n))
+    }
+
+    return ret
+};
+
+
 
 function config ($ariaProvider) {
 	'ngInject';

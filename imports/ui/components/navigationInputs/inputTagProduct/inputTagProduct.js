@@ -17,6 +17,7 @@ class InputTagProduct {
 
 		this.limit = 5;
 		this.expanded = false;
+		this.unSelected = true;
 
 		this.root = $rootScope;
 
@@ -31,9 +32,15 @@ class InputTagProduct {
 			}
 		});
 
-		$('html').click((event) =>{
+		$('html').click((event) =>{console.log('e');
 			this.searchText = '';
 			this.contractHeader(event);
+			$scope.$apply();
+		});
+
+		//input bug (Mueve el input de la pantalla cuando se ahce focus, lo comentamos si tienes que tocarlo)
+		$('[nav-option="producto"]').on('click', (event)=>{
+			this.unSelected = false;
 			$scope.$apply();
 		});
 
@@ -42,7 +49,7 @@ class InputTagProduct {
 
 	selectProduct (product, event) {console.log(product);
 		if(!this.productAreSelected(product).found){
-			this.selected.push(product);
+			this.selected = product;
 			this.searchText = '';
 			this.contractHeader(event);
 			this.root.$broadcast('closeProducts', {
