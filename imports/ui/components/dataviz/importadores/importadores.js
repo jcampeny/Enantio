@@ -7,16 +7,22 @@ import * as topojson from "topojson";
 import { Meteor } from 'meteor/meteor';
 
 import template from './importadores.html';
-import us from './countries_50.json';
+import countriesMap from '../world-110m.json';
 
 class Importadores {
-	constructor(){
-		
+	constructor($scope, $reactive){
+		'ngInject';
 
-		var width = 960,
-		    height = 600;
+		$reactive(this).attach($scope);
 
-	    var projection = d3geo.geoMercator()
+		this.createMap();
+		$scope.$watch(
+			()=>$(name).width()+$(name).height(), 
+			()=>{console.log($(name).width())});	
+	}
+
+	createMap(){
+	    var projection = d3geo.geoEquirectangular()
 	    	.center([0, 0])
 		    .scale(150)
 		    .rotate([0,0]);
@@ -25,33 +31,37 @@ class Importadores {
 		    .projection(projection);
 
 		var svg = d3.select("importadores").append("svg")
-		    .attr("width", width)
-		    .attr("height", height);
+			.attr('width', $(name).width())
+			.attr('height', $(name).width() * 0.6);
 
-		console.log(d3);
-
+		//svg > g > path element
 		var dPath = svg.append('g');
 
+		//create land
 	    dPath.append("path")
-	        .datum(topojson.feature(us, us.objects.countries_50_geo))
+	        .datum(topojson.feature(countriesMap, countriesMap.objects.land))
 	        .attr("class", "land")
-	        .attr("d", path);
+	        .attr("d", path)
+	        .attr("id", function(d) {
+              return d.properties.name;
+            }); 
 
+	    //create countries border
 	    dPath.append("path")
-	        .datum(topojson.mesh(us, us.objects.countries_50_geo, (a, b)=>{ return a !== b; }))
+	        .datum(topojson.mesh(countriesMap, countriesMap.objects.countries, (a, b)=>{ return a !== b; }))
 	        .attr("class", "border")
 	        .attr("d", path);
 
-        // zoom and pan
+	    //handle function on zoom event
         var zoom = d3.zoom()
-            .on("zoom",() =>  {
+            .on("zoom",() => {
 	            dPath.attr("transform",
 	            	"translate("+ d3.event.transform.x + ", " + d3.event.transform.y +
-	            	")scale("+d3.event.transform.k+")");            		
+	            	")scale("+d3.event.transform.k+")");        		
           });
 
+        //set handle function to svg element
         svg.call(zoom);
-
 	}
 }
 
