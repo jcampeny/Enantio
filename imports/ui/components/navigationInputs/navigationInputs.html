@@ -1,7 +1,7 @@
 <section ng-class="{ 'active' : navigationInputs.sectionSelected}" slide-move>
 	<div ng-click="navigationInputs.onSectionSelected('producto', $event)" 
 		 ng-class="{ 'active' : (navigationInputs.sectionSelected == 'producto')}" nav-option="producto">
-		 <input-tag name="producto" selected="navigationInputs.producto" ></input-tag>
+		 <input-tag-product name="producto" selected="navigationInputs.producto" ></input-tag-product>
 	</div>
 	<div ng-click="navigationInputs.onSectionSelected('importador', $event)" 
 		 ng-class="{ 'active' : (navigationInputs.sectionSelected == 'importador')}" nav-option="importador">

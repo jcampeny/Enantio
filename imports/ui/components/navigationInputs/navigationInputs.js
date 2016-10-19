@@ -4,6 +4,7 @@ import ngAria from 'angular-aria';
 import matchMedia from 'angular-media-queries';
 
 import { name as InputTag } from './inputTag/inputTag';
+import { name as InputTagProduct } from './inputTagProduct/inputTagProduct';
 
 import template from './navigationInputs.html';
 
@@ -142,6 +143,7 @@ export default angular.module(name, [
 	angularMeteor,
 	ngAria,
 	InputTag,
+	InputTagProduct,
 	'matchMedia'
 ]).component(name, {
 	template,
