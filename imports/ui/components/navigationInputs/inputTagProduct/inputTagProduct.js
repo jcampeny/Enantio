@@ -1,9 +1,10 @@
 import angular from 'angular';
 import angularMeteor from 'angular-meteor';
+import { Meteor } from 'meteor/meteor';
 
 import { Products } from '../../../../api/products/index';
 import template from './inputTagProduct.html';
-
+import { name as ProductNavigation} from './productNavigation/productNavigation';
 
 class InputTagProduct {
 	constructor ($scope, $reactive, $rootScope) {
@@ -12,13 +13,15 @@ class InputTagProduct {
 		$reactive(this).attach($scope);
 
 		this.searchText = '';
+		this.codeBaseToFind = '0101';
+		this.levelToFind = '4';
 
 		this.subscribe('products');
 
 		this.limit = 5;
 		this.expanded = false;
 		this.unSelected = true;
-
+		
 		this.root = $rootScope;
 
 		this.helpers({
@@ -29,10 +32,24 @@ class InputTagProduct {
 				    	$options : 'i'
 				  	}
 				}, {limit : this.limit});
+			},
+			productsByLevel (){
+				return Products.find({
+					code : {
+						$regex: new RegExp('^' + this.getReactively('codeBaseToFind')),
+						$options : 'i'
+					},
+					level : this.getReactively('levelToFind')
+				}).count();
+			},
+			productsParent (){
+				return Products.find({
+					isParent : true
+				});
 			}
 		});
 
-		$('html').click((event) =>{console.log('e');
+		$('html').click((event) =>{
 			this.searchText = '';
 			this.contractHeader(event);
 			$scope.$apply();
@@ -47,9 +64,10 @@ class InputTagProduct {
 		this.catchRootEvents();
 	}
 
-	selectProduct (product, event) {console.log(product);
+	selectProduct (product, event) {
 		if(!this.productAreSelected(product).found){
 			this.selected = product;
+			this.root.product = product;
 			this.searchText = '';
 			this.contractHeader(event);
 			this.root.$broadcast('closeProducts', {
@@ -106,12 +124,20 @@ class InputTagProduct {
 		});
 	}
 
+	toggleMenu (event, menu = 'product-navigation') {
+		this.contractHeader(event);
+		this.root.$broadcast('toggleMenu', {
+		    menu : 'product-navigation'
+		});
+	}
+
 };
 
 const name = 'inputTagProduct';
 
 export default angular.module(name, [
-	angularMeteor
+	angularMeteor,
+	ProductNavigation
 ]).component(name, {
 	template,
 	bindings : {

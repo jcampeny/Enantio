@@ -27,6 +27,6 @@
        product-item="{{inputTagProduct.name}}" 
        ng-click="inputTagProduct.selectProduct(product, $event)"
        ng-if="!inputTagProduct.productAreSelected(product).found"><span code>{{product.code | insertPoints}}</span><span name>{{product.name_es | capitalize}}</span></div>
-	<div class="search-in-index">Buscar en Índice</div>
+	<div class="search-in-index" ng-click="inputTagProduct.toggleMenu($event)">Buscar en Índice</div>
 </div>
-
+<product-navigation flex="0" menu="product-navigation" parents="inputTagProduct.productsParent"></product-navigation>

@@ -278,3 +278,27 @@ $shadow-blur : 0px 2px 8px 0px rgba(206,206,206,0.2);
 	padding: 0.8em 1.8em;
 	text-transform : uppercase;
 }
+/**********
+Animation
+**////////
+
+@-webkit-keyframes rotating{
+  from {
+  	@include transform(rotate(0deg));
+  }
+  to {
+  	@include transform(rotate(360deg));
+  }
+}
+@keyframes rotating {
+  from {
+    @include transform(rotate(0deg));
+  }
+  to {
+    @include transform(rotate(360deg));
+  }
+}
+
+.infinite-rotation {
+	@include animate(rotating 2s linear infinite);
+}
