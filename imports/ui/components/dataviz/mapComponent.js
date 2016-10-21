@@ -5,10 +5,14 @@ import countriesMap from './countries_110.json';
 
 class MapComponent
 {
-	constructor($reactive, $scope, $q, $timeout){
+	constructor($reactive, $scope, $q, $timeout, $rootScope){
 		'ngInject';
+
     $reactive(this).attach($scope);
+    
+    this.root = $rootScope;
     this.q = $q;
+
     this.projection = null;
     this.path       = null;
     this.svg        = null;
@@ -34,11 +38,11 @@ class MapComponent
       });     
     });
 
-    // this.root.$on('refreshMap', (data) => {
-    //   if(data.mapType == this.type) {
-    //     this.refreshMap();
-    //   }
-    // });
+    this.root.$on('refreshMap', (event, data) => {
+      if(data.mapType.toLowerCase() == this.type) {
+        this.refreshMap();
+      }
+    });
 	}
 
   refreshMap(){

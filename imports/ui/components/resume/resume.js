@@ -9,13 +9,16 @@ import { name as Exportadores } from '../dataviz/exportadores/exportadores';
 
 
 class Resume {
-	constructor ($scope, $reactive) {
+	constructor ($scope, $reactive, $rootScope) {
 		'ngInject';
 
 		$reactive(this).attach($scope);
+		this.root = $rootScope;
 
 		this.refresh = (name) => {
-			console.log(name + ' refreshed');
+			this.root.$broadcast('refreshMap', {
+				mapType : name
+			});
 		};
 
 		function headerController (id, name, lock, refresh, fullScreen, collapsed, date = null) {
