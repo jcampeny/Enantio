@@ -15,20 +15,31 @@ class Resume {
 		$reactive(this).attach($scope);
 		this.root = $rootScope;
 
-		this.refresh = (name) => {
+		const refresh = (name) => {
 			this.root.$broadcast('refreshMap', {
 				mapType : name
 			});
 		};
 
-		function headerController (id, name, lock, refresh, fullScreen, collapsed, date = null) {
+		const toggleLock = (name, lock) => {
+			this.root.$broadcast('toggleLock', {
+				mapType : name,
+				toLock : lock
+			});
+		}
+
+		function headerController (id, name, lock, toggleLock, refresh, fullScreen, collapsed, date = null) {
 			this.id = id;
 			this.name = name;
 			this.lock = lock;
+			this.toggleLock = toggleLock;
 			this.refresh = refresh;
 			this.fullScreen = fullScreen;
 			this.collapsed = collapsed;
 			this.date = date;
+
+			if(this.lock)
+				$(name.toLowerCase()).addClass('locked-area');
 		}
 		/*new Date().getFullYear()*/
 		this.date = {
@@ -36,11 +47,11 @@ class Resume {
 			end : '2016'
 		};
 
-		this.fecha        = new headerController('fecha', 'Fecha', null, null, 'home.fecha', false, this.date);
-		this.importadores = new headerController('importadores', 'Importadores', true, this.refresh, 'home.importadores', false);
-		this.exportadores = new headerController('exportadores', 'Exportadores', true, this.refresh, 'home.exportadores', false);
-		this.codigo       = new headerController('codigo', 'Código de tarifa', null, null, 'home.codigo', false);
-		this.precio       = new headerController('precio', 'Precio unitario', true, this.refresh, 'home.precio', true);
+		this.fecha        = new headerController('fecha', 'Fecha', null, toggleLock, null, 'home.fecha', false, this.date);
+		this.importadores = new headerController('importadores', 'Importadores', true, toggleLock, refresh, 'home.importadores', false);
+		this.exportadores = new headerController('exportadores', 'Exportadores', true, toggleLock, refresh, 'home.exportadores', false);
+		this.codigo       = new headerController('codigo', 'Código de tarifa', null, toggleLock, null, 'home.codigo', false);
+		this.precio       = new headerController('precio', 'Precio unitario', true, toggleLock, refresh, 'home.precio', true);
 	}
 
 };

@@ -8,7 +8,7 @@
     <div date ng-if="vizHeader.vizController.date !== null">{{vizHeader.vizController.date.start}} - {{vizHeader.vizController.date.start}} <span class="lnr lnr-calendar-full"></span></div> 
 
     <div lock ng-if="vizHeader.vizController.lock !== null" 
-              ng-click="vizHeader.vizController.lock = !vizHeader.vizController.lock" 
+              ng-click="vizHeader.toggleLock()" 
               ng-class="{'unlocked' : !vizHeader.vizController.lock}"><span class="lnr lnr-lock" ></span><div></div></div>
     
     <div ng-if="vizHeader.vizController.refresh !== null"

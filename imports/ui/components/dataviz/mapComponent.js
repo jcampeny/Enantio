@@ -12,6 +12,7 @@ class MapComponent
     
     this.root = $rootScope;
     this.q = $q;
+    this.element = $(this.type);
 
     this.projection = null;
     this.path       = null;
@@ -19,8 +20,8 @@ class MapComponent
     this.data       = [];
     this.dataNest   = {};
     this.valueScale = null;
-    this.width      = $(this.type).width();
-    this.height     = $(this.type).height();
+    this.width      = this.element.width();
+    this.height     = this.element.height();
     this.totalValue = 0;
 
     this.setupMap(this.width, this.width*0.6);
@@ -31,7 +32,7 @@ class MapComponent
     this.renderTimeout;
 
     $scope.$watch(
-      ()=>$(this.type).width() + $(this.type).height(), 
+      ()=>this.element.width() + this.element.height(), 
       ()=>{
         $timeout.cancel(this.renderTimeout);
         this.renderTimeout = $timeout(() => { this.refreshMap(); },400);
@@ -43,11 +44,21 @@ class MapComponent
         this.refreshMap();
       }
     });
+
+    this.root.$on('toggleLock', (event, data) => {
+      if(data.mapType.toLowerCase() == this.type) {
+        if(data.toLock){
+          this.element.addClass('locked-area');
+        } else {
+          this.element.removeClass('locked-area');
+        }
+      }
+    });
 	}
 
   refreshMap(){
-    this.width      = $(this.type).width();
-    this.height     = $(this.type).height();
+    this.width      = this.element.width();
+    this.height     = this.element.height();
     this.setupMap(this.width, this.width * 0.6);
     this.removeMap();
     this.renderMap(this.type, this.width);               

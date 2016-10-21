@@ -21,6 +21,11 @@ class VizHeader {
 		this.vizController.refresh(this.vizController.name);
 	}
 
+	toggleLock () {
+		this.vizController.lock = !this.vizController.lock;
+		this.vizController.toggleLock(this.vizController.name, this.vizController.lock);
+	}
+
 	changeViewFrame () {
 		if(this.viewFrameState != 'changing'){
 			

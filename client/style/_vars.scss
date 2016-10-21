@@ -279,9 +279,13 @@ $shadow-blur : 0px 2px 8px 0px rgba(206,206,206,0.2);
 	padding: 0.8em 1.8em;
 	text-transform : uppercase;
 }
+
+.locked-area{
+	pointer-events: none;
+}
 /**********
 Animation
-**////////
+**********/
 
 @-webkit-keyframes rotating{
   from {
