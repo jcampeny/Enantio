@@ -8,10 +8,7 @@ class MapComponent
 	constructor($reactive, $scope, $q, $timeout){
 		'ngInject';
     $reactive(this).attach($scope);
-
-console.log("DEBUG: "+$scope.type);
     this.q = $q;
-    this.type = $scope.type;
     this.projection = null;
     this.path       = null;
     this.svg        = null;
@@ -20,23 +17,37 @@ console.log("DEBUG: "+$scope.type);
     this.valueScale = null;
     this.width      = $(this.type).width();
     this.height     = $(this.type).height();
+    this.totalValue = 0;
 
     this.setupMap(this.width, this.width*0.6);
 
     this.loadData(this.type).then(()=>{
     this.renderMap(this.type, this.width); 
 
+    this.renderTimeout;
+
     $scope.$watch(
-      ()=>this.width + this.height, 
+      ()=>$(this.type).width() + $(this.type).height(), 
       ()=>{
-        $timeout(() => {
-          this.setupMap(this.width, this.width * 0.6);
-          this.removeMap();
-          this.renderMap(this.type, this.width);               
-        },0);
+        $timeout.cancel(this.renderTimeout);
+        this.renderTimeout = $timeout(() => { this.refreshMap(); },400);
       });     
     });
+
+    // this.root.$on('refreshMap', (data) => {
+    //   if(data.mapType == this.type) {
+    //     this.refreshMap();
+    //   }
+    // });
 	}
+
+  refreshMap(){
+    this.width      = $(this.type).width();
+    this.height     = $(this.type).height();
+    this.setupMap(this.width, this.width * 0.6);
+    this.removeMap();
+    this.renderMap(this.type, this.width);               
+  }
 
   setupMap(width, height){
     var b = [-180,-90,180,90];
@@ -58,16 +69,18 @@ console.log("DEBUG: "+$scope.type);
   }
 
   loadData(type){
-    this.type = type;
     let deferred = this.q.defer();
     let self = this;
-    let parser = d3.dsvFormat(";");
-    var min = 0;
-    var max = Infinity;
+    // let parser = d3.dsvFormat(";");
+    var min = Infinity;
+    var max = -Infinity;
 
-    d3.request("data/annual_comtrade_2008_spain.csv")
-      .mimeType("text/plain")
-      .response(function(xhr) { return parser.parse(xhr.responseText); })
+    // d3.request("data/annual_comtrade_2008_spain.csv")
+    //   .mimeType("text/plain")
+    //   .response(function(xhr) { return parser.parse(xhr.responseText); })
+    d3.request("data/dataset.json")
+      .mimeType("application/json")
+      .response(function(xhr) { return JSON.parse(xhr.responseText); })
       .get(function(data){
         let tradeFlow = "-1";
         if(type === "importadores"){
@@ -76,29 +89,25 @@ console.log("DEBUG: "+$scope.type);
           tradeFlow = "2";
         }
 
-        angular.forEach(data, function(d){
-          if(d['Trade Flow Code'] === tradeFlow && d['Partner ISO'] === "WLD"){
-            if(!self.dataNest[d['Reporter ISO']]){
-              self.dataNest[d['Reporter ISO']] = {};
+        angular.forEach(data.dataset, function(d){
+          if(d.rgCode == tradeFlow && d.pt3ISO === "WLD"){
+            if(!self.dataNest[d.rt3ISO]){
+              self.dataNest[d.rt3ISO] = { countryName : d.rtTitle };
             }
-            if(!self.dataNest[d['Reporter ISO']]['agg_'+d['Aggregate Level']]){
-              self.dataNest[d['Reporter ISO']]['agg_'+d['Aggregate Level']] = parseFloat(d['Trade Value (US$)']);
+            if(!self.dataNest[d.rt3ISO]['agg_'+d.aggrLevel]){
+              self.dataNest[d.rt3ISO]['agg_'+d.aggrLevel] = parseFloat(d.TradeValue);
             }else{
-              self.dataNest[d['Reporter ISO']]['agg_'+d['Aggregate Level']] += parseFloat(d['Trade Value (US$)']);
+              self.dataNest[d.rt3ISO]['agg_'+d.aggrLevel] += parseFloat(d.TradeValue);
             }
-            min = Math.min(min, parseFloat(d['Trade Value (US$)']));
-            max = Math.max(max, parseFloat(d['Trade Value (US$)']));
+            min = Math.min(min, parseFloat(d.TradeValue));
+            max = Math.max(max, parseFloat(d.TradeValue));
+            this.total += parseFloat(d.TradeValue);
           }
         });
-        // self.dataNest = d3.nest()
-        //   .key(function(d) { return d['Reporter ISO']; })
-        //   .key(function(d) { return d['Aggregate Level']; })
-        //   .rollup(function(leaves) { return  d3.sum(leaves, function(d) {return parseFloat(d['Trade Value (US$)']);}); })
-        //   .entries(self.data);
 
         self.valueScale = d3.scaleLinear()
           .domain([min, max])
-          .range([5, 30]);
+          .range([1, 15]);
         deferred.resolve();
       });
       return deferred.promise;
@@ -113,6 +122,8 @@ console.log("DEBUG: "+$scope.type);
 
     let dPath = this.svg.append('g').attr("id","mapFeatures");
     let circles = this.svg.append('g').attr("id","mapCircles");
+
+    let tooltip = d3.select(this.type).append('div').attr("id", "mapTooltip");
 
     let dataFeatures = topojson.feature(countriesMap, countriesMap.objects.countries_110_geo).features;
 
@@ -145,13 +156,7 @@ console.log("DEBUG: "+$scope.type);
         .attr("transform", (d) => {
           return "translate(" + this.path.centroid(d) + ")";   
         })
-        .attr("r",(d) => {
-          if(self.dataNest[d.properties.iso_a3]){
-            return this.valueScale(self.dataNest[d.properties.iso_a3].agg_2);  
-          }else{
-            return 0;
-          }
-        })
+        .attr("r",0)
         .attr("fill",(d)=>{
           if(this.type === "importadores"){
             return "rgb(0,51,123)";
@@ -159,7 +164,38 @@ console.log("DEBUG: "+$scope.type);
             return "rgb(237,27,82)";
           }
         })
-        .style("opacity","0.5");
+        .style("opacity","0.5")
+        .on('mousemove', (d)=>{
+          var mouse = d3.mouse(this.svg.node()).map(function(d) {
+              return parseInt(d);
+          });
+          var country = self.dataNest[d.properties.iso_a3];
+          if(country){
+            var mapWidth = parseInt(this.svg.style("width"));
+            var tooltipLeft = mouse[0]+215 < mapWidth ? (mouse[0] + 15) : (mouse[0] - 215);
+
+            var tooltipContent = 
+              "<div class='tooltip-item'>"+country.countryName+"";
+                
+
+            tooltip.classed('show', true)
+                .attr('style', 'left:' + (tooltipLeft) +
+                        'px; top:' + (mouse[1] - 35) + 'px')
+                .html(tooltipContent);
+          }
+        })
+        .on('mouseout', function() {
+            tooltip.classed('show', false);
+        })
+        .transition()
+        .duration(1000)
+        .attr("r",(d) => {
+          if(self.dataNest[d.properties.iso_a3]){
+            return this.valueScale(self.dataNest[d.properties.iso_a3].agg_0);  
+          }else{
+            return 0;
+          }
+        });
 
     var zoom = d3.zoom()
         .scaleExtent([1, 8])
@@ -175,7 +211,7 @@ console.log("DEBUG: "+$scope.type);
 
           d3.selectAll('.land').style("stroke-width", 0.5 / s + "px");
           dPath.attr("transform","translate("+ t[0] + ", " + t[1] + ")scale("+s+")");            
-          circles.attr("transform","translate("+ t[0] + ", " + t[1] + ")scale("+0.5 * s+")");            
+          circles.attr("transform","translate("+ t[0] + ", " + t[1] + ")scale("+s+")");            
       });
 
     //set handle function to this.svg element
