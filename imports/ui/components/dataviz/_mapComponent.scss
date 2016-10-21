@@ -1,9 +1,8 @@
 #mapTooltip {
 	position:absolute;
-	min-width: 200px;
 	padding:7px;
 	border-radius: 2px;
-	background-color:rgba(239, 240, 240, 0.9);
+	background-color: #FFFFFF;
 	font-size: 12px;
 	pointer-events: none;
 	@include opacity(0);
@@ -13,14 +12,20 @@
 		@include opacity(1);
 	}
 
-	.title{
-		font-size: 14px;
-		color:#0093FD;
-	}
 
-	.item{
-		display:block;
+	.tooltip-item{
+		display:flex;
 		margin-bottom: 5px; 
 		color:#000000;
+		
+		.item-left{
+			flex-grow:1;
+			text-align:left;
+		}
+
+		.item-right{
+			flex-grow:1;
+			text-align: right;	
+		}
 	}
 }
