@@ -81,7 +81,7 @@ class MapComponent
     d3.request("data/dataset.json")
       .mimeType("application/json")
       .response(function(xhr) { return JSON.parse(xhr.responseText); })
-      .get(function(data){
+      .get((data) => {
         let tradeFlow = "-1";
         if(type === "importadores"){
           tradeFlow = "1";
@@ -89,7 +89,7 @@ class MapComponent
           tradeFlow = "2";
         }
 
-        angular.forEach(data.dataset, function(d){
+        angular.forEach(data.dataset, (d) => {
           if(d.rgCode == tradeFlow && d.pt3ISO === "WLD"){
             if(!self.dataNest[d.rt3ISO]){
               self.dataNest[d.rt3ISO] = { countryName : d.rtTitle };
@@ -101,7 +101,7 @@ class MapComponent
             }
             min = Math.min(min, parseFloat(d.TradeValue));
             max = Math.max(max, parseFloat(d.TradeValue));
-            this.total += parseFloat(d.TradeValue);
+            self.totalValue += parseFloat(d.TradeValue);
           }
         });
 
@@ -171,12 +171,23 @@ class MapComponent
           });
           var country = self.dataNest[d.properties.iso_a3];
           if(country){
-            var mapWidth = parseInt(this.svg.style("width"));
-            var tooltipLeft = mouse[0]+215 < mapWidth ? (mouse[0] + 15) : (mouse[0] - 215);
+            var tooltipText = "";
+            if(this.type === "importadores"){
+              tooltipText = "País de destino";
+
+            }else if(this.type === "exportadores"){
+              tooltipText = "País de origen";
+            }
+
+            var tooltipPercent = Math.round(parseFloat(self.dataNest[d.properties.iso_a3].agg_0 / self.totalValue) * 10000) / 100;
 
             var tooltipContent = 
-              "<div class='tooltip-item'>"+country.countryName+"";
-                
+              "<table><tr class='tooltip-item'><td class='item-left'>"+tooltipText+": </td><td class='item-right'>"+country.countryName+"</td></tr>"+
+              "<tr class='tooltip-item'><td class='item-left'>% del total: </td><td class='item-right'>"+tooltipPercent+"%</td></tr></table>";
+
+
+            var mapWidth = parseInt(this.svg.style("width"));
+            var tooltipLeft = mouse[0] + parseInt(tooltip.style("width")) < mapWidth ? (mouse[0] + 15) : (mouse[0] - 15 - parseInt(tooltip.style("width")));
 
             tooltip.classed('show', true)
                 .attr('style', 'left:' + (tooltipLeft) +
