@@ -8,15 +8,20 @@
       <span class="name">{{parent.name_es | capitalize}}</span>
       <span class="options">
         <a>Usar producto</a>
-        <span class="lnr lnr-indent-increase"></span>
+        <span class="lnr lnr-indent-increase" ng-click="productNavigation.selectParent(parent)"></span>
       </span>
     </li>
+
+<!--todo-->
+    <li ng-repeat="children in productNavigation.childrens" style="color:black;">{{children.name_es}}</li>
+
+
     <li class="loading" ng-class="{'loaded' : (productNavigation.parents.length > 0)}">
       <md-progress-circular md-diameter="30" md-mode="indeterminate"></md-progress-circular>
     </li>
   </ul>
   <div options-mobile ng-if="productNavigation.menuState">
     <span class="lnr lnr-indent-increase next" ng-click="productNavigation.selectParent()"></span>
-    <span class="select"><img src="img/checkmark.png"></span>
+    <span class="select" ng-click="productNavigation.submit($event)"><img src="img/checkmark.png"></span>
   </div>
 </div>

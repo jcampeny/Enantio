@@ -15,7 +15,7 @@ class InputTagProduct {
 		this.searchText = '';
 		this.codeBaseToFind = '0101';
 		this.levelToFind = '4';
-
+		this.parentSelected = {};
 		this.subscribe('products');
 
 		this.limit = 5;
@@ -33,19 +33,22 @@ class InputTagProduct {
 				  	}
 				}, {limit : this.limit});
 			},
-			productsByLevel (){
-				return Products.find({
-					code : {
-						$regex: new RegExp('^' + this.getReactively('codeBaseToFind')),
-						$options : 'i'
-					},
-					level : this.getReactively('levelToFind')
-				}).count();
-			},
 			productsParent (){
 				return Products.find({
 					isParent : true
 				});
+			},
+			productsByParent (){
+				if(this.getReactively('parentSelected.childrens')){
+					return Products.find({
+						code : {
+							$in : this.getReactively('parentSelected.childrens')
+						}
+					});
+				} else {
+					return null;
+				}
+
 			}
 		});
 
@@ -132,7 +135,7 @@ class InputTagProduct {
 	}
 
 	getChildren (parent){
-		console.log(parent);
+		this.parentSelected = parent;
 	}
 
 };
