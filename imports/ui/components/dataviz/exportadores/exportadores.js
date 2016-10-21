@@ -4,17 +4,19 @@ import angularMeteor from 'angular-meteor';
 import { Meteor } from 'meteor/meteor';
 import {name as MapComponent} from '../mapComponent';
 
-import template from './importadores.html';
+import template from './exportadores.html';
 
 
-class Importadores {
+class Exportadores {
 	constructor($scope, $reactive){
 		'ngInject';
+
 		$reactive(this).attach($scope);
+		let self = this;
 	}
 }
 
-const name = 'importadores';
+const name = 'exportadores';
 
 export default angular.module(name, [
 	angularMeteor,
@@ -22,5 +24,5 @@ export default angular.module(name, [
 ]).component(name, {
 	template,
 	controllerAs : name,
-	controller : Importadores 
+	controller : Exportadores 
 });
