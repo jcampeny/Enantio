@@ -14,7 +14,6 @@ class ProductNavigation {
 
 		$reactive(this).attach($scope);
 
-
 		this.root = $rootScope;
 		this.state = $state;
 		this.timeout = $timeout;
@@ -53,11 +52,6 @@ class ProductNavigation {
 	}
 
 	toggleMenu (data = {menu : this.menu}){
-		/*if(data.menu == this.menu) {
-			this.menuState = !this.menuState;
-		}else{
-			this.menuState = false;
-		}*/
 		this.menuState = true;
 		this.onMenuCall(this.menuState, data.menu);
 	}
@@ -134,6 +128,8 @@ class ProductNavigation {
 			-.1, //delay between each
 		);
 		if(e) e.stopPropagation();
+
+		this.menuState = false;
 	}
 
 	logout (){
@@ -165,8 +161,16 @@ class ProductNavigation {
 		if(parent.codeParent){
 			this.getChildren({
 				parent : parent
-			});
+			});			
+		} else {
+			//isChildren
 		}
+	}
+
+	submit(event, parent = this.parentSelected){
+		if(parent)
+			this.closeMenu(event);
+
 	}
 };
 
@@ -180,6 +184,7 @@ export default angular.module(name, [
 	bindings : {
 		menu : '@',
 		parents : '<',
+		childrens : '<',
 		getChildren : '&'
 	},
 	controllerAs : name,
