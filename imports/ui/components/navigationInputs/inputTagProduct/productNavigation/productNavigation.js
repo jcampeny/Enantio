@@ -15,17 +15,13 @@ class ProductNavigation {
 		$reactive(this).attach($scope);
 
 
-		this.helpers({
-			currentUser(){
-				return Meteor.user();
-			}
-		});
-
 		this.root = $rootScope;
 		this.state = $state;
 		this.timeout = $timeout;
 		this.lazyLoad = true; //animar correctamente cuando se cargan tarde
 		this.menuState = false;
+
+		this.parentSelected = {};
 
 		
 		$('html').click((e) =>{
@@ -152,15 +148,24 @@ class ProductNavigation {
 		const optionsMobileElement = $('[options-mobile]');
 
 		if(this.isMobile){
-			$('[parent]').removeClass('selected');
-
-			if(!parentElement.hasClass('selected')){
-				parentElement.addClass('selected');
-				optionsMobileElement.addClass('active');
-			} else {
+			if(parentElement.hasClass('selected')){
+				this.parentSelected = {};
 				parentElement.removeClass('selected');
 				optionsMobileElement.removeClass('active');
+			} else {
+				this.parentSelected = parent;
+				$('[parent]').removeClass('selected');
+				parentElement.addClass('selected');
+				optionsMobileElement.addClass('active');
 			}
+		}
+	}
+
+	selectParent (parent = this.parentSelected) {
+		if(parent.codeParent){
+			this.getChildren({
+				parent : parent
+			});
 		}
 	}
 };
@@ -174,7 +179,8 @@ export default angular.module(name, [
 	template,
 	bindings : {
 		menu : '@',
-		parents : '<'
+		parents : '<',
+		getChildren : '&'
 	},
 	controllerAs : name,
 	controller : ProductNavigation

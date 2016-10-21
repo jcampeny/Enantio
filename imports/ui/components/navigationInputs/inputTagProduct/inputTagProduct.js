@@ -131,6 +131,10 @@ class InputTagProduct {
 		});
 	}
 
+	getChildren (parent){
+		console.log(parent);
+	}
+
 };
 
 const name = 'inputTagProduct';
