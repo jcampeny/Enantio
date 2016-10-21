@@ -1,0 +1,164 @@
+product-navigation {
+	[nav-menu] {
+		position: absolute;
+		width: 100%;
+		top: 100%;
+		left: 0;
+		overflow : hidden;
+		color: $darkest-blue;
+		@media #{$gt-sm} {
+			width: 600px;
+			max-width: 80%;
+			left: 15%;
+		}
+		ul{
+			list-style: none;
+		    padding: 0;
+		    margin: 0;
+		    background-color: white;
+		    overflow : hidden;
+		    z-index: 10;
+		    @include transform(translateY(-100%));
+		    @include box-shadow($shadow);
+		    @media (max-width: 960px) {
+	    	    position: fixed;
+	    	    top: 60px;
+	    	    left: 0px;
+	    	    width: 100%;
+	    	    height: calc(0% - 60px);
+	    	    overflow-y : scroll;
+	    	    @include custom-scroll();
+	    	    @include transform(translateY(0%));
+		    }
+			li{
+				cursor : pointer;
+				border-left: 4px solid transparent;
+				padding: 1.4em;
+				padding-left: 25px;
+				border-bottom: 1px solid $light-gray;
+				opacity : 0;
+				@include transform(matrix(1, 0, 0, 1, 20, 0));
+				@include transition(border $transition, background $transition, color $transition);
+				&.active, &:hover{
+					//background-color: $darkest-blue;
+					//color: white;
+					//border-bottom: 1px solid $darkest-blue;
+					span.options, a{
+						color: $dark-blue;
+						span.lnr{color: $dark-blue;}
+					}
+					a{
+						color: $dark-blue !important;
+						border-color: $dark-blue !important;
+					}
+				}
+				&:first-child{
+					background-color: $light-gray;
+					cursor: initial;
+					color: $darkest-blue;
+					border-bottom: 0px solid transparent ;
+					@include box-shadow($shadow);
+					span.lnr{
+						font-size: 20px;
+						float: right;
+						cursor: pointer;
+					}
+				}
+				&:last-child{
+					border-bottom: 0px solid transparent;
+				}
+				&.lazy-load{
+					opacity: 1;
+					@include transform(matrix(1, 0, 0, 1, 0, 0));
+				}
+				&.loading{
+					&.loaded{display: none;}
+					svg{
+						@extend .infinite-rotation;
+					}
+				}
+				&[parent]{
+					span{
+						display:inline-block;
+						float: left;
+						cursor : initial;
+						&.roman{width: 30px;}
+						&.name{
+							width: calc(100% - 200px);
+							@media (max-width: 960px){ width: calc(100% - 30px); }
+						}
+						&.options{
+							width: 160px;
+							color: white;
+							margin-left: 10px;
+							@media (max-width: 960px){ display:none; }
+							span{
+								font-size: 20px;
+								float: none;
+								position: relative;
+								top: 4px;
+								margin-left: 20px;
+								cursor: pointer;
+								@include transition(all $transition);
+							}
+							a{
+								@extend .btn-transparent;
+								color: white;
+								border-color: white;
+								cursor: pointer;
+								@include transition(all $transition);
+								&:hover{color:white !important;}
+								
+							}
+						}
+					}
+					&:after{
+						content: "";
+						clear: both;
+						display: block;
+					}
+					&.selected{
+						background-color: $dark-blue;
+						color: white;
+					}
+				}
+			}
+		}			
+		div[options-mobile]{
+			position: fixed;
+			bottom: $margin;
+			right: $margin;
+			z-index: 21;
+			opacity: 0;
+			pointer-events: none;
+			@include transition(all $transition);
+			@media #{$gt-sm} { display: none; }
+			&.active{
+				opacity: 1;
+				pointer-events: all;
+			}
+			span{
+				display: block;
+				font-size: 20px;
+				color: white;
+				width: 40px;
+				height: 40px;
+				border-radius: 100%;
+				text-align: center;
+    			line-height: 40px;
+				float: right;
+			}
+			span.next{
+				background-color : $dark-blue;
+			}
+			span.select{
+				background-color : $green;
+				margin-right: $margin / 1.5;
+			}
+		}
+	}
+
+	.no-point{
+		pointer-events: none;
+	}
+}

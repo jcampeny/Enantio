@@ -4,6 +4,7 @@ import ngAria from 'angular-aria';
 import matchMedia from 'angular-media-queries';
 
 import { name as InputTag } from './inputTag/inputTag';
+import { name as InputTagProduct } from './inputTagProduct/inputTagProduct';
 
 import template from './navigationInputs.html';
 
@@ -88,7 +89,7 @@ class NavigationInputs {
 
 	resizeInputs () {
 		const marginLeft = 20;
-		const marginTop = (this.isMobile) ? 10 : 15;
+		const marginTop = (this.isMobile) ? 10 : 5;
 
 		const widthProducto   = $('[nav-option="'+'producto'+'"]').width() + marginLeft;
 		const widthImportador = $('[nav-option="'+'importador'+'"]').width() + marginLeft;
@@ -103,8 +104,8 @@ class NavigationInputs {
 		const offsetExportador = $('[nav-option="'+'exportador'+'"]').offset();
 
 		$('[input-select-options="'+'producto'+'"]').css({
-			'width': widthProducto, 
-			'left' : offsetProducto.left,
+			'width': (this.isMobile) ? '100%': (widthProducto * 3), 
+			'left' : (this.isMobile) ? '0' : offsetProducto.left,
 			'top' : offsetProducto.top + heightProducto
 		});
 
@@ -142,6 +143,7 @@ export default angular.module(name, [
 	angularMeteor,
 	ngAria,
 	InputTag,
+	InputTagProduct,
 	'matchMedia'
 ]).component(name, {
 	template,
@@ -149,9 +151,52 @@ export default angular.module(name, [
 	controller : NavigationInputs
 }).filter('capitalize', function() {
     return function(input) {
-      return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
+    	return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
+    }
+}).filter('insertPoints', function() {
+    return function(str, n = 2) {
+    	var ret = [];
+    	var i;
+    	var len;
+
+    	for(i = 0, len = str.length; i < len; i += n) {
+    	   ret.push(str.substr(i, n))
+    	}
+
+    	return ret.join('.') + '.';
+    }
+}).filter('romanize', function() {
+    return function(num) {
+    	if (!+num)
+    	    return false;
+    	var digits = String(+num).split(""),
+    	    key = ["","C","CC","CCC","CD","D","DC","DCC","DCCC","CM",
+    	           "","X","XX","XXX","XL","L","LX","LXX","LXXX","XC",
+    	           "","I","II","III","IV","V","VI","VII","VIII","IX"],
+    	    roman = "",
+    	    i = 3;
+    	while (i--)
+    	    roman = (key[+digits.pop() + (i * 10)] || "") + roman;
+    	return Array(+digits.join("") + 1).join("M") + roman;
     }
 }).config(config);
+
+
+
+
+function chunk(str, n) {
+    var ret = [];
+    var i;
+    var len;
+
+    for(i = 0, len = str.length; i < len; i += n) {
+       ret.push(str.substr(i, n))
+    }
+
+    return ret
+};
+
+
 
 function config ($ariaProvider) {
 	'ngInject';

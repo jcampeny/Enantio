@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Parties } from '../api/parties';
 import { Countries } from '../api/countries';
+import { Products } from '../api/products';
 
 Meteor.startup(() => {
   if (Parties.find().count() === 0) {

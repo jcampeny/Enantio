@@ -1,0 +1,193 @@
+input-tag-product {
+	div[input-container] {	
+		line-height: 15px;
+		text-align : left;
+		@media #{$gt-sm} {line-height: 20px;}
+		&.on-load-mobile{
+			@media (max-width: 960px){line-height: 30px;}
+		}
+		label{
+			display: block;
+			position: relative;
+			font-size: 14px;
+			top: 20px;
+			transform-origin: left top;
+			@include transform(scale(1));
+			@include transition(all $transition-angular);
+			&.product-selected { 
+				@extend label.activated; 
+			}
+			@media (max-width: 960px) { text-align: center; }
+		}
+		input{
+			border-color : transparent;
+			background-color: transparent;
+			color: $dark-blue;
+			&:focus{outline: none;}
+			&.expanded{
+				margin-top: 10px;
+			}
+		}	
+		div[product-tags] {
+			display: inline;
+			white-space: nowrap;
+			position: relative;
+
+			div[products-selected] {
+				display: inline-block;
+				color: $dark-blue;
+				padding: 2px 7px 0px 0px;
+				@media (max-width: 960px) { 
+					margin-top: 4px; 
+					padding: 2px 7px 0px 7px;
+				}
+				span.lnr{
+					position: relative;
+					top: 1px;
+					padding-left: 0px;
+				}
+				span.contracted-mobile {
+					position:absolute;
+					top:0;
+					max-width: 75%;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					display: inline-block;
+					@media (max-width: 960px) {
+						overflow: hidden;
+						max-width: 60%;
+						text-overflow: ellipsis;
+						display: inline-block;
+					}
+				}
+			}	
+			input.ajust-desktop{ 
+				position: relative;
+				left: -15px;
+				top: 2px;
+			}	
+			div[more-products] {
+				display: inline-block;
+				width: 22px; height: 22px;
+				border-radius: 100%;
+				background-color : $dark-blue;
+				color: white;
+				position: relative;
+				top: -1px;
+				left: 10px;
+				line-height: 23px;
+			}	
+			div[expanded]{
+				display: block;
+				margin-top: 10px;
+				span.lnr { float: right; }
+				span.contracted-mobile {
+					@media (max-width: 960px) {
+						overflow: hidden;
+						max-width: 50px;
+						text-overflow: ellipsis;
+						display: inline-block;
+					}
+				}
+			}		
+		}
+
+	}
+	div[input-select-options]{
+		position: absolute;
+		top : 120px;  
+		left : 15%;
+		opacity : 0;
+		height: 0%;
+		pointer-events: none;
+		@include transition(
+			width 0.2s ease-in 0.2s, 
+			left 0.2s ease-in 0.2s, 
+			opacity 0.2s ease-in 0s,
+			height 0.2s ease-in 0s);
+
+		@media #{$gt-sm} {
+			top: 80px;
+			&.importador{left : 34%;}
+			&.exportador{left : 53%;}		
+		}
+
+		div[product-item] {
+			padding: $margin;
+			background-color : $light-gray;
+			@include transition(all $transition);
+			@include box-shadow($shadow);
+			
+			&:after{
+				content: "";
+				display:block;
+				clear: both;
+			}
+			@media #{$gt-sm} {
+				&:hover {
+					background-color : $dark-blue;
+					color : white;
+				}
+			}
+
+			span{
+				display: block;
+			    float: left;
+			    &[code]{width: 80px;}
+			    &[name]{width: calc(100% - 80px);}
+			}
+		}
+
+		div.search-in-index{
+			padding: $margin;
+			background-color: white;
+			@include transition(all $transition);
+			@include box-shadow($shadow);
+			&:hover{
+				background-color : $dark-blue;
+				color : white;
+			}
+		}
+	}
+
+}
+
+div.active{
+	div[input-container]{
+		label{ 
+			@extend label.activated;
+			opacity : 1 !important;
+		}
+		input { border-bottom: 1px solid $light-gray; }		
+	}
+
+	div[input-select-options]{
+		position: absolute;
+		opacity : 1;
+		height: 300%;
+		pointer-events: all;
+		@include transition(
+			width 0s ease-in, 
+			left 0s ease-in, 
+			opacity 0.2s ease-in .4s,
+			height 0.2s ease-in 0s);
+	}
+
+	.contracted-mobile {
+		@media (max-width: 960px) {
+			max-width: 80px !important;
+
+		}
+	}
+
+}
+
+label.activated {
+	@include transform(scale(0.75));
+	top: 0px;
+	color : $gray;
+	text-align: left !important;
+	@media (max-width: 960px)  {
+		opacity : 0;
+	}
+}

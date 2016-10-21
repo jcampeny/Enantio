@@ -1,0 +1,32 @@
+<div input-container ng-class="{'on-load-mobile' : inputTagProduct.unSelected}">
+  <label ng-class="{'product-selected' : ((inputTagProduct.selected && inputTagProduct.selected.code) || inputTagProduct.searchText !== '')}">{{inputTagProduct.name | capitalize}}</label>
+  <!-- products selected tags-->
+  <div product-tags>
+  	  <!--expanded-->
+	  <div expanded products-selected="{{inputTagProduct.name}}" 
+	  	ng-if="inputTagProduct.expanded && inputTagProduct.selected && inputTagProduct.selected.code">
+	  		<span class="contracted-mobile" ng-if="inputTagProduct.searchText == ''">{{inputTagProduct.selected.code | insertPoints}} &nbsp;{{inputTagProduct.selected.name_es | capitalize}}</span>
+	  </div>
+	  <!-- not expanded -->
+	  <div products-selected="{{inputTagProduct.name}}" 
+	  	   ng-if="!inputTagProduct.expanded && inputTagProduct.selected && inputTagProduct.selected.code">
+	  			<span class="contracted-mobile" ng-if="inputTagProduct.searchText == ''">{{inputTagProduct.selected.code | insertPoints}} &nbsp;{{inputTagProduct.selected.name_es | capitalize}}</span>
+	  	</span>
+	  </div>
+	  <!-- Input to select products -->
+	  <input id="input-{{inputTagProduct.name}}" type="" name="" 
+	  		ng-class="{'ajust-desktop' : (inputTagProduct.selected && inputTagProduct.selected.code)}"
+	  		ng-model="inputTagProduct.searchText"> 	
+  </div>
+
+
+</div>
+<!-- product list -->
+<div input-select-options="{{inputTagProduct.name}}" ng-class="inputTagProduct.name" class="body-dark">
+  	<div ng-repeat="product in inputTagProduct.products" 
+       product-item="{{inputTagProduct.name}}" 
+       ng-click="inputTagProduct.selectProduct(product, $event)"
+       ng-if="!inputTagProduct.productAreSelected(product).found"><span code>{{product.code | insertPoints}}</span><span name>{{product.name_es | capitalize}}</span></div>
+	<div class="search-in-index" ng-click="inputTagProduct.toggleMenu($event)">Buscar en Índice</div>
+</div>
+<product-navigation flex="0" menu="product-navigation" parents="inputTagProduct.productsParent" get-children="inputTagProduct.getChildren(parent)"></product-navigation>
