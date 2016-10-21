@@ -1,8 +1,9 @@
-
 <div class="body-white no-point" nav-menu product-navigation ng-if="productNavigation.menu == 'product-navigation'">
   <ul>
     <li>Productos<span class="lnr lnr-cross" ng-click="productNavigation.closeMenu($event)"></span></li>
-    <li ng-repeat="parent in productNavigation.parents" ng-class="{'lazy-load' : productNavigation.lazyLoad}" parent>
+    <li ng-repeat="parent in productNavigation.parents" 
+        ng-class="{'lazy-load' : productNavigation.lazyLoad}" 
+        ng-click="productNavigation.preSelectParent(parent, $event)" parent="{{parent.codeParent}}">
       <span class="roman">{{parent.codeParent | romanize}}</span>
       <span class="name">{{parent.name_es | capitalize}}</span>
       <span class="options">
@@ -14,4 +15,8 @@
       <md-progress-circular md-diameter="30" md-mode="indeterminate"></md-progress-circular>
     </li>
   </ul>
+  <div options-mobile ng-if="productNavigation.menuState">
+    <span class="lnr lnr-indent-increase next"></span>
+    <span class="select"><img src="img/checkmark.png"></span>
+  </div>
 </div>

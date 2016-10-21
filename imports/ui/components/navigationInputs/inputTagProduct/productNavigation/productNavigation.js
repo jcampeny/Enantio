@@ -145,6 +145,24 @@ class ProductNavigation {
 			this.state.go('auth');
 		});
 	}
+
+	preSelectParent (parent, event){
+		this.stop(event);
+		const parentElement = $('[parent="'+parent.codeParent+'"]');
+		const optionsMobileElement = $('[options-mobile]');
+
+		if(this.isMobile){
+			$('[parent]').removeClass('selected');
+
+			if(!parentElement.hasClass('selected')){
+				parentElement.addClass('selected');
+				optionsMobileElement.addClass('active');
+			} else {
+				parentElement.removeClass('selected');
+				optionsMobileElement.removeClass('active');
+			}
+		}
+	}
 };
 
 const name = 'productNavigation';
