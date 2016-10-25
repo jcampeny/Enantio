@@ -19,6 +19,10 @@ input-tag {
 		input{
 			border-color : transparent;
 			background-color: transparent;
+			@media #{$gt-sm} {
+				position: relative;
+				left : -5px;
+			}
 			&:focus{outline: none;}
 			&.expanded{
 				margin-top: 10px;

@@ -27,10 +27,25 @@ class InputTagProduct {
 		this.helpers({
 			products(){
 				return Products.find({
-					"name_es" : {
-				    	$regex: new RegExp('^' + this.getReactively('searchText')),
-				    	$options : 'i'
-				  	}
+					$or: [
+						{
+							"name_es" : {
+						    	$regex: new RegExp('^' + this.getReactively('searchText')),
+						    	$options : 'i'
+						  	},
+						  	isParent: {
+						  		$exists: false
+						  	}
+						},{
+						  	"code" : {
+						      	$regex: new RegExp('^' + this.getReactively('searchText').split('.').join("")),
+						      	$options : 'i'
+						    },
+						   	isParent: {
+						   		$exists: false
+						   	}
+						}
+					]
 				}, {limit : this.limit});
 			},
 			productsParent (){
