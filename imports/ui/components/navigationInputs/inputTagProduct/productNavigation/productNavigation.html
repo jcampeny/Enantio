@@ -1,25 +1,44 @@
-<div class="body-white no-point" nav-menu product-navigation ng-if="productNavigation.menu == 'product-navigation'">
+<div class="body-white no-point" nav-menu product-navigation ng-if="productNavigation.menu == 'product-navigation'" ng-click="productNavigation.stop($event);">
   <ul>
-    <li>Productos<span class="lnr lnr-cross" ng-click="productNavigation.closeMenu($event)"></span></li>
+    <li>Productos
+      <span class="lnr lnr-cross" ng-click="productNavigation.closeMenu($event)"></span>
+      <span class="lnr lnr-arrow-left" ng-if="productNavigation.levelChildrens > 0" ng-click="productNavigation.goBack($event)"></span>
+    </li>
+
+    <!-- Parent products -->
     <li ng-repeat="parent in productNavigation.parents" 
         ng-class="{'lazy-load' : productNavigation.lazyLoad}" 
-        ng-click="productNavigation.preSelectParent(parent, $event)" parent="{{parent.codeParent}}">
+        ng-click="productNavigation.preSelectParent(parent, $event)" 
+        parent="{{parent.codeParent}}">
       <span class="roman">{{parent.codeParent | romanize}}</span>
       <span class="name">{{parent.name_es | capitalize}}</span>
       <span class="options">
-        <a>Usar producto</a>
+        <!-- <a>Usar producto</a>  -->
         <span class="lnr lnr-indent-increase" ng-click="productNavigation.selectParent(parent)"></span>
       </span>
     </li>
 
-<!--todo-->
-    <li ng-repeat="children in productNavigation.childrens" style="color:black;">{{children.name_es}}</li>
+    <!-- Children Products -->
+    <li ng-repeat="children in productNavigation.childrens" 
+        ng-click="productNavigation.preSelectParent(children, $event)" 
+        children="children.code"
+        children-level="{{children.level}}">
+      <span class="roman">{{children.code | insertPoints}}</span>
+      <span class="name">{{children.name_es | capitalize}}</span>
+      <span class="options">
+        <a>Usar producto</a>
+        <!-- todo select children -->
+        <span class="lnr lnr-indent-increase" ng-click="productNavigation.selectParent(parent)"></span>
+      </span>
+    </li>
 
-
+    <!-- lazy loading -->
     <li class="loading" ng-class="{'loaded' : (productNavigation.parents.length > 0)}">
       <md-progress-circular md-diameter="30" md-mode="indeterminate"></md-progress-circular>
     </li>
   </ul>
+
+  <!-- Float options -->
   <div options-mobile ng-if="productNavigation.menuState">
     <span class="lnr lnr-indent-increase next" ng-click="productNavigation.selectParent()"></span>
     <span class="select" ng-click="productNavigation.submit($event)"><img src="img/checkmark.png"></span>

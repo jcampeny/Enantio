@@ -62,14 +62,31 @@ product-navigation {
 						font-size: 20px;
 						float: right;
 						cursor: pointer;
+						&.lnr-arrow-left{
+							margin-right: $margin;
+						}
 					}
 				}
 				&:last-child{
 					border-bottom: 0px solid transparent;
 				}
+				&.product-transition{
+					@include transition(
+						opacity $transition,
+						transform $transition);
+				}
 				&.lazy-load{
 					opacity: 1;
 					@include transform(matrix(1, 0, 0, 1, 0, 0));
+				}
+				&.to-hide{
+					opacity : 0 !important;
+					@include transform(matrix(1, 0, 0, 1, -40, 0));
+				}
+				&.to-hide-reverse{
+					opacity : 0 !important;
+					@include transform(matrix(1, 0, 0, 1, 40, 0));
+					@extend .product-transition;
 				}
 				&.loading{
 					&.loaded{display: none;}
@@ -78,6 +95,21 @@ product-navigation {
 					}
 				}
 				&[parent]{
+					span{
+						cursor: pointer !important;
+					}
+					span.options{
+						span.lnr{
+							margin-right: $margin !important;
+							float: right !important;
+						}
+					}
+				}
+				&[children]{
+					cursor : initial;
+				}
+				&[parent], &[children]{
+
 					span{
 						display:inline-block;
 						float: left;
@@ -97,7 +129,7 @@ product-navigation {
 								float: none;
 								position: relative;
 								top: 4px;
-								margin-left: 20px;
+								margin-left: 15px;
 								cursor: pointer;
 								@include transition(all $transition);
 							}

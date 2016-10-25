@@ -54,10 +54,10 @@ class InputTagProduct {
 				});
 			},
 			productsByParent (){
-				if(this.getReactively('parentSelected.childrens')){
+				if(this.getReactively('parentSelected.childrens', true)){
 					return Products.find({
 						code : {
-							$in : this.getReactively('parentSelected.childrens')
+							$in : this.getReactively('parentSelected.childrens', true)
 						}
 					});
 				} else {

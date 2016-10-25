@@ -19,7 +19,7 @@ class ProductNavigation {
 		this.timeout = $timeout;
 		this.lazyLoad = true; //animar correctamente cuando se cargan tarde
 		this.menuState = false;
-
+		this.levelChildrens = 0;
 		this.parentSelected = {};
 
 		
@@ -154,6 +154,8 @@ class ProductNavigation {
 				parentElement.addClass('selected');
 				optionsMobileElement.addClass('active');
 			}
+		} else {
+			this.selectParent(parent);
 		}
 	}
 
@@ -161,9 +163,14 @@ class ProductNavigation {
 		if(parent.codeParent){
 			this.getChildren({
 				parent : parent
-			});			
+			});	
+			this.levelChildrens = 2;
+			this.animateTransitionBetweenLevelProduct(0, 2);
 		} else {
 			//isChildren
+			this.levelChildrens = (this.levelChildrens < 6) ? this.levelChildrens + 2 : 6;
+			//getChildren
+
 		}
 	}
 
@@ -171,6 +178,66 @@ class ProductNavigation {
 		if(parent)
 			this.closeMenu(event);
 
+	}
+
+	goBack(event){
+		this.stop(event);
+		if(this.levelChildrens > 0){
+			this.animateTransitionBetweenLevelProduct(this.levelChildrens, this.levelChildrens -2);
+			this.levelChildrens -= 2;
+		} else {
+			//error handler
+		}
+	}
+
+	//Animation methods
+	animateTransitionBetweenLevelProduct(fromLevel = this.levelChildrens-2, toLevel = this.levelChildrens){
+		//from parent to firs children
+		const parentElement = $('[parent]');
+		var childrenElement = $('[children-level="'+this.levelChildrens+'"]');
+
+		if (fromLevel == 0 && toLevel == 2){
+			// Hide Parent
+			parentElement.addClass('product-transition to-hide');
+
+			this.timeout(() => { 
+				parentElement.css({'display' : 'none'}); 
+
+				// Show Children
+				this.animateChildrenOnDBReturn($('[children-level="'+this.levelChildrens+'"]'));
+			},400);
+		}
+
+//REVERSEEEE
+		//from first children to parent
+		if (fromLevel == 2 && toLevel == 0){
+			this.animateChildrenOnDBReturn(childrenElement, true);
+
+			this.timeout(() => { 
+				parentElement.css({'display' : 'block'});
+				parentElement.removeClass('to-hide');
+			},400);
+
+		}
+	}
+
+	animateChildrenOnDBReturn (childrenElement, reverse = false){
+		// Si los Children llegan tarde no hay elementos a animar
+		// Y va checkeando los elementos li para iniciar la animación cuando lleguen
+		if(childrenElement && childrenElement.length > 0){
+			if(reverse){ //going back
+				childrenElement.removeClass('lazy-load');
+				this.timeout(() => { 
+					childrenElement.css({'display' : 'none'});
+				},400);
+			} else { //moving forward
+				childrenElement.css({'display' : 'block'});
+				childrenElement.addClass('product-transition lazy-load');
+			}
+		} else { //recursive 
+			childrenElement = $('[children-level="'+this.levelChildrens+'"]');
+			this.animateChildrenOnDBReturn(childrenElement, reverse);
+		}
 	}
 };
 
