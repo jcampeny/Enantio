@@ -41,6 +41,8 @@
   <!-- Float options -->
   <div options-mobile ng-if="productNavigation.menuState">
     <span class="lnr lnr-indent-increase next" ng-click="productNavigation.selectParent()"></span>
-    <span class="select" ng-click="productNavigation.submit($event)"><img src="img/checkmark.png"></span>
+    <span class="select" 
+      ng-click="productNavigation.submit($event)"
+      ng-if="productNavigation.levelChildrens > 0"><img src="img/checkmark.png"></span>
   </div>
 </div>
