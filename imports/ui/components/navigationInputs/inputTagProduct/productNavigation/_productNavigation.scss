@@ -77,15 +77,15 @@ product-navigation {
 				}
 				&.lazy-load{
 					opacity: 1;
-					@include transform(matrix(1, 0, 0, 1, 0, 0));
+					@include transform(matrix(1, 0, 0, 1, 0, 0) !important);
 				}
 				&.to-hide{
 					opacity : 0 !important;
-					@include transform(matrix(1, 0, 0, 1, -40, 0));
+					@include transform(matrix(1, 0, 0, 1, -40, 0) !important);
 				}
 				&.to-hide-reverse{
 					opacity : 0 !important;
-					@include transform(matrix(1, 0, 0, 1, 40, 0));
+					@include transform(matrix(1, 0, 0, 1, 40, 0) !important);
 					@extend .product-transition;
 				}
 				&.loading{
@@ -104,9 +104,6 @@ product-navigation {
 							float: right !important;
 						}
 					}
-				}
-				&[children]{
-					cursor : initial;
 				}
 				&[parent], &[children]{
 
@@ -152,6 +149,31 @@ product-navigation {
 					&.selected{
 						background-color: $dark-blue;
 						color: white;
+					}
+				}
+				&[children]{
+					cursor : initial;
+				}
+				&[children-level="4"]{
+					span{
+						&.roman{width: 60px;}
+						&.name{
+							width: calc(100% - 240px);
+							@media (max-width: 960px){ width: calc(100% - 30px); }
+						}
+					}
+				}
+				&[children-level="6"]{
+					span{
+						&.roman{width: 100px;}
+						&.name{
+							width: calc(100% - 270px);
+							@media (max-width: 960px){ width: calc(100% - 30px); }
+						}
+						&.options{
+							span{ display: none !important;}
+							a{ float: right;}
+						}
 					}
 				}
 			}

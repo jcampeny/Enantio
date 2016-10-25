@@ -61,7 +61,12 @@ class InputTagProduct {
 						}
 					});
 				} else {
-					return null;
+					return Products.find({
+						"code" : {
+						   	$regex: new RegExp('^' + this.getReactively('parentSelected.code')),
+						   	$options : 'i'
+						}
+					}, {skip : 1});
 				}
 
 			}
