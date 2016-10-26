@@ -1,0 +1,114 @@
+zoom-controller{
+	.zoom-mobile{
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+		opacity: 1;
+		pointer-events: all;
+		@include transition(opacity $transition 0.3s);
+		@media #{$gt-sm} {
+			display: none;
+		}
+		div{
+			width: 40px;
+			height: 40px;
+			border-radius: 100%;
+			background-color: $gray;
+			margin: 10px 5px 5px 5px;
+			color: white;
+			text-align: center;
+			border: none;
+			@include box-shadow($shadow-dataviz);
+		}
+		div[zoom]{
+			float: left;
+		}
+		div[zoom="in"]:after{
+			content:'+';
+			font-size: 30px;
+			line-height: 130%;
+		}
+		div[zoom="out"]:after{
+			content: '—';
+			font-size: 20px;
+			line-height: 180%;
+		}
+		div[lasso]{
+			float: right;
+			img{ margin-top: 10px;}
+		}
+	}
+	.zoom-desktop{
+		display:none;
+		@media #{$gt-sm} {
+			display: block;
+			position: absolute;
+			bottom: $margin;
+			left: 20px;
+			z-index: 1;
+			opacity: 1;
+			@include box-shadow($shadow);
+			@include transition(all $transition);
+			div{
+				float: left;
+				display: block;
+				width: 33px;
+				height: 33px;
+				background-color: $light-gray;
+				border: none;
+				color: $dark-gray;
+				cursor: pointer;
+				text-align: center;
+				@include transition(
+					background-color $transition,
+					color $transition
+				);
+				&:hover{
+					background-color: $dark-blue;
+					color: white;
+				}
+			}
+			div[zoom="in"]:after,
+			div[zoom="out"]:after{
+				line-height: 33px;
+			}
+			div[zoom="in"]:after{
+				content:'+';
+				font-size: 20px;
+			}
+			div[zoom="out"]:after{
+				content: '—';
+				font-size: 15px;
+			}
+			div[lasso]{
+				background-image: url('/img/lasso-desktop.png');
+				background-repeat: no-repeat;
+				background-position: center;
+				&:hover{
+					background-size: 45%;
+					background-image: url('/img/lasso.png');
+				}
+			}
+		}
+	}
+
+}
+
+.locked-area{
+	.zoom-mobile{
+		opacity: 0;
+		pointer-events: none;
+		@include transition(opacity $transition);
+	}
+	.zoom-desktop{
+	    bottom: 10px;
+	    opacity: 0;
+	    pointer-events: none;
+	}
+}
+
+
+
+
+
+

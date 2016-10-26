@@ -74,7 +74,7 @@ class NavigationInputs {
 	}
 
 	contractHeader (name, event) {
-		const height = (this.isMobile) ? 120 : 80;
+		const height = ($(window).width() < 960) ? 120 : 80;
 
 		$('header').css({
 			'height' : height + 'px'

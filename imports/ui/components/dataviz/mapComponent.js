@@ -39,22 +39,20 @@ class MapComponent
       });     
     });
 
-    this.root.$on('refreshMap', (event, data) => {
-      if(data.mapType.toLowerCase() == this.type) {
-        this.refreshMap();
-      }
-    });
-
-    this.root.$on('toggleLock', (event, data) => {
-      if(data.mapType.toLowerCase() == this.type) {
-        if(data.toLock){
-          this.element.addClass('locked-area');
-        } else {
-          this.element.removeClass('locked-area');
-        }
-      }
-    });
+    this.handleRootEvents();
 	}
+
+  zoomIn(){
+    console.log('zoom in');
+  }
+
+  zoomOut(){
+    console.log('zoom out');
+  }
+
+  triggerLaso(){
+    console.log('active lasso');
+  }
 
   refreshMap(){
     this.width      = this.element.width();
@@ -242,6 +240,42 @@ class MapComponent
 
     //set handle function to this.svg element
     this.svg.call(zoom);
+  }
+
+  handleRootEvents (){
+    //on refresh
+    this.root.$on('refreshMap', (event, data) => {
+      if(data.mapType.toLowerCase() == this.type) {
+        this.refreshMap();
+      }
+    });
+
+    //on toggle lock
+    this.root.$on('toggleLock', (event, data) => {
+      if(data.mapType.toLowerCase() == this.type) {
+        if(data.toLock){
+          this.element.addClass('locked-area');
+        } else {
+          this.element.removeClass('locked-area');
+        }
+      }
+    });
+
+    this.root.$on('zoom', (event, data) => {
+      if (data.watching == this.type){
+        if (data.direction == 'in') {
+          this.zoomIn();
+        } else {
+          this.zoomOut();
+        }        
+      }
+    });
+
+    this.root.$on('lasso', (event, data) => {
+      if (data.watching == this.type){
+        this.triggerLaso();      
+      }
+    });
   }
 }
 

@@ -73,9 +73,12 @@ class InputTagProduct {
 		});
 
 		$('html').click((event) =>{
-			this.searchText = '';
-			this.contractHeader(event);
-			$scope.$apply();
+			if(this.expanded){
+				this.searchText = '';
+				this.contractHeader(event);
+				$scope.$apply();				
+			}
+
 		});
 
 		//input bug (Mueve el input de la pantalla cuando se ahce focus, lo comentamos si tienes que tocarlo)

@@ -47,9 +47,9 @@ viz-header{
 					div{
 						position: absolute;
 						background-color: white;
-						width: 4px;
+						width: 2px;
 						height: 10px;
-						top: 3px; left: 12px;
+						top: 4px; left: 13px;
 						@media #{$gt-sm} { top: 10px; left: 15px;}
 						@include transition(all $transition);
 					}

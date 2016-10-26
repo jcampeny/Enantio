@@ -22,7 +22,7 @@ resume {
 				@media #{$gt-sm} {
 					height: 45px;
 				}*/
-				fecha, importadores, exportadores, codigo, precios{padding-top: 0%;}
+				fecha, importadores, exportadores, codigo, precios{padding-top: calc(0% + 0px) !important;}
 			}
 
 			/********************************
@@ -38,15 +38,29 @@ resume {
 				@include transition(all $transition);
 			}
 			fecha {background-image : url(/img/Barras-mobile.png); padding-top: 59%;}
-			//importadores {background-image : url(/img/Importadores.png); padding-top: 60%;}
-			importadores {background-image : none; padding-top: 60%;}
-			exportadores {background-image : url(/img/Exportadores.png); padding-top: 60%;}
-			exportadores {background-image : none; padding-top: 60%;}
 			codigo {background-image : url(/img/Treemap-mobile.png); padding-top: 170%;}
 
 			@media #{$gt-sm} {
 				fecha {background-image : url(/img/Barras.png); padding-top: 20%;}
 				codigo {background-image : url(/img/Treemap.png); padding-top: 20%;}
+			}
+
+			/********************************
+					END PROTOTYPE
+			********************************/
+			importadores, exportadores{
+				background-image : none; 
+				padding-top: calc(60% + 50px);
+				
+				@include transition(padding $transition);
+				@media #{$gt-sm} {
+					padding-top: calc(60% + 0px);
+				}
+
+				&.locked-area{
+					@include transition(padding $transition 0.3s);
+					padding-top: calc(60% + 0px);
+				}
 			}
 		}
 

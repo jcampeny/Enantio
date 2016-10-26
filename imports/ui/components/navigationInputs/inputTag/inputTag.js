@@ -32,9 +32,12 @@ class InputTag {
 		});
 
 		$('html').click((event) =>{
-			this.searchText = '';
-			this.contractHeader(event);
-			$scope.$apply();
+			if(this.expanded){
+				this.searchText = '';
+				this.contractHeader(event);
+				$scope.$apply();
+			}
+
 		});
 
 		this.catchRootEvents();

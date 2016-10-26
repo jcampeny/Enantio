@@ -3,6 +3,7 @@ import angularMeteor from 'angular-meteor';
 
 import { Meteor } from 'meteor/meteor';
 import {name as MapComponent} from '../mapComponent';
+import { name as ZoomController } from '../zoomController/zoomController'
 
 import template from './importadores.html';
 
@@ -18,7 +19,8 @@ const name = 'importadores';
 
 export default angular.module(name, [
 	angularMeteor,
-	MapComponent
+	MapComponent,
+	ZoomController
 ]).component(name, {
 	template,
 	controllerAs : name,
