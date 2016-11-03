@@ -22,27 +22,27 @@ resume {
 				@media #{$gt-sm} {
 					height: 45px;
 				}*/
-				fecha, importadores, exportadores, codigo, precios{padding-top: calc(0% + 0px) !important;}
+				vbars, importadores, exportadores, treemap, precios{padding-top: calc(0% + 0px) !important;}
 			}
 
 			/********************************
 					FOR PROTOTYPE
 			********************************/
-			fecha, importadores, exportadores, codigo, precios{
+			vbars, importadores, exportadores, treemap, precios{
 				display : block;
 				overflow: hidden;
 				background-size: contain;
 				background-repeat: no-repeat;
 				background-position: center;
-				background-image : url(/img/Barras.png);
+				// background-image : url(/img/Barras.png);
 				@include transition(all $transition);
 			}
-			fecha {background-image : url(/img/Barras-mobile.png); padding-top: 59%;}
-			codigo {background-image : url(/img/Treemap-mobile.png); padding-top: 170%;}
+			vbars {padding-top: 59%;overflow:visible;}
+			treemap {padding-top: 170%;overflow:visible;}
 
 			@media #{$gt-sm} {
-				fecha {background-image : url(/img/Barras.png); padding-top: 20%;}
-				codigo {background-image : url(/img/Treemap.png); padding-top: 20%;}
+				vbars {padding-top: 20%;}
+				treemap {padding-top: 20%;margin: 30px;}
 			}
 
 			/********************************

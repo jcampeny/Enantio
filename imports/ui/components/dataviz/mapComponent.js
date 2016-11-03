@@ -27,16 +27,16 @@ class MapComponent
     this.setupMap(this.width, this.width*0.6);
 
     this.loadData(this.type).then(()=>{
-    this.renderMap(this.type, this.width); 
+      this.renderMap(this.type, this.width); 
 
-    this.renderTimeout;
+      this.renderTimeout;
 
-    $scope.$watch(
-      ()=>this.element.width() + this.element.height(), 
-      ()=>{
-        $timeout.cancel(this.renderTimeout);
-        this.renderTimeout = $timeout(() => { this.refreshMap(); },400);
-      });     
+      $scope.$watch(
+        ()=>this.element.width() + this.element.height(), 
+        ()=>{
+          $timeout.cancel(this.renderTimeout);
+          this.renderTimeout = $timeout(() => { this.refreshMap(); },400);
+        });     
     });
 
     this.handleRootEvents();

@@ -1,0 +1,41 @@
+vbars {
+	position: relative;
+	svg{
+	    position: absolute;
+	    top: 0;
+	    left: 0;
+	}
+
+	path{
+		&.domain{
+			stroke: none;
+		}
+	}
+
+	.tick{
+		line{
+			display:none;
+		}
+		text{
+			fill:$dark-gray;
+			font-size:9px;
+		}
+	}
+
+	.bar{
+		fill: $viz-green;
+		@include opacity(0.6);
+	}
+	.tick-lines{
+		.tick-line{
+			shape-rendering : crispEdges;
+			@include opacity(0.2);
+		}
+	}
+
+	#mapTooltip{
+		&.show {
+			@include transform(translate(0,-20px));
+		}
+	}
+}

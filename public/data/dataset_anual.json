@@ -1,0 +1,16 @@
+{"dataset":[
+	{"yr":2002,"rgCode":1,"rgDesc":"Import","rtCode":0,"rtTitle":"World","rt3ISO":"WLD","ptCode":0,"ptTitle":"World","pt3ISO":"WLD","ptCode2":null,"TradeValue":39474593764},
+	{"yr":2003,"rgCode":1,"rgDesc":"Import","rtCode":0,"rtTitle":"World","rt3ISO":"WLD","ptCode":0,"ptTitle":"World","pt3ISO":"WLD","ptCode2":null,"TradeValue":39485543286},
+	{"yr":2004,"rgCode":1,"rgDesc":"Import","rtCode":0,"rtTitle":"World","rt3ISO":"WLD","ptCode":0,"ptTitle":"World","pt3ISO":"WLD","ptCode2":null,"TradeValue":54321975216},
+	{"yr":2005,"rgCode":1,"rgDesc":"Import","rtCode":0,"rtTitle":"World","rt3ISO":"WLD","ptCode":0,"ptTitle":"World","pt3ISO":"WLD","ptCode2":null,"TradeValue":61939019586},
+	{"yr":2006,"rgCode":1,"rgDesc":"Import","rtCode":0,"rtTitle":"World","rt3ISO":"WLD","ptCode":0,"ptTitle":"World","pt3ISO":"WLD","ptCode2":null,"TradeValue":71934198576},
+	{"yr":2007,"rgCode":1,"rgDesc":"Import","rtCode":0,"rtTitle":"World","rt3ISO":"WLD","ptCode":0,"ptTitle":"World","pt3ISO":"WLD","ptCode2":null,"TradeValue":32961123856},
+	{"yr":2008,"rgCode":1,"rgDesc":"Import","rtCode":0,"rtTitle":"World","rt3ISO":"WLD","ptCode":0,"ptTitle":"World","pt3ISO":"WLD","ptCode2":null,"TradeValue":30684969336},
+	{"yr":2009,"rgCode":1,"rgDesc":"Import","rtCode":0,"rtTitle":"World","rt3ISO":"WLD","ptCode":0,"ptTitle":"World","pt3ISO":"WLD","ptCode2":null,"TradeValue":61096654126},
+	{"yr":2010,"rgCode":1,"rgDesc":"Import","rtCode":0,"rtTitle":"World","rt3ISO":"WLD","ptCode":0,"ptTitle":"World","pt3ISO":"WLD","ptCode2":null,"TradeValue":49684654236},
+	{"yr":2011,"rgCode":1,"rgDesc":"Import","rtCode":0,"rtTitle":"World","rt3ISO":"WLD","ptCode":0,"ptTitle":"World","pt3ISO":"WLD","ptCode2":null,"TradeValue":39583654226},
+	{"yr":2012,"rgCode":1,"rgDesc":"Import","rtCode":0,"rtTitle":"World","rt3ISO":"WLD","ptCode":0,"ptTitle":"World","pt3ISO":"WLD","ptCode2":null,"TradeValue":61239632416},
+	{"yr":2013,"rgCode":1,"rgDesc":"Import","rtCode":0,"rtTitle":"World","rt3ISO":"WLD","ptCode":0,"ptTitle":"World","pt3ISO":"WLD","ptCode2":null,"TradeValue":71968593906},
+	{"yr":2014,"rgCode":1,"rgDesc":"Import","rtCode":0,"rtTitle":"World","rt3ISO":"WLD","ptCode":0,"ptTitle":"World","pt3ISO":"WLD","ptCode2":null,"TradeValue":81964702396},
+	{"yr":2015,"rgCode":1,"rgDesc":"Import","rtCode":0,"rtTitle":"World","rt3ISO":"WLD","ptCode":0,"ptTitle":"World","pt3ISO":"WLD","ptCode2":null,"TradeValue":46833640906}
+]}

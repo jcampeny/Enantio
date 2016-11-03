@@ -1,0 +1,61 @@
+treemap {
+	position: relative;
+	svg{
+	    position: absolute;
+	    top: 0;
+	    left: 0;
+	}
+
+	#mapTooltip{
+		&.show {
+			@include transform(translate(0,0) !important);
+		}
+	}
+
+	.node {
+	  box-sizing: border-box;
+	  line-height: 1em;
+	  overflow: hidden;
+	  position: absolute;
+	  white-space: pre;
+	  background: #ddd;
+
+	  &.color-0{background-color: #CFD665;}
+	  &.color-1{background-color: #94B376;}
+	  &.color-2{background-color: #567D67;}
+	  &.color-3{background-color: #52C1B2;}
+	  &.color-4{background-color: #6498AE;}
+	  &.color-5{background-color: #5A637B;}
+	  &.color-6{background-color: #9D656F;}
+	  &.color-7{background-color: #DD5C58;}
+	  &.color-8{background-color: #FFAD46;}
+	  &.color-9{background-color: #FECC4F;}
+
+	  &.subcolor-0{@include opacity(1);}
+	  &.subcolor-1{@include opacity(0.97);}
+	  &.subcolor-2{@include opacity(0.94);}
+	  &.subcolor-3{@include opacity(0.91);}
+	  &.subcolor-4{@include opacity(0.88);}
+	  &.subcolor-5{@include opacity(0.85);}
+	  &.subcolor-6{@include opacity(0.82);}
+	  &.subcolor-7{@include opacity(0.79);}
+	  &.subcolor-8{@include opacity(0.76);}
+	  &.subcolor-9{@include opacity(0.73);}
+	  
+	}
+
+	.node-label,
+	.node-value {
+	  margin: 4px;
+	  font-size: 14px;
+	  color: #ffffff;
+	  overflow: hidden;
+	  text-overflow: ellipsis;
+	}
+
+	.node-value {
+		font-size:12px;
+	  	margin-top: -2px;
+	}
+
+}

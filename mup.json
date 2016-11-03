@@ -12,7 +12,7 @@
       //"sshOptions": { "port" : 49154 },
       // server specific environment variables
       "env": {},
-      "pem": "/Applications/MAMP/htdocs/enantio/meteor-enantio.pem"
+      "pem": "/Users/cristiam/webapps/enantio/meteor-enantio.pem"
     }
   ],
 
@@ -25,7 +25,7 @@
   // Location of app (local directory). This can reference '~' as the users home directory.
   // i.e., "app": "~/Meteor/my-app",
   // This is the same as the line below.
-  "app": "/Applications/MAMP/htdocs/enantio",
+  "app": "/Users/cristiam/webapps/enantio",
 
   // Configure environment
   // ROOT_URL must be set to your correct domain (https or http)

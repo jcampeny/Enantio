@@ -6,6 +6,8 @@ import template from './resume.html';
 import { name as VizHeader } from './vizHeader/vizHeader';
 import { name as Importadores } from '../dataviz/importadores/importadores';
 import { name as Exportadores } from '../dataviz/exportadores/exportadores';
+import { name as VBars } from '../dataviz/vbars/vbars';
+import { name as Treemap } from '../dataviz/treemap/treemap';
 
 
 class Resume {
@@ -62,7 +64,9 @@ export default angular.module(name, [
 	angularMeteor,
 	VizHeader,
 	Importadores,
-	Exportadores
+	Exportadores,
+	VBars,
+	Treemap
 ]).component(name, {
 	template,
 	controllerAs : name,
