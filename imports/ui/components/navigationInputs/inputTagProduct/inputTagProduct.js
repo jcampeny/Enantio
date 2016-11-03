@@ -108,6 +108,12 @@ class InputTagProduct {
 		this.selected.splice(index,1);
 	}
 
+
+	resetProduct (event){
+		event.stopPropagation();
+		this.selected = null;
+	}
+
 	productAreSelected (product) {
 		var found = false;
 		var index = null;
