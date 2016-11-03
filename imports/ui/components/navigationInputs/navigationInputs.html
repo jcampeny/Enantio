@@ -1,4 +1,4 @@
-<section ng-class="{ 'active' : navigationInputs.sectionSelected}" slide-move>
+<section ng-class="{ 'active' : navigationInputs.sectionSelected, 'expanded': navigationInputs.expanded}" slide-move>
 	<div ng-click="navigationInputs.onSectionSelected('producto', $event)" 
 		 ng-class="{ 'active' : (navigationInputs.sectionSelected == 'producto')}" nav-option="producto">
 		 <input-tag-product name="producto" selected="navigationInputs.producto" ></input-tag-product>

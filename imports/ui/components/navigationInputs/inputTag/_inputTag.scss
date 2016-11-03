@@ -74,6 +74,17 @@ input-tag {
 						display: inline-block;
 					}
 				}
+				@media #{$gt-sm} {
+				    max-width: 75%;
+				    span.contracted-mobile{
+				    	display: inline-block;
+				    	overflow: hidden;
+				    	text-overflow: ellipsis;
+				    	width: calc(100% - 20px);
+				    	height: 16px;				    	
+				    }
+
+				}
 			}		
 		}
 
@@ -137,7 +148,7 @@ div.active{
 
 	.contracted-mobile {
 		@media (max-width: 960px) {
-			max-width: 80px !important;
+			max-width: 100px !important;
 
 		}
 	}

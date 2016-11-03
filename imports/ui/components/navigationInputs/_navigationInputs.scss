@@ -16,7 +16,9 @@ navigation-inputs{
 					padding-left: $margin;
 				}				
 			}
-
+		}
+		&.expanded {
+			overflow-y: scroll;
 		}
 		div[nav-option]{
 			height: 100%;

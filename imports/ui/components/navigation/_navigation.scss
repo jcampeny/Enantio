@@ -7,9 +7,11 @@ navigation{
 		border-bottom: 1px solid $light-gray;
 		background-color: white;
 		z-index: 20;
+		max-height: 150px;
 		@include transition(all $transition);
 		@media #{$gt-sm} {
 			height: 80px;
+			max-height: 150px;
 			@include box-shadow($shadow);
 		}
 		[navigation-logo] {

@@ -39,6 +39,7 @@ class NavigationInputs {
 		this.importador = [];
 		this.exportador = [];
 
+		this.expanded = false;
 		this.catchRootEvents();	
 	}
 
@@ -60,9 +61,8 @@ class NavigationInputs {
 	expandHeader (name, event) {
 		const height = 80 + (this[name].length * 30) + 10;
 
-		$('header').css({
-			'height' : height + 'px'
-		});
+		$('header').css({ 'height' : height + 'px'});
+		$('[nav-option]').css({'height' : height + 'px'});
 
 		this.onSectionSelected('', event);
 
@@ -70,20 +70,20 @@ class NavigationInputs {
 
 		this.timeout(() => {this.resizeInputs();}, 400);
 
+		this.expanded = true;
 		this.root.$broadcast('expandedHeader', { name : name });
 	}
 
 	contractHeader (name, event) {
 		const height = ($(window).width() < 960) ? 120 : 80;
 
-		$('header').css({
-			'height' : height + 'px'
-		});
-
-
+		$('header').css({ 'height' : height + 'px'});
+		$('[nav-option]').css({'height' : ''});
+		
 		this.onSectionSelected('', event);
 		this.timeout(() => {this.resizeInputs();}, 400);
 
+		this.expanded = false;
 		this.root.$broadcast('contractedHeader', { name : name });
 	}
 
@@ -95,9 +95,7 @@ class NavigationInputs {
 		const widthImportador = $('[nav-option="'+'importador'+'"]').width() + marginLeft;
 		const widthExportador = $('[nav-option="'+'exportador'+'"]').width() + marginLeft;
 
-		const heightProducto   = $('[nav-option="'+'producto'+'"]').height() + marginTop;
-		const heightImportador = $('[nav-option="'+'importador'+'"]').height() + marginTop;
-		const heightExportador = $('[nav-option="'+'exportador'+'"]').height() + marginTop;
+		const headerHeight   = $('header').height();
 
 		const offsetProducto = $('[nav-option="'+'producto'+'"]').offset();
 		const offsetImportador = $('[nav-option="'+'importador'+'"]').offset();
@@ -106,19 +104,19 @@ class NavigationInputs {
 		$('[input-select-options="'+'producto'+'"]').css({
 			'width': (this.isMobile) ? '100%': (widthProducto * 3), 
 			'left' : (this.isMobile) ? '0' : offsetProducto.left,
-			'top' : offsetProducto.top + heightProducto
+			'top' : headerHeight
 		});
 
 		$('[input-select-options="'+'importador'+'"]').css({
 			'width': widthImportador, 
 			'left' : offsetImportador.left,
-			'top' : offsetImportador.top + heightImportador
+			'top' : headerHeight
 		});
 
 		$('[input-select-options="'+'exportador'+'"]').css({
 			'width': widthExportador, 
 			'left' : offsetExportador.left,
-			'top' : offsetExportador.top + heightExportador
+			'top' : headerHeight
 		});
 	}
 
