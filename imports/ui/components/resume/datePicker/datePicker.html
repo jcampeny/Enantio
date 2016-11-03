@@ -1,0 +1,40 @@
+
+<div class="resume-dates" ng-click="datePicker.openDatePicker($event)">
+  <span start>{{datePicker.selectedDate.start}}</span> - 
+  <span end>{{datePicker.selectedDate.end}}</span>
+  <span class="lnr lnr-calendar-full"></span>
+</div> 
+
+<div class="date-picker" ng-class="{'open': datePicker.isDatePickerOpen}" ng-click="datePicker.stop($event)">
+  <div class="temporal-period">
+    <span>Periodo: </span>
+    <span start> {{datePicker.temporalDate.start}}</span> - 
+    <span end>{{datePicker.temporalDate.end}}</span>
+  </div>
+  <div class="calendar-from">
+    <h4>Desde</h4>
+    <div calendar="from"> 
+      <span ng-repeat="fromDate in datePicker.datePanel.from">
+        <span ng-if="$first" ng-click="datePicker.datePanel.changeFrom(true)" class="lnr lnr-chevron-left"></span>
+        <span ng-class="{'selected' : datePicker.isSelected('start', fromDate)}"
+              ng-click="datePicker.temporalSelect('start', fromDate)">{{fromDate}}</span>
+        <span ng-if="$last" ng-click="datePicker.datePanel.changeFrom()" class="lnr lnr-chevron-right"></span>
+      </span>
+    </div> 
+  </div>
+  <div class="calendar-to">
+    <h4>Hasta</h4>
+    <div calendar="to">
+      <span ng-repeat="toDate in datePicker.datePanel.to">
+        <span ng-if="$first" ng-click="datePicker.datePanel.changeTo(true)" class="lnr lnr-chevron-left"></span>
+        <span ng-class="{'selected' : datePicker.isSelected('end', toDate)}"
+              ng-click="datePicker.temporalSelect('end', toDate)">{{toDate}}</span>
+        <span ng-if="$last" ng-click="datePicker.datePanel.changeTo()" class="lnr lnr-chevron-right"></span>
+      </span>
+    </div>
+  </div>
+  <div class="submit-section">
+    <a class="btn-dark-blue" ng-click="datePicker.submitNewDates($event)">Aplicar</a>
+    <a class="btn-transparent" ng-click="datePicker.closeDatePicker($event)">Cancelar</a>
+  </div>
+</div>

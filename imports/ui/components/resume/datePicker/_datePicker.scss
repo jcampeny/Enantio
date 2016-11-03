@@ -1,0 +1,90 @@
+date-picker{
+	position: relative;
+	.date-spans{
+		span[start],
+		span[end]{
+			padding: 0px;
+		}
+	}
+	div.resume-dates{
+		@extend .date-spans;
+		cursor: pointer;
+		span.lnr-calendar-full{
+			padding: 0 $margin/2;
+		}
+	}
+	div.date-picker{
+		position: absolute;
+		right: 0px;
+		top: 0px;
+		z-index: 1;
+		height: 0px;
+		width: 450px;
+		opacity: 0;
+		pointer-events: none;
+		overflow: hidden;
+		background-color: white;
+		@include box-shadow($shadow-blur);
+		@include transition(height $transition, opacity $transition);
+		@extend .date-spans;
+		&.open{
+			height: 325px;
+			opacity: 1;
+			pointer-events: all;
+		}
+		div.temporal-period{
+			background-color: $light-gray;
+			padding-left: $margin;
+		}
+		div.submit-section{
+			clear: both;
+			text-align: right;
+			padding: 0 $margin $margin;
+		}
+		
+		div.calendar-from,
+		div.calendar-to{
+			float: left;
+			margin: 0px $margin $margin $margin;
+			width: 185px;
+			h4{
+				margin-top: 0px;
+				font-weight: normal;
+				border-bottom: 1px solid $gray;
+			}
+			div[calendar]{
+				background-color: $dark-blue;
+				width: 180px;
+				span[ng-repeat]{
+					span{
+						font-size: 12px;
+						display: inline-block;
+						width: 45px;
+						height: 45px;
+						float: left;
+						text-align: center;
+						color: white;
+						border-bottom: 1px solid $dark-gray;				
+						@media #{$gt-sm} {
+							&:hover{
+								background-color: rgba(255,255,255,0.5);
+							}
+						}	
+						&.selected{
+							background-color: rgba(255,255,255,0.5);
+						}
+						&.lnr{
+							font-size: 14px;
+							line-height: 45px;
+						}					
+					}
+				}
+				&:after{
+					content: '';
+					display: block;
+					clear: both;
+				}
+			}
+		}
+	}
+}

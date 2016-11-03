@@ -33,15 +33,7 @@ viz-header{
 						height: 45px;
 						line-height: 45px;
 					}
-				}	
-				&[date]{
-					min-width: 130px;
-					padding-left : $margin/2;
-					white-space: nowrap;
-					span {
-						padding: 0px $margin/2;
-					}
-				}		
+				}			
 				&[lock]{
 					position: relative;
 					div{
@@ -57,6 +49,11 @@ viz-header{
 						div{width: 6px;}
 					}
 				}
+			}
+			date-picker{
+				min-width: 130px;
+				padding-left : $margin/2;
+				white-space: nowrap;
 			}
 		}
 	}

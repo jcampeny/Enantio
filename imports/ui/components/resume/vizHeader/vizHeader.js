@@ -2,7 +2,7 @@ import angular from 'angular';
 import angularMeteor from 'angular-meteor';
 
 import {name as VizHeaderService} from './vizHeaderService';
-
+import {name as DatePicker} from '../datePicker/datePicker'
 import template from './vizHeader.html';
 
 class VizHeader {
@@ -58,7 +58,8 @@ const name = 'vizHeader';
 
 export default angular.module(name, [
 	angularMeteor,
-	VizHeaderService
+	VizHeaderService,
+	DatePicker
 ]).component(name, {
 	template,
 	bindings : {
