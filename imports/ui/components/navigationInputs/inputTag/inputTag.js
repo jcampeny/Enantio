@@ -23,19 +23,30 @@ class InputTag {
 		this.helpers({
 			countries(){
 				return Countries.find({
-				  	$or: [
+					$or: [
 				  		{
 				  			"name.es" : {
 				  		    	$regex: new RegExp('^' + this.getReactively('searchText')),
 				  		    	$options : 'i'
 				  		  	}
 				  		},{
-			  		  		"name.en" : {
-			  		  	    	$regex: new RegExp('^' + this.getReactively('searchText')),
-			  		  	    	$options : 'i'
-			  		  	  	}
-				  		}
-				  	]
+				  			"_id" : {
+						  		$exists: true
+						  	}				  			
+						 }
+				  	],
+					$where : (object)=>{
+						var found = false;
+						var text = this.searchText;
+
+						angular.forEach(object.name, (value, key) => {
+							var regExp = new RegExp('^' + text);
+							if(value.toLowerCase().match(regExp))
+								found = true;
+						});
+
+						return found;
+					}
 				}, {limit : this.limit});
 			}
 		});
