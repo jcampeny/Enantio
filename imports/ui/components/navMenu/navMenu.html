@@ -15,6 +15,7 @@
     <li>Hola {{navMenu.currentUser.username}}</li>
     <li>Perfil y cuenta</li>
     <li>Preferencias</li>
+    <li ng-if="navMenu.root.isAdmin" ui-sref="admin">Admin Panel</li>
     <li ng-click="navMenu.logout()">Log out</li>
   </ul>
 </div>

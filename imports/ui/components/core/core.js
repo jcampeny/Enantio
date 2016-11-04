@@ -8,6 +8,7 @@ import {name as Navigation} from '../navigation/navigation';
 
 import {name as Auth} from '../auth/auth';
 import {name as Home} from '../home/home';
+import {name as Admin} from '../admin/admin';
 
 class App {};
 
@@ -18,6 +19,7 @@ export default angular.module(name, [
 	ngMaterial, 
 	Auth,
 	Home,
+	Admin,
 	'accounts.ui',
 	Navigation,
 	uiRouter

@@ -1,5 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
+import { Roles } from 'meteor/alanning:roles';
+
 if (Meteor.isServer) {
 	Meteor.publish('users', function(){
 		return Meteor.users.find({},{
@@ -19,3 +21,15 @@ if (Meteor.isServer) {
 		return user;
 	});
 }
+
+export function isInRole() {
+	if(!Roles.userIsInRole(Meteor.user(), 'admin', 'admin-group')){
+		throw new Meteor.Error(403, "Access denied");
+	} 
+		return true;
+	
+}
+ 
+Meteor.methods({
+	isInRole
+});
