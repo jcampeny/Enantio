@@ -5,7 +5,7 @@
   	  <!--expanded-->
 	  <div expanded products-selected="{{inputTagProduct.name}}" 
 	  	ng-if="inputTagProduct.expanded && inputTagProduct.selected && inputTagProduct.selected.code">
-	  		<span class="contracted-mobile product-input-cross" ng-if="inputTagProduct.searchText == ''">{{inputTagProduct.selected.code | insertPoints}} &nbsp;{{inputTagProduct.selected.name_es | capitalize}}
+	  		<span class="contracted-mobile product-input-cross" ng-if="inputTagProduct.searchText == ''">{{inputTagProduct.selected.code | insertPoints}} &nbsp;{{inputTagProduct.selected.name.es | capitalize}}
 				<span class="lnr lnr-cross" ng-click="inputTagProduct.resetProduct($event)"></span>
 	  		</span>
 	  		
@@ -13,7 +13,7 @@
 	  <!-- not expanded -->
 	  <div products-selected="{{inputTagProduct.name}}" 
 	  	   ng-if="!inputTagProduct.expanded && inputTagProduct.selected && inputTagProduct.selected.code">
-	  			<span class="contracted-mobile product-input-cross" ng-if="inputTagProduct.searchText == ''">{{inputTagProduct.selected.code | insertPoints}} &nbsp;{{inputTagProduct.selected.name_es | capitalize}}
+	  			<span class="contracted-mobile product-input-cross" ng-if="inputTagProduct.searchText == ''">{{inputTagProduct.selected.code | insertPoints}} &nbsp;{{inputTagProduct.selected.name.es | capitalize}}
 					<span class="lnr lnr-cross" ng-click="inputTagProduct.resetProduct($event)"></span>
 	  			</span>
 	  	</span>
@@ -31,7 +31,7 @@
   	<div ng-repeat="product in inputTagProduct.products" 
        product-item="{{inputTagProduct.name}}" 
        ng-click="inputTagProduct.selectProduct(product, $event)"
-       ng-if="!inputTagProduct.productAreSelected(product).found"><span code>{{product.code | insertPoints}}</span><span name>{{product.name_es | capitalize}}</span></div>
+       ng-if="!inputTagProduct.productAreSelected(product).found"><span code>{{product.code | insertPoints}}</span><span name>{{product.name.es | capitalize}}</span></div>
 	<div class="search-in-index" ng-click="inputTagProduct.toggleMenu($event)">Buscar en Índice</div>
 </div>
 <product-navigation flex="0" 

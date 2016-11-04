@@ -11,7 +11,7 @@
         ng-click="productNavigation.preSelectParent(parent, $event)" 
         parent="{{parent.codeParent}}">
       <span class="roman">{{parent.codeParent | romanize}}</span>
-      <span class="name">{{parent.name_es | capitalize}}</span>
+      <span class="name">{{parent.name.es | capitalize}}</span>
       <span class="options">
         <!-- <a>Usar producto</a>  -->
         <span class="lnr lnr-indent-increase" ng-click="productNavigation.selectParent(parent)"></span>
@@ -24,7 +24,7 @@
         children="{{children.code}}"
         children-level="{{children.level}}">
       <span class="roman">{{children.code | insertPoints}}</span>
-      <span class="name">{{children.name_es | capitalize}}</span>
+      <span class="name">{{children.name.es | capitalize}}</span>
       <span class="options">
         <a ng-click="productNavigation.useProduct(children)">Usar producto</a>
         <!-- todo select children -->
