@@ -39,5 +39,6 @@ input.md-input{
 	font-family: $Avenir !important;
 	border-bottom-width: 1px !important;
 }
-
-  
+div[ui-view], home{
+	min-height: 100%;
+ }

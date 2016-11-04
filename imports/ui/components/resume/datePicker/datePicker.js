@@ -24,6 +24,7 @@ class DatePicker {
 				$scope.$apply();				
 			}
 		});
+
 	}
 
 	//El temporalDate deberá guardar la fecha parseada y la fecha normal, 
@@ -48,13 +49,17 @@ class DatePicker {
 		if(!this.isDatePickerOpen){
 			this.stop(event);
 			this.isDatePickerOpen = true;
-			$('body').addClass('date-picker-open');			
+			$('body').addClass('date-picker-open');	
+			if($(window).width() > 960)
+				$('#home-view').addClass('menu-active');	
 		}
 	}
 
 	closeDatePicker(event){
 		this.isDatePickerOpen = false;
-		$('body').removeClass('date-picker-open');	
+		$('body').removeClass('date-picker-open');
+		if($(window).width() > 960)
+			$('#home-view').removeClass('menu-active');	
 	}
 
 	submitNewDates(event){
