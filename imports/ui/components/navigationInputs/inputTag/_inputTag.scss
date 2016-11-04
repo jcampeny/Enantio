@@ -121,6 +121,12 @@ input-tag {
 				}
 			}
 		}
+		.loading{
+			&.loaded{display: none;}
+			svg{
+				@extend .infinite-rotation;
+			}
+		}
 	}
 
 }

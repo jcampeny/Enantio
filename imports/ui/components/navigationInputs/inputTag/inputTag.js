@@ -23,10 +23,19 @@ class InputTag {
 		this.helpers({
 			countries(){
 				return Countries.find({
-					name : {
-				    	$regex: new RegExp('^' + this.getReactively('searchText')),
-				    	$options : 'i'
-				  	}
+				  	$or: [
+				  		{
+				  			"name.es" : {
+				  		    	$regex: new RegExp('^' + this.getReactively('searchText')),
+				  		    	$options : 'i'
+				  		  	}
+				  		},{
+			  		  		"name.en" : {
+			  		  	    	$regex: new RegExp('^' + this.getReactively('searchText')),
+			  		  	    	$options : 'i'
+			  		  	  	}
+				  		}
+				  	]
 				}, {limit : this.limit});
 			}
 		});
