@@ -30,23 +30,20 @@ class InputTag {
 				  		    	$options : 'i'
 				  		  	}
 				  		},{
-				  			"_id" : {
-						  		$exists: true
-						  	}				  			
+				  			$where : (object)=>{
+				  				var found = false;
+				  				var text = this.searchText;
+
+				  				angular.forEach(object.name, (value, key) => {
+				  					var regExp = new RegExp('^' + text);
+				  					if(value.toLowerCase().match(regExp))
+				  						found = true;
+				  				});
+
+				  				return found;
+				  			}				  			
 						 }
-				  	],
-					$where : (object)=>{
-						var found = false;
-						var text = this.searchText;
-
-						angular.forEach(object.name, (value, key) => {
-							var regExp = new RegExp('^' + text);
-							if(value.toLowerCase().match(regExp))
-								found = true;
-						});
-
-						return found;
-					}
+				  	]
 				}, {limit : this.limit});
 			}
 		});

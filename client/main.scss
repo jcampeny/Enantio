@@ -43,3 +43,9 @@ input.md-input{
 div[ui-view], home{
 	min-height: 100%;
  }
+.loading{
+ 	&.loaded{display: none;}
+ 	svg{
+ 		@extend .infinite-rotation;
+ 	}
+ }

@@ -1,3 +1,64 @@
 admin{
-	
+	div.data-container{
+		background-color: white;
+		margin: $margin*2;
+		color: $dark-blue;
+		@include box-shadow($shadow);
+		div.header{
+			padding: $margin;
+			border-bottom: 1px solid $light-gray;
+			background-color: $dark-blue;
+			color: white;
+		}
+		div.options{
+			padding: $margin;
+			background-color: $light-gray;
+			padding-bottom: 0px;
+			&:after{
+				content:"";
+				display: block;
+				clear: both;
+			}
+			.search-text{
+				float: right;
+				margin-top: -25px;
+				md-input-container{
+					.md-errors-spacer{display:none;}
+				}
+			}
+		}
+		div.content{
+			div[item]{
+				padding: $margin;
+				border-top: 1px solid $light-gray;
+				&:last-child{ border-bottom: 1px solid $light-gray;}
+			}
+			div.loading{
+				padding: $margin;
+			}
+		}
+		div.pagination{
+			padding: $margin/2 $margin;
+			padding-top: $margin;
+			&:after{
+				content:"";
+				display: block;
+				clear: both;
+			}
+			.pages{
+				float: left;
+				md-input-container{
+					margin-right: 10px;
+					margin-left: 10px;
+				}
+			}
+			.per-page{
+				float: left;
+				margin-left: 50px;
+				md-input-container{
+					min-width: 100px;
+				}				
+			}
+		}
+	}
 }
