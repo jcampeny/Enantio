@@ -36,6 +36,9 @@ class DatePicker {
 	isSelected(startOrEnd, theDate){
 		return this.temporalDate[startOrEnd] == theDate;
 	}
+	isGeneralSelected(startOrEnd, theDate){
+		return this.selectedDate[startOrEnd] == theDate;
+	}
 
 	stop(event){
 		event.stopPropagation();
@@ -45,13 +48,13 @@ class DatePicker {
 		if(!this.isDatePickerOpen){
 			this.stop(event);
 			this.isDatePickerOpen = true;
-			console.log('open');			
+			$('body').addClass('date-picker-open');			
 		}
 	}
 
 	closeDatePicker(event){
 		this.isDatePickerOpen = false;
-		console.log('closed');
+		$('body').removeClass('date-picker-open');	
 	}
 
 	submitNewDates(event){

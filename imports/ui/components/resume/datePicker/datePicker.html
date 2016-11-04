@@ -10,13 +10,14 @@
     <span>Periodo: </span>
     <span start> {{datePicker.temporalDate.start}}</span> - 
     <span end>{{datePicker.temporalDate.end}}</span>
+    <span class="lnr lnr-cross" ng-click="datePicker.closeDatePicker($event)"></span>
   </div>
   <div class="calendar-from">
     <h4>Desde</h4>
     <div calendar="from"> 
       <span ng-repeat="fromDate in datePicker.datePanel.from">
         <span ng-if="$first" ng-click="datePicker.datePanel.changeFrom(true)" class="lnr lnr-chevron-left"></span>
-        <span ng-class="{'selected' : datePicker.isSelected('start', fromDate)}"
+        <span ng-class="{'selected' : datePicker.isSelected('start', fromDate), 'actual' : datePicker.isGeneralSelected('start', fromDate)}"
               ng-click="datePicker.temporalSelect('start', fromDate)">{{fromDate}}</span>
         <span ng-if="$last" ng-click="datePicker.datePanel.changeFrom()" class="lnr lnr-chevron-right"></span>
       </span>
@@ -27,7 +28,7 @@
     <div calendar="to">
       <span ng-repeat="toDate in datePicker.datePanel.to">
         <span ng-if="$first" ng-click="datePicker.datePanel.changeTo(true)" class="lnr lnr-chevron-left"></span>
-        <span ng-class="{'selected' : datePicker.isSelected('end', toDate)}"
+        <span ng-class="{'selected' : datePicker.isSelected('end', toDate), 'actual' : datePicker.isGeneralSelected('end', toDate)}"
               ng-click="datePicker.temporalSelect('end', toDate)">{{toDate}}</span>
         <span ng-if="$last" ng-click="datePicker.datePanel.changeTo()" class="lnr lnr-chevron-right"></span>
       </span>
@@ -36,5 +37,8 @@
   <div class="submit-section">
     <a class="btn-dark-blue" ng-click="datePicker.submitNewDates($event)">Aplicar</a>
     <a class="btn-transparent" ng-click="datePicker.closeDatePicker($event)">Cancelar</a>
+  </div>
+  <div class="submit-section-mobile" ng-click="datePicker.submitNewDates($event)">
+    <img src="img/checkmark.png" alt="checkmark">
   </div>
 </div>

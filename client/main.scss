@@ -28,6 +28,11 @@
 body {
 	@extend .body;
 	background-color : $light-gray !important;
+	&.date-picker-open{
+		@media (max-width: 960px){
+			overflow:hidden;
+		}
+	}
 }
 
 input.md-input{

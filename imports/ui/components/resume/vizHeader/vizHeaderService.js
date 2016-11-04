@@ -143,7 +143,8 @@ class VizHeaderService
   					e.css({
   						'transition' : '',
   						'max-width' : 'calc(100% - ' + originalMargin * 2 + 'px)',
-  						'position' : ''
+  						'position' : '',
+              'z-index' : '25'
   					});
   					deferred.resolve('expanded');
   				}
