@@ -3,11 +3,11 @@ import angularMeteor from 'angular-meteor';
 
 import { Meteor } from 'meteor/meteor';
 
-import { Countries } from '../../../../api/countries/index';
+import { Products } from '../../../../api/products/index';
 
-import template from './countries.html';
+import template from './products.html';
 
-class AdminCountries {
+class AdminProducts {
 	constructor ($scope, $reactive, $rootScope) {
 		'ngInject';
 
@@ -15,7 +15,7 @@ class AdminCountries {
 
 		this.root = $rootScope;
 
-		this.selectedCountry = null;
+		this.selectedProduct = null;
 		
 		this.perPageOptions = [5, 10, 15, 20, 25];
 		this.perPage = 5;
@@ -26,8 +26,8 @@ class AdminCountries {
 		this.searchText = '';
 
 		this.helpers({
-			countries(){
-				return Countries.find({
+			products(){
+				return Products.find({
 					$or: [{
 						$where : (object)=>{
 							var found = false;
@@ -54,7 +54,7 @@ class AdminCountries {
 				});
 			},
 			totalPages(){
-				return Math.ceil(Countries.find({
+				return Math.ceil(Products.find({
 					$or: [{
 						$where : (object)=>{
 							var found = false;
@@ -79,47 +79,47 @@ class AdminCountries {
 		});
 
 		//catchEvents
-		this.root.$on('confirmUpdateCountry', (event, data) => {
+		this.root.$on('confirmUpdateProduct', (event, data) => {
 			if(data.accepted)
-				this.updateCountry(data.item);
+				this.updateProduct(data.item);
 		});
 
-		this.root.$on('createTraductionCountry', (event, data) => {
-			this.selectedCountry = data.item;
+		this.root.$on('createTraductionProduct', (event, data) => {
+			this.selectedProduct = data.item;
 		});
 	}
 
 	removeTraduction(key){
-		delete this.selectedCountry.name[key];
+		delete this.selectedProduct.name[key];
 	}
-	selectCountryToEdit(item){
-		this.selectedCountry = angular.copy(item);
+	selectProductToEdit(item){
+		this.selectedProduct = angular.copy(item);
 	}
-	onCreateTraductionCountry(){
+	onCreateTraductionProduct(){
 		this.root.$broadcast('openPopUp', {
-			reason : 'createTraductionCountry',
-			text : 'Introduzca el nombre del País y la abreviatura del idioma.',
-			item : this.selectedCountry,
+			reason : 'createTraductionProduct',
+			text : 'Introduzca el nombre del Producto y la abreviatura del idioma.',
+			item : this.selectedProduct,
 			action : 'Crear'
 		});
 	}
 
-	onUpdateCountry(){
+	onUpdateProduct(){
 		this.root.$broadcast('openPopUp', {
-		    reason : 'confirmUpdateCountry',
-		    text : 'Seguro que quiere editar '+this.selectedCountry.name.es+' ?',
-		    item : this.selectedCountry,
+		    reason : 'confirmUpdateProduct',
+		    text : 'Seguro que quiere editar '+this.selectedProduct.name.es+' ?',
+		    item : this.selectedProduct,
 		    action : 'Actualizar'
 		});
 	}
-	updateCountry(country){
-		Meteor.call('updateCountry', country._id, country,
+	updateProduct(product){
+		Meteor.call('updateProduct', product._id, product,
 			(error) => {
 				console.log(error);
 				if (error) {
-					console.log('Oops, unable to update the country...');
+					console.log('Oops, unable to update the product...');
 				} else {
-					console.log(country.name.es + ' updated!');
+					console.log(product.name.es + ' updated!');
 				}
 			}
 		);
@@ -136,14 +136,14 @@ class AdminCountries {
 	}
 };
 
-const name = 'adminCountries';
+const name = 'adminProducts';
 
 export default angular.module(name, [
 	angularMeteor
 ]).component(name, {
 	template,
 	controllerAs : name,
-	controller : AdminCountries
+	controller : AdminProducts
 });
 
 

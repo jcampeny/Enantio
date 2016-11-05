@@ -1,15 +1,25 @@
 import { Mongo } from 'meteor/mongo';
+import { Roles } from 'meteor/alanning:roles';
 
 export const Products = new Mongo.Collection('products');
 
 Products.allow({
-	insert (userId, products) {
-		return false;
+	insert (userId, product) {
+		if(!Roles.userIsInRole(userId, 'admin', 'admin-group')){
+			return false;
+		}
+		return true;
 	},
-	update (userId, products, fields, modifier) {
-		return false;
+	update (userId, product, fields, modifier) {
+		if(!Roles.userIsInRole(userId, 'admin', 'admin-group')){
+			return false;
+		}
+		return true;
 	},
-	remove (userId, products) {
-		return false;
+	remove (userId, product) {
+		if(!Roles.userIsInRole(userId, 'admin', 'admin-group')){
+			return false;
+		}
+		return true;
 	}
 });

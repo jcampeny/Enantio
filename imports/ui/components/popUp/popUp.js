@@ -19,7 +19,7 @@ class PopUp {
 		this.root.$on('openPopUp', (event, data) => {
 			this.reason = data.reason;
 			//possible switch
-			if(this.reason == 'createTraductionCountry'){
+			if(this.reason == 'createTraductionCountry' || this.reason == 'createTraductionProduct'){
 				this.popUpType = 'creation';
 			} else {
 				this.popUpType = "confirmation";

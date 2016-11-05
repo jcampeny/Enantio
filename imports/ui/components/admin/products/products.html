@@ -1,0 +1,76 @@
+
+<div class="all-items">
+	<div class="options">
+		<span ng-click="adminProducts.toggleSort()" ng-if="adminProducts.totalPages > 0">
+			Ordenar
+			<span class="lnr" ng-class="{
+				'lnr-chevron-down' : adminProducts.sort['name.es'] < 0,
+				'lnr-chevron-up' : adminProducts.sort['name.es'] > 0,
+			}"></span>
+		</span>
+		<div class="search-text">
+			<md-input-container>
+			  <label>Buscar</label>
+			  <input ng-model="adminProducts.searchText">
+			</md-input-container>
+		</div>
+	</div>
+	<div class="content">
+		<div ng-repeat="product in adminProducts.products" item ng-click="adminProducts.selectProductToEdit(product)">
+			{{product.code | insertPoints}} - {{product.name.es}}
+		</div>
+		<div class="loading" ng-if="adminProducts.products.length === 0">
+			<md-progress-circular md-diameter="30" md-mode="indeterminate"></md-progress-circular>
+		</div>
+	</div>
+	<div class="pagination">
+		<div class="pages" ng-if="adminProducts.totalPages > 0">
+			<span class="lnr lnr-chevron-left" ng-click="adminProducts.changePage(-1)"></span>
+			<md-input-container>
+	          <label>Página</label>
+	          <md-select ng-model="adminProducts.page">
+	            <md-option ng-repeat="pageNumber in adminProducts.getNumber(adminProducts.totalPages) track by $index" ng-value="$index">
+	              {{$index}}
+	            </md-option>
+	          </md-select>
+	        </md-input-container>
+			<span class="lnr lnr-chevron-right" ng-click="adminProducts.changePage(1)"></span>
+		</div>
+		<div class="per-page" ng-if="adminProducts.totalPages > 0">        
+			<md-input-container>
+	          <label>Por página</label>
+	          <md-select ng-model="adminProducts.perPage">
+	            <md-option ng-repeat="perPage in adminProducts.perPageOptions" ng-value="perPage">
+	              {{perPage}}
+	            </md-option>
+	          </md-select>
+	        </md-input-container>
+        </div>
+    </div>
+</div>
+<div class="selected-item">
+	<div class="header-selected-item">Editando: {{adminProducts.selectedProduct.name.es}}</div>
+	<div class="general-info" ng-if="adminProducts.selectedProduct">
+    	Code: {{adminProducts.selectedProduct.code | insertPoints}} <br>
+    	Level: {{adminProducts.selectedProduct.level}}
+	</div>
+	<div class="traductions-container" ng-if="adminProducts.selectedProduct">
+		<div class="header-traductions">
+			Traducciones:
+			<a class="btn-transparent btn-reverse" ng-click="adminProducts.onCreateTraductionProduct()">Añadir</a>
+		</div>
+		<div class="traduction-item" ng-repeat="(traductionKey, traductionValue) in adminProducts.selectedProduct.name">
+		Idioma: <b>{{traductionKey}}</b> <span class="lnr lnr-trash" ng-click="adminProducts.removeTraduction(traductionKey)"></span><br> 
+    		<md-input-container>
+    		  <label>Nombre</label>
+    		  <input ng-model="adminProducts.selectedProduct.name[traductionKey]">
+    		</md-input-container>
+    		
+		</div>
+		<div class="submit-traductions">
+			<a class="btn-transparent" ng-click="adminProducts.selectProductToEdit('')">Cancelar</a>
+			<a class="btn-dark-blue" ng-click="adminProducts.onUpdateProduct()">Actualizar</a>
+		</div>
+	</div>
+</div>
+

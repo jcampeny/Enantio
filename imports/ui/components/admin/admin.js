@@ -9,7 +9,8 @@ import { Countries } from '../../../api/countries/index';
 
 import template from './admin.html';
 
-import {name as AdminCountries} from './countries/countries'
+import {name as AdminCountries} from './countries/countries';
+import {name as AdminProducts} from './products/products';
 import {name as PopUp} from '../popUp/popUp';
 
 class Admin {
@@ -23,7 +24,7 @@ class Admin {
 
 		this.root.isAdmin = false;
 
-		this.viewState = 'countries';
+		this.viewState = 'Países';
 
 		Meteor.call('isInRole', 
 			(error, response) => {
@@ -34,6 +35,9 @@ class Admin {
 	logout(){
 		Accounts.logout();
 	}
+	toggleState(){
+		this.viewState = (this.viewState == 'Productos') ? 'Países' : 'Productos';
+	}
 };
 
 const name = 'admin';
@@ -41,7 +45,8 @@ const name = 'admin';
 export default angular.module(name, [
 	angularMeteor, 
 	PopUp,
-	AdminCountries
+	AdminCountries,
+	AdminProducts
 ]).component(name, {
 	template,
 	controllerAs : name,
