@@ -2,51 +2,92 @@
 
 <div class="data-container">
 	<div class="header">Países</div>
-	<div class="options">
-		<span ng-click="admin.toggleSort()" ng-if="admin.totalPages > 0">
-			Ordenar
-			<span class="lnr" ng-class="{
-				'lnr-chevron-down' : admin.sort['name.es'] < 0,
-				'lnr-chevron-up' : admin.sort['name.es'] > 0,
-			}"></span>
-		</span>
-		<div class="search-text">
-			<md-input-container>
-			  <label>Buscar</label>
-			  <input ng-model="admin.searchText">
-			</md-input-container>
+	<div class="all-items">
+		<div class="options">
+			<span ng-click="admin.toggleSort()" ng-if="admin.totalPages > 0">
+				Ordenar
+				<span class="lnr" ng-class="{
+					'lnr-chevron-down' : admin.sort['name.es'] < 0,
+					'lnr-chevron-up' : admin.sort['name.es'] > 0,
+				}"></span>
+			</span>
+			<div class="search-text">
+				<md-input-container>
+				  <label>Buscar</label>
+				  <input ng-model="admin.searchText">
+				</md-input-container>
+			</div>
 		</div>
-	</div>
-	<div class="content">
-		<div ng-repeat="country in admin.countries" item>{{country.name.es}}</div>
-		<div class="loading" ng-if="admin.countries.length === 0">
-			<md-progress-circular md-diameter="30" md-mode="indeterminate"></md-progress-circular>
+		<div class="content">
+			<div ng-repeat="country in admin.countries" item ng-click="admin.selectCountryToEdit(country)">
+				{{country.name.es}}
+				<a class="btn-dark-blue">Editar</a>
+			</div>
+			<div class="loading" ng-if="admin.countries.length === 0">
+				<md-progress-circular md-diameter="30" md-mode="indeterminate"></md-progress-circular>
+			</div>
 		</div>
-	</div>
-	<div class="pagination">
-		<div class="pages" ng-if="admin.totalPages > 0">
-			<span class="lnr lnr-chevron-left" ng-click="admin.changePage(-1)"></span>
-			<md-input-container>
-	          <label>Página</label>
-	          <md-select ng-model="admin.page">
-	            <md-option ng-repeat="pageNumber in admin.getNumber(admin.totalPages) track by $index" ng-value="$index">
-	              {{$index}}
-	            </md-option>
-	          </md-select>
-	        </md-input-container>
-			<span class="lnr lnr-chevron-right" ng-click="admin.changePage(1)"></span>
-		</div>
-		<div class="per-page" ng-if="admin.totalPages > 0">        
-			<md-input-container>
-	          <label>Por página</label>
-	          <md-select ng-model="admin.perPage">
-	            <md-option ng-repeat="perPage in admin.perPageOptions" ng-value="perPage">
-	              {{perPage}}
-	            </md-option>
-	          </md-select>
-	        </md-input-container>
-        </div>
+		<div class="pagination">
+			<div class="pages" ng-if="admin.totalPages > 0">
+				<span class="lnr lnr-chevron-left" ng-click="admin.changePage(-1)"></span>
+				<md-input-container>
+		          <label>Página</label>
+		          <md-select ng-model="admin.page">
+		            <md-option ng-repeat="pageNumber in admin.getNumber(admin.totalPages) track by $index" ng-value="$index">
+		              {{$index}}
+		            </md-option>
+		          </md-select>
+		        </md-input-container>
+				<span class="lnr lnr-chevron-right" ng-click="admin.changePage(1)"></span>
+			</div>
+			<div class="per-page" ng-if="admin.totalPages > 0">        
+				<md-input-container>
+		          <label>Por página</label>
+		          <md-select ng-model="admin.perPage">
+		            <md-option ng-repeat="perPage in admin.perPageOptions" ng-value="perPage">
+		              {{perPage}}
+		            </md-option>
+		          </md-select>
+		        </md-input-container>
+	        </div>
+	    </div>
+    </div>
+    <div class="selected-item">
+    	<div class="header-selected-item">Editando: {{admin.selectedCountry.name.es}}</div>
+    	<div class="general-info" ng-if="admin.selectedCountry">
+	    	Code: {{admin.selectedCountry.code}} <br>
+	    	ISO: {{admin.selectedCountry.iso}} <br>
+	    	Latitud: {{admin.selectedCountry.coordinates.lat}} <br> 
+	    	Longitud: {{admin.selectedCountry.coordinates.lng}}
+    	</div>
+    	<div class="traductions-container" ng-if="admin.selectedCountry">
+    		<div class="header-traductions">
+    			Traducciones:
+    			<a class="btn-transparent" ng-click="admin.onCreateTraductionCountry()">Añadir</a>
+    		</div>
+    		<div class="traduction-item" ng-repeat="(traductionKey, traductionValue) in admin.selectedCountry.name">
+    		Idioma: <b>{{traductionKey}}</b> <span class="lnr lnr-trash" ng-click="admin.removeTraduction(traductionKey)"></span><br> 
+	    		<md-input-container>
+	    		  <label>Nombre</label>
+	    		  <input ng-model="admin.selectedCountry.name[traductionKey]">
+	    		</md-input-container>
+	    		
+    		</div>
+    		<div class="submit-traductions">
+    			<a class="btn-transparent" ng-click="admin.selectCountryToEdit('')">Cancelar</a>
+    			<a class="btn-dark-blue" ng-click="admin.onUpdateCountry()">Actualizar</a>
+    		</div>
+    	</div>
     </div>
 </div>
 
 <pop-up></pop-up>
+
+
+
+
+
+
+
+
+

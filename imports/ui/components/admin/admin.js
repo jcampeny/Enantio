@@ -9,6 +9,8 @@ import { Countries } from '../../../api/countries/index';
 
 import template from './admin.html';
 
+import {name as PopUp} from '../popUp/popUp';
+
 class Admin {
 	constructor ($scope, $reactive, $rootScope, $state) {
 		'ngInject';
@@ -20,6 +22,8 @@ class Admin {
 
 		this.root.isAdmin = false;
 
+		this.selectedCountry = null;
+
 		Meteor.call('isInRole', 
 			(error, response) => {
 				this.root.isAdmin = response;
@@ -30,7 +34,7 @@ class Admin {
 		this.perPage = 5;
 		this.page = 1;
 		this.sort = {
-			"name.es" : -1
+			"name.es" : 1
 		};
 		this.searchText = '';
 
@@ -88,17 +92,60 @@ class Admin {
 				}).count() / this.getReactively('perPage'));
 			}
 		});
+
+		//catchEvents
+		this.root.$on('confirmUpdateCountry', (event, data) => {
+			if(data.accepted)
+				this.updateCountry(data.item);
+		});
+
+		this.root.$on('createTraductionCountry', (event, data) => {
+			this.selectedCountry = data.item;
+		});
 	}
 
+	removeTraduction(key){
+		delete this.selectedCountry.name[key];
+	}
+	selectCountryToEdit(item){
+		this.selectedCountry = angular.copy(item);
+	}
+	onCreateTraductionCountry(){
+		this.root.$broadcast('openPopUp', {
+			reason : 'createTraductionCountry',
+			text : 'Introduzca el nombre del País y la abreviatura del idioma.',
+			item : this.selectedCountry,
+			action : 'Crear'
+		});
+	}
+
+	onUpdateCountry(){
+		this.root.$broadcast('openPopUp', {
+		    reason : 'confirmUpdateCountry',
+		    text : 'Seguro que quiere editar '+this.selectedCountry.name.es+' ?',
+		    item : this.selectedCountry,
+		    action : 'Actualizar'
+		});
+	}
+	updateCountry(country){
+		Meteor.call('updateCountry', country._id, country,
+			(error) => {
+				console.log(error);
+				if (error) {
+					console.log('Oops, unable to update the country...');
+				} else {
+					console.log(country.name.es + ' updated!');
+				}
+			}
+		);
+	}
 	logout(){
 		Accounts.logout();
 	}
-
 	changePage(direction){
 		if(this.page+direction > 0 && this.page+direction <= this.totalPages)
 			this.page += direction;
 	}
-
 	toggleSort(){
 		this.sort["name.es"] *= -1;
 	}
@@ -110,7 +157,8 @@ class Admin {
 const name = 'admin';
 
 export default angular.module(name, [
-	angularMeteor
+	angularMeteor, 
+	PopUp
 ]).component(name, {
 	template,
 	controllerAs : name,

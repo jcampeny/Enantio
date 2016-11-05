@@ -32,9 +32,15 @@ class Favoritos {
 		this.favorites = [
 			{
 				id : 'IURBGIJERBGER',
-				day : {text : 'LU', number : '14'},
+				day : {text : 'LU', number : '14'},//date
 				name : 'Favorito A',
-				color : 'yellow'
+				color : 'yellow',
+				filter : {
+					product: "",
+					importers: [""],
+					exporters: [""],
+					years : {start: "", end: ""} 
+				}
 			},
 			{
 				id : 'GE9O57W48574B',

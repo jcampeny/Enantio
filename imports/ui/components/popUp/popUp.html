@@ -1,6 +1,23 @@
 <div id="shape-popup"></div>
-<div id="popup" class="body-dark">
+<!-- CONFIRMATION -->
+<div id="popup" class="body-dark" ng-if="popUp.popUpType == 'confirmation'">
   <p>{{popUp.content}}</p>
-  <a class="btn-dark-blue" ng-click="popUp.submit(true)">Borrar</a>
+  <a class="btn-dark-blue" ng-click="popUp.submit(true)">{{popUp.action}}</a>
+  <a class="btn-transparent" ng-click="popUp.submit(false)">Cancelar</a>
+</div>
+
+<!-- CREATION -->
+<div id="popup" class="body-dark" ng-if="popUp.popUpType == 'creation'">
+  <p>{{popUp.content}}</p>
+  <md-input-container>
+    <label>Idioma</label>
+    <input ng-model="popUp.temporalIdioma">
+  </md-input-container>
+  <md-input-container>
+    <label>Nombre</label>
+    <input ng-model="popUp.temporalNombre">
+  </md-input-container>
+  <br>
+  <a class="btn-dark-blue" ng-click="popUp.submit(true)">{{popUp.action}}</a>
   <a class="btn-transparent" ng-click="popUp.submit(false)">Cancelar</a>
 </div>

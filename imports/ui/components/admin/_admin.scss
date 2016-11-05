@@ -1,64 +1,185 @@
 admin{
+	display: block;
+	background-color: $light-gray;
+	padding-bottom: $margin;
+	overflow: hidden;
 	div.data-container{
 		background-color: white;
 		margin: $margin*2;
+
 		color: $dark-blue;
 		@include box-shadow($shadow);
+		&:after{
+			content:"";
+			display:block;
+			clear:both;
+		}
 		div.header{
 			padding: $margin;
 			border-bottom: 1px solid $light-gray;
 			background-color: $dark-blue;
 			color: white;
 		}
-		div.options{
-			padding: $margin;
-			background-color: $light-gray;
-			padding-bottom: 0px;
-			&:after{
-				content:"";
-				display: block;
-				clear: both;
-			}
-			.search-text{
-				float: right;
-				margin-top: -25px;
-				md-input-container{
-					.md-errors-spacer{display:none;}
+		div.all-items,
+		div.selected-item{
+			width: 100%;
+			background-color: white;
+			@media #{$gt-sm} {
+				width:50%;
+				float: left;
+				&:after{
+					content:"";
+					display:block;
+					clear:both;
 				}
 			}
 		}
-		div.content{
-			div[item]{
+		div.all-items{
+			div.options{
 				padding: $margin;
-				border-top: 1px solid $light-gray;
-				&:last-child{ border-bottom: 1px solid $light-gray;}
-			}
-			div.loading{
-				padding: $margin;
-			}
-		}
-		div.pagination{
-			padding: $margin/2 $margin;
-			padding-top: $margin;
-			&:after{
-				content:"";
-				display: block;
-				clear: both;
-			}
-			.pages{
-				float: left;
-				md-input-container{
-					margin-right: 10px;
-					margin-left: 10px;
+				background-color: $light-gray;
+				padding-bottom: 0px;
+				&:after{
+					content:"";
+					display: block;
+					clear: both;
+				}
+				.search-text{
+					float: right;
+					margin-top: -25px;
+					md-input-container{
+						.md-errors-spacer{display:none;}
+					}
+				}
+				.lnr{margin-left:$margin/2;}
+				span[ng-click]{
+					position: relative;
+					top: 6px;
 				}
 			}
-			.per-page{
-				float: left;
-				margin-left: 50px;
-				md-input-container{
-					min-width: 100px;
-				}				
+			div.content{
+				div[item]{
+					padding: $margin;
+					border-top: 1px solid $light-gray;
+					cursor:pointer;
+					&:last-child{ border-bottom: 1px solid $light-gray;}
+					a.btn-dark-blue{
+						float: right;
+					}
+					@media #{$gt-sm}{
+						a.btn-dark-blue{opacity: 0;}
+						&:hover{
+							a.btn-dark-blue{
+								float: right;
+								opacity: 1;
+							}
+						}
+					}
+					
+				}
+				div.loading{
+					padding: $margin;
+				}
+			}
+			div.pagination{
+				padding: $margin/2 $margin;
+				padding-top: $margin;
+				&:after{
+					content:"";
+					display: block;
+					clear: both;
+				}
+				.pages{
+					float: left;
+					md-input-container{
+						margin-right: 10px;
+						margin-left: 10px;
+					}
+				}
+				.per-page{
+					float: left;
+					margin-left: 50px;
+					md-input-container{
+						min-width: 100px;
+					}				
+				}
+			}			
+		}
+		div.selected-item{
+			div.header-selected-item{
+				padding: $margin+7 $margin $margin $margin;
+				border-bottom: 1px solid $light-gray;
+				background-color: $light-gray;
+			}
+			.general-info{
+				padding: $margin;
+				padding-top: 25px;
+				@media #{$gt-sm}{ border-left: 1px solid $light-gray; }
+			}
+			.traductions-container{
+				div.header-traductions,
+				div.traduction-item,
+				div.submit-traductions{
+					padding: $margin;
+					border-top: 1px solid $light-gray;
+				}
+				div.header-traductions{					
+					background-color: $dark-blue;
+					color:white;
+					a{
+						color:white;
+						border-color: white;
+						float: right;
+						position: relative; top: -6px;
+						@media #{$gt-sm}{
+							&:hover{
+								color: $dark-blue;
+								background-color: white;
+							}
+							
+						}
+					}
+				}
+				div.traduction-item{
+					padding-bottom: 9px;
+					@media #{$gt-sm}{ border-left: 1px solid $light-gray; }
+					md-input-container{
+						.md-errors-spacer{display:none;}
+					}
+					span.lnr{
+						font-size: 20px;
+						margin-left: 10px;
+						float: right;
+						cursor: pointer;
+					}
+				}
+				div.submit-traductions{
+					padding: 14px 20px 15px 20px;
+					@media #{$gt-sm}{ 
+						border-left: 1px solid $light-gray; 
+						border-bottom: 1px solid $light-gray; 
+					}
+					&:after{
+						content:"";
+						display:block;
+						clear:both;
+					}
+					a{
+						float: right;
+						&:first-child{
+							margin-left: 5px;
+						}
+					}
+				}
 			}
 		}
 	}
 }
+
+
+
+
+
+
+
+
