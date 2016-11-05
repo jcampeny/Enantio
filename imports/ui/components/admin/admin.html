@@ -1,7 +1,10 @@
 <navigation></navigation>
+<!-- COUNTRIES -->
+<admin-countries></admin-countries>
 
-<div class="data-container">
-	<div class="header">Países</div>
+<!-- PRODUCTS 
+<div class="data-container" ng-if="admin.viewState == 'products'">
+	<div class="header">Productos<a class="btn-transparent btn-reverse" ng-click="admin.viewState='countries'">Ver países</a></div>
 	<div class="all-items">
 		<div class="options">
 			<span ng-click="admin.toggleSort()" ng-if="admin.totalPages > 0">
@@ -63,7 +66,7 @@
     	<div class="traductions-container" ng-if="admin.selectedCountry">
     		<div class="header-traductions">
     			Traducciones:
-    			<a class="btn-transparent" ng-click="admin.onCreateTraductionCountry()">Añadir</a>
+    			<a class="btn-transparent btn-reverse" ng-click="admin.onCreateTraductionCountry()">Añadir</a>
     		</div>
     		<div class="traduction-item" ng-repeat="(traductionKey, traductionValue) in admin.selectedCountry.name">
     		Idioma: <b>{{traductionKey}}</b> <span class="lnr lnr-trash" ng-click="admin.removeTraduction(traductionKey)"></span><br> 
@@ -79,8 +82,7 @@
     		</div>
     	</div>
     </div>
-</div>
-
+</div>-->
 <pop-up></pop-up>
 
 
