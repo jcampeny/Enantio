@@ -6,15 +6,18 @@ import {name as DatePicker} from '../datePicker/datePicker'
 import template from './vizHeader.html';
 
 class VizHeader {
-	constructor ($scope, $reactive, $state, vizHeaderServices) {
+	constructor ($scope, $reactive, $state, vizHeaderServices, $rootScope) {
 		'ngInject';
 
 		$reactive(this).attach($scope);
 
 		this.state = $state;
 		this.service = vizHeaderServices;
-		
+		this.root = $rootScope;
+		this.scope = $scope;
 		this.viewFrameState = 'contracted';//expanded, changing
+
+		this.catchEvents();
 	}
  
 	refresh () {
@@ -42,6 +45,7 @@ class VizHeader {
 		this.service.expand(this.vizController.id)
 			.then((succes) => {
 				this.viewFrameState = succes;
+				this.refreshMenu();
 			});
 	}
 
@@ -49,7 +53,27 @@ class VizHeader {
 		this.service.contract(this.vizController.id)
 			.then((succes) => {
 				this.viewFrameState = succes;
+				this.refreshMenu(true);
 			});
+	}
+
+	catchEvents () {
+		this.root.$on('expandViz', (event, data)=>{
+			if(data.id == this.vizController.id)
+				this.expand();
+		});
+		this.root.$on('contractViz', (event, data)=>{
+			if(data.id == this.vizController.id)
+				this.contract();
+		});
+	}
+
+	refreshMenu(contract){
+		const id = (contract) ? '' : this.vizController.id;
+
+		this.root.$broadcast('vizSizeChange', {
+			id : id
+		});
 	}
 
 };

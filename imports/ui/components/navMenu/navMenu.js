@@ -7,6 +7,7 @@ import { Accounts } from 'meteor/accounts-base';
 
 import template from './navMenu.html';
 
+import { Favorites } from '../../../api/favorites/index';
 
 class NavMenu {
 	constructor ($scope, $reactive, $rootScope, screenSize, $state, $timeout) {
@@ -14,10 +15,14 @@ class NavMenu {
 
 		$reactive(this).attach($scope);
 
-
+		this.subscribe('favorites');
+		
 		this.helpers({
 			currentUser(){
 				return Meteor.user();
+			}, 
+			favoritesCount(){
+				return Favorites.find({}).count();
 			}
 		});
 
@@ -26,7 +31,7 @@ class NavMenu {
 		this.timeout = $timeout;
 		this.scope = $scope;
 		this.menuState = false;
-
+		this.expanded = '';
 		
 		$('html').click((e) =>{
 			this.menuState = false;
@@ -51,6 +56,39 @@ class NavMenu {
 			error : '',
 			loading : false
 		};
+
+		this.root.$on('vizSizeChange', (event, data)=>{
+			this.expanded = data.id;
+		});
+	}
+
+	expandViz(id, forced = false){
+		if(this.expanded != id || forced){
+			if(this.expanded === '' || forced){
+				this.expanded = id;
+				this.root.$broadcast('expandViz', {
+					id : this.expanded
+				});
+			} else {
+				this.expanded = id;
+				this.contractViz(true);
+			}			
+		}
+	}
+
+	contractViz(forced = false){			
+		if(this.expanded !== ''){
+			this.root.$broadcast('contractViz', {
+				id : this.expanded
+			});
+			if(forced){
+				this.timeout(() => { 
+					this.expandViz(this.expanded, forced); 
+				},3000);
+			} else {
+				this.expanded = '';
+			}
+		}
 	}
 
 	toggleMenu (data = {menu : this.menu}){

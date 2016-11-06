@@ -38,7 +38,23 @@ nav-menu {
 					&:nth-child(3) {border-left: 4px solid $blue;}
 					&:nth-child(4) {border-left: 4px solid $purple;}
 					&:nth-child(5) {border-left: 4px solid $magenta;}
-					&:nth-child(6) {border-left: 4px solid $yellow;}
+					&:nth-child(6) {
+						border-left: 4px solid $yellow;
+						span.fav-count{background-color: $yellow !important; }
+					}
+				}
+				span.fav-count{
+					float: right;
+					display: inline-block;
+					background-color: rgba(255,255,255,0.5);
+					width: 30px;
+					height: 30px;
+					text-align: center;
+					border-radius: 100%;
+					line-height: 30px;
+					position: relative;
+					top: -7px;
+					@include transition(background $transition);
 				}
 			}
 		}

@@ -1,20 +1,20 @@
 
 <div class="body-white no-point" nav-menu page-navigation ng-if="navMenu.menu == 'page-navigation'">
   <ul>
-    <li>Resumen</li>
-    <li>Importadores</li>
-    <li>Exportadores</li>
-    <li>Productos</li>
-    <li>Precios</li>
-    <li ui-sref="home.favoritos">Favoritos</li>
+    <li ng-class="{'active' : navMenu.expanded === ''}" ng-click="navMenu.contractViz()">Resumen</li>
+    <li ng-class="{'active' : navMenu.expanded === 'importadores'}" ng-click="navMenu.expandViz('importadores')">Importadores</li>
+    <li ng-class="{'active' : navMenu.expanded === 'exportadores'}" ng-click="navMenu.expandViz('exportadores')">Exportadores</li>
+    <li ng-class="{'active' : navMenu.expanded === 'codigo'}" ng-click="navMenu.expandViz('codigo')">Productos</li>
+    <li ng-class="{'active' : navMenu.expanded === 'precio'}" ng-click="navMenu.expandViz('precio')">Precios</li>
+    <li ui-sref="home.favoritos">Favoritos <span class="fav-count">{{navMenu.favoritesCount}}</span></li>
   </ul>
 </div>
 
 <div class="body-white no-point" nav-menu user-options ng-if="navMenu.menu == 'user-options'">
   <ul>
-    <li>Hola {{navMenu.currentUser.username}}</li>
+    <!--<li>Hola {{navMenu.currentUser.username}}</li>
     <li>Perfil y cuenta</li>
-    <li>Preferencias</li>
+    <li>Preferencias</li>-->
     <li ng-if="navMenu.root.isAdmin" ui-sref="admin">Admin Panel</li>
     <li ng-click="navMenu.logout()">Log out</li>
   </ul>
