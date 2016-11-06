@@ -43,8 +43,13 @@
         <div ng-click="navMenu.favoritos.color = 'blue'" blue ng-class="{'unselected' : (navMenu.favoritos.color != '' && navMenu.favoritos.color != 'blue')}"></div>
       </div>
     </li>
+    
+    <li ng-if="navMenu.favoritos.loading" class="loading">
+      <md-progress-circular md-diameter="30" md-mode="indeterminate"></md-progress-circular>
+    </li>
+    <li ng-if="navMenu.favoritos.error" class="error">{{navMenu.favoritos.error}}</li>
     <li>
-      <a class="btn-dark-blue" flex >Guardar</a>
+      <a class="btn-dark-blue" flex ng-click="navMenu.saveFavorite()">Guardar</a>
       <a class="btn-dark-blue" flex ng-click="navMenu.toggleMenu()">Cancelar</a>      
     </li>
     <li class="create-favorite" ng-class="{'show' : navMenu.favoritos.name}">

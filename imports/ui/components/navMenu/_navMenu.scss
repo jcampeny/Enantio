@@ -102,6 +102,15 @@ nav-menu {
 						}
 					} 
 				}
+				&.error{
+					position: relative;
+					top: -40px;
+					left: 7px;
+					opacity: 1 !important;
+				}
+				&.loading{
+					opacity: 1 !important;
+				}
 			}
 			a{
 				display : inline-block;

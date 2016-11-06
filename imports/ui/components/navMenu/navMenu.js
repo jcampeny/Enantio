@@ -24,7 +24,7 @@ class NavMenu {
 		this.root = $rootScope;
 		this.state = $state;
 		this.timeout = $timeout;
-
+		this.scope = $scope;
 		this.menuState = false;
 
 		
@@ -47,7 +47,9 @@ class NavMenu {
 
 		this.favoritos = {
 			name : 'Favorito A',
-			color : ''
+			color : 'turquoise',
+			error : '',
+			loading : false
 		};
 	}
 
@@ -138,6 +140,31 @@ class NavMenu {
 		Accounts.logout(() => {
 			this.state.go('auth');
 		});
+	}
+
+	saveFavorite(){
+		this.favoritos.loading = true;
+
+		const newFavorite = {
+			owner : Meteor.userId(),
+			date : new Date(),
+			name : this.favoritos.name,
+			color : this.favoritos.color,
+			filter : this.root.filter
+		};
+
+		Meteor.call('insertFavorite', newFavorite, 
+			(err, res) =>{
+				if(err){
+					this.favoritos.error = err.reason;
+				} else {
+					this.closeMenu();
+					this.favoritos.error = '';
+				}
+				this.favoritos.loading = false;
+				this.scope.$apply();
+			}
+		);
 	}
 };
 

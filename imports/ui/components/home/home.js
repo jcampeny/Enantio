@@ -21,11 +21,11 @@ class Home {
 		this.root = $rootScope;
 		this.state = $state;
 
-		this.root.variables = {
-			productos : '',
-			importadores : [{id : '', name : ''}],
-			exportadores : [{id : '', name : ''}],
-			fecha : ''
+		this.root.filter = {
+			product : '',
+			importers : [''],
+			exporters: [''],
+			years : {start: '', end:''}
 		};
 
 		this.root.isAdmin = false;

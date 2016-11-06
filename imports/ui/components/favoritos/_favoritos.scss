@@ -7,9 +7,10 @@ favoritos {
 		position: relative;
 		@include box-shadow($shadow);
 		@media #{$gt-sm} {
-			min-height: 100%;
-			margin: $margin*2;
+			min-height: 50vh;
+			padding: $margin*2;
 			width: auto;
+			background-color: transparent;
 			@include box-shadow($shadow-blur);
 		}
 		&:before{ 
@@ -18,16 +19,23 @@ favoritos {
 			height: 100%; width: 1px;
 			top: 0; left: 30px;
 			background-color: $light-gray;
+			z-index: 1;
+			@media #{$gt-sm}{
+				left: 70px;
+			}
 		}
 		div.favoritos-header{
 			height: 60px;
 			background-color: $light-gray;
 			padding: $margin;
+			z-index: 2;
+			@include transition(all $transition);
 			@media #{$gt-sm} {
 				background-color: #FFFFFF;
 				border-bottom: 1px solid $light-gray;
 				position: relative;
-				z-index: 0;
+				z-index: 1;
+				background-color: white;
 			}
 			h2{
 				font-weight: 100;
@@ -53,6 +61,7 @@ favoritos {
 			height: 73px;
 			@include transition(all $transition);
 			@media #{$gt-sm} {
+				background-color: white;
 				&:hover{
 					//background-color: $dark-blue;
 					//div[date] span {color : white !important;}
@@ -84,6 +93,7 @@ favoritos {
 				position: absolute;
 				top: 47%;
 				left: 25px;
+				z-index: 2;
 				@include transition(all $transition);
 				@include transform(translateY(-50%));
 			}
@@ -98,7 +108,7 @@ favoritos {
 				span:last-child{
 					position: relative;
 					top: -3px;
-					left: 6px;					
+					left: -6px;					
 				}
 			}
 			div[name]{
@@ -150,4 +160,8 @@ favoritos {
 			}
 		}
 	}
+}
+home #home-view.menu-active{
+	div.favoritos-header,
+	favoritos div[favoritos-container]:before{z-index:0;}
 }
