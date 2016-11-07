@@ -1,0 +1,110 @@
+{
+    "name":{
+        "es" : "ANIMALES VIVOS Y PRODUCTOS DEL REINO ANIMAL; PLANTAS, LEGUMBRES, HORTALIZAS, FRUTOS; CAFE,TE Y ESPECIAS",
+        "en" : "ANIMALES VIVOS Y PRODUCTOS DEL REINO ANIMAL; PLANTAS, LEGUMBRES, HORTALIZAS, FRUTOS; CAFE,TE Y ESPECIAS"
+    },
+    "level" : "0",
+    "code" : "00",
+    "codeParent" : "1",
+    "isParent" : true,
+    "childrens" : ["01", "02", "03", "04", "05", "06", "07", "08", "09"] 
+}
+{
+    "name":{
+        "es" : "CEREALES; MOLINERIA; SEMILLAS; RESINAS; MATERIAS TRENZABLES; GRASAS Y ACEITES; PRODUCTOS IND.ALIMENTARIA",
+        "en" : "CEREALES; MOLINERIA; SEMILLAS; RESINAS; MATERIAS TRENZABLES; GRASAS Y ACEITES; PRODUCTOS IND.ALIMENTARIA"
+    },
+    "level" : "0",
+    "code" : "00",
+    "codeParent" : "2",
+    "isParent" : true,
+    "childrens" : ["10", "11", "12", "13", "14", "15", "16", "17", "18", "19"] 
+}
+{
+    "name":{
+        "es" : "PREP.DE LEGUMBRES, FRUTOS, ETC.; PREP.ALIMENTICIAS DIVERSAS; BEBIDAS; ALIMENTOS PARA ANIMALES; TABACO; PTOS.MINERALES; PTOS.QUIMICOS",
+        "en" : "PREP.DE LEGUMBRES, FRUTOS, ETC.; PREP.ALIMENTICIAS DIVERSAS; BEBIDAS; ALIMENTOS PARA ANIMALES; TABACO; PTOS.MINERALES; PTOS.QUIMICOS"
+    },
+    "level" : "0",
+    "code" : "00",
+    "codeParent" : "3",
+    "isParent" : true,
+    "childrens" : ["20", "21", "22", "23", "24", "25", "26", "27", "28", "29"] 
+}
+{
+    "name":{
+        "es" : "PTOS.FARMACEUTICOS; ABONOS; PINTURAS; PERFUMERIA; JABONES; ALMIDONES; PIROTECNIA; IND.QUIMICA; PLASTICO",
+        "en" : "PTOS.FARMACEUTICOS; ABONOS; PINTURAS; PERFUMERIA; JABONES; ALMIDONES; PIROTECNIA; IND.QUIMICA; PLASTICO"
+    },
+    "level" : "0",
+    "code" : "00",
+    "codeParent" : "4",
+    "isParent" : true,
+    "childrens" : ["30", "31", "32", "33", "34", "35", "36", "37", "38", "39"] 
+}
+{
+    "name":{
+        "es" : "CAUCHO, CUERO, PIELES, MADERA, CORCHO, ESPARTERIA, CELULOSAS, PAPEL Y CARTON Y SUS MANUFACTURAS",
+        "en" : "CAUCHO, CUERO, PIELES, MADERA, CORCHO, ESPARTERIA, CELULOSAS, PAPEL Y CARTON Y SUS MANUFACTURAS"
+    },
+    "level" : "0",
+    "code" : "00",
+    "codeParent" : "5",
+    "isParent" : true,
+    "childrens" : ["40", "41", "42", "43", "44", "45", "46", "47", "48", "49"] 
+}
+{
+    "name":{
+        "es" : "MATERIAS TEXTILES Y SUS MANUFACTURAS (EXC.DE PUNTO)",
+        "en" : "MATERIAS TEXTILES Y SUS MANUFACTURAS (EXC.DE PUNTO)"
+    },
+    "level" : "0",
+    "code" : "00",
+    "codeParent" : "6",
+    "isParent" : true,
+    "childrens" : ["50", "51", "52", "53", "54", "55", "56", "57", "58", "59"] 
+}
+{
+    "name":{
+        "es" : "TEJIDOS DE PUNTO; ART.TEXTILES CONFECCIONADOS; CALZADO; SOMBRERERIA; PARAGUAS; PLUMON; MANUFACTURAS DE PIEDRA, YESO, ETC. PTOS.CERAMICOS",
+        "en" : "TEJIDOS DE PUNTO; ART.TEXTILES CONFECCIONADOS; CALZADO; SOMBRERERIA; PARAGUAS; PLUMON; MANUFACTURAS DE PIEDRA, YESO, ETC. PTOS.CERAMICOS"
+    },
+    "level" : "0",
+    "code" : "00",
+    "codeParent" : "7",
+    "isParent" : true,
+    "childrens" : ["60", "61", "62", "63", "64", "65", "66", "67", "68", "69"] 
+}
+{
+    "name":{
+        "es" : "VIDRIO, PERLAS, HIERRO Y ACERO, COBRE, NIQUEL, ALUMINIO, PLOMO, CINC Y SUS MANUFACTURAS",
+        "en" : "VIDRIO, PERLAS, HIERRO Y ACERO, COBRE, NIQUEL, ALUMINIO, PLOMO, CINC Y SUS MANUFACTURAS"
+    },
+    "level" : "0",
+    "code" : "00",
+    "codeParent" : "8",
+    "isParent" : true,
+    "childrens" : ["70", "71", "72", "73", "74", "75", "76", "77", "78", "79"] 
+}
+{
+    "name":{
+        "es" : "ESTAÑO Y METALES COMUNES Y SUS MANUFACTURAS; APARATOS MECANICOS, ELECTRICOS; VEHICULOS TERRESTRES, AEREOS, MARITIMOS",
+        "en" : "ESTAÑO Y METALES COMUNES Y SUS MANUFACTURAS; APARATOS MECANICOS, ELECTRICOS; VEHICULOS TERRESTRES, AEREOS, MARITIMOS"
+    },
+    "level" : "0",
+    "code" : "00",
+    "codeParent" : "9",
+    "isParent" : true,
+    "childrens" : ["80", "81", "82", "83", "84", "85", "86", "87", "88", "89"] 
+}
+{
+    "name":{
+        "es" : "APARATOS DE OPTICA; RELOJERIA; MUSICA; ARMAS; MUEBLES; JUGUETES; OBJETOS DE ARTE Y DIVERSAS MANUFACTURAS",
+        "en" : "APARATOS DE OPTICA; RELOJERIA; MUSICA; ARMAS; MUEBLES; JUGUETES; OBJETOS DE ARTE Y DIVERSAS MANUFACTURAS"
+    },
+    "level" : "0",
+    "code" : "00",
+    "codeParent" : "10",
+    "isParent" : true,
+    "childrens" : ["90", "91", "92", "93", "94", "95", "96", "97", "98"] 
+}

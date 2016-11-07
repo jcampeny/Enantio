@@ -123,7 +123,7 @@ input-tag-product {
 		div[product-item] {
 			padding: $margin;
 			background-color : $light-gray;
-			@include transition(all $transition);
+			//@include transition(all $transition);
 			@include box-shadow($shadow);
 			
 			&:after{

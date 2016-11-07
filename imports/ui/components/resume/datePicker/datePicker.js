@@ -24,6 +24,7 @@ class DatePicker {
 				$scope.$apply();				
 			}
 		});
+
 	}
 
 	//El temporalDate deberá guardar la fecha parseada y la fecha normal, 
@@ -36,6 +37,9 @@ class DatePicker {
 	isSelected(startOrEnd, theDate){
 		return this.temporalDate[startOrEnd] == theDate;
 	}
+	isGeneralSelected(startOrEnd, theDate){
+		return this.selectedDate[startOrEnd] == theDate;
+	}
 
 	stop(event){
 		event.stopPropagation();
@@ -45,13 +49,17 @@ class DatePicker {
 		if(!this.isDatePickerOpen){
 			this.stop(event);
 			this.isDatePickerOpen = true;
-			console.log('open');			
+			$('body').addClass('date-picker-open');	
+			if($(window).width() > 960)
+				$('#home-view').addClass('menu-active');	
 		}
 	}
 
 	closeDatePicker(event){
 		this.isDatePickerOpen = false;
-		console.log('closed');
+		$('body').removeClass('date-picker-open');
+		if($(window).width() > 960)
+			$('#home-view').removeClass('menu-active');	
 	}
 
 	submitNewDates(event){

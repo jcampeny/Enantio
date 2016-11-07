@@ -1,15 +1,25 @@
 import { Mongo } from 'meteor/mongo';
+import { Roles } from 'meteor/alanning:roles';
 
 export const Countries = new Mongo.Collection('countries');
 
 Countries.allow({
 	insert (userId, country) {
-		return false;
+		if(!Roles.userIsInRole(userId, 'admin', 'admin-group')){
+			return false;
+		}
+		return true;
 	},
 	update (userId, country, fields, modifier) {
-		return false;
+		if(!Roles.userIsInRole(userId, 'admin', 'admin-group')){
+			return false;
+		}
+		return true;
 	},
 	remove (userId, country) {
-		return false;
+		if(!Roles.userIsInRole(userId, 'admin', 'admin-group')){
+			return false;
+		}
+		return true;
 	}
 });

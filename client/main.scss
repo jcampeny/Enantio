@@ -3,6 +3,9 @@
 @import '../imports/ui/components/auth/auth';
 @import '../imports/ui/components/navigation/navigation';
 @import '../imports/ui/components/home/home';
+@import '../imports/ui/components/admin/admin';
+@import '../imports/ui/components/admin/countries/countries';
+@import '../imports/ui/components/admin/products/products';
 @import '../imports/ui/components/navigationInputs/navigationInputs';
 @import '../imports/ui/components/navigationInputs/inputTag/inputTag'; 
 @import '../imports/ui/components/navigationInputs/inputTagProduct/inputTagProduct'; 
@@ -28,11 +31,24 @@
 body {
 	@extend .body;
 	background-color : $light-gray !important;
+	&.date-picker-open{
+		@media (max-width: 960px){
+			overflow:hidden;
+		}
+	}
 }
 
 input.md-input{
 	font-family: $Avenir !important;
 	border-bottom-width: 1px !important;
 }
-
-  
+div[ui-view], home{
+	min-height: 100%;
+ }
+.loading{
+ 	&.loaded{display: none;}
+ 	svg{
+ 		@extend .infinite-rotation;
+ 	}
+ }
+ .error{color: #ED1852 !important;}

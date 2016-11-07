@@ -1,25 +1,25 @@
 <div favoritos-container>
   <div class="favoritos-header">
     <h2 class="h2-dark">Favoritos</h2>
-    <a class="btn-dark-blue">Nombre</a>
-    <a class="btn-transparent">Color</a>
+    <a ng-class="(favoritos.order == 'name') ? 'btn-dark-blue' : 'btn-transparent'" ng-click="favoritos.order = 'name'">Nombre</a>
+    <a ng-class="(favoritos.order == 'color') ? 'btn-dark-blue' : 'btn-transparent'" ng-click="favoritos.order = 'color'">Color</a>
   </div>
-  <div ng-repeat="favorito in favoritos.favorites" 
+  <div ng-repeat="favorito in favoritos.favorites | orderBy:favoritos.order" 
        md-swipe-left="favoritos.onSwipeLeft($event)" 
        md-swipe-right="favoritos.onSwipeRight($event)"
-       id="{{favorito.id}}">
+       id="{{favorito._id}}">
     <div color="{{favorito.color}}"></div>
     <div date>
-      <span class="h1-dark">{{favorito.day.number}}</span>
+      <span class="h1-dark">{{favorito.date | getDay}}</span>
       <br>
-      <span class="caption-dark-centered">{{favorito.day.text}}</span>
+      <span class="caption-dark-centered">{{favorito.date | getMonth}}</span>
     </div>
     <div name class="body-dark">{{favorito.name}}</div>
     <div delete ng-click="favoritos.onDeleteFavorite(favorito)">
       <span class="lnr lnr-cross"></span>
     </div>
     <div options-desktop>
-      <a>Usar Favorito</a>
+      <a ng-click="favoritos.useFavorite(favorito)">Usar Favorito</a>
       <span ng-click="favoritos.onDeleteFavorite(favorito)" class="lnr lnr-trash"></span>
     </div>
   </div>

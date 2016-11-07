@@ -29,13 +29,18 @@ class InputTagProduct {
 				return Products.find({
 					$or: [
 						{
-							"name_es" : {
-						    	$regex: new RegExp('^' + this.getReactively('searchText')),
-						    	$options : 'i'
-						  	},
-						  	isParent: {
-						  		$exists: false
-						  	}
+							$where : (object)=>{
+								var found = false;
+								var text = this.searchText;
+
+								angular.forEach(object.name, (value, key) => {
+									var regExp = new RegExp('^' + text);
+									if(value.toLowerCase().match(regExp))
+										found = true;
+								});
+
+								return found;
+							}
 						},{
 						  	"code" : {
 						      	$regex: new RegExp('^' + this.getReactively('searchText').split('.').join("")),
@@ -45,7 +50,8 @@ class InputTagProduct {
 						   		$exists: false
 						   	}
 						}
-					]
+					],
+
 				}, {limit : this.limit});
 			},
 			productsParent (){

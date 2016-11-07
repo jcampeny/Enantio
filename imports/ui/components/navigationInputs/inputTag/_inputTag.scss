@@ -111,7 +111,7 @@ input-tag {
 		div[country-item] {
 			padding: 10px 20px;
 			background-color : $light-gray;
-			@include transition(all $transition);
+			//@include transition(all $transition);
 			@include box-shadow($shadow);
 
 			@media #{$gt-sm} {
@@ -119,6 +119,12 @@ input-tag {
 					background-color : $dark-blue;
 					color : white;
 				}
+			}
+		}
+		.loading{
+			&.loaded{display: none;}
+			svg{
+				@extend .infinite-rotation;
 			}
 		}
 	}

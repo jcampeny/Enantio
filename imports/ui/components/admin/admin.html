@@ -1,0 +1,22 @@
+<navigation></navigation>
+
+<div class="data-container">
+	<div class="header">{{admin.viewState}}
+		<a class="btn-transparent btn-reverse" ng-click="admin.toggleState()">Ver
+			<span ng-if="admin.viewState == 'Productos'">países</span>
+			<span ng-if="admin.viewState == 'Países'">productos</span> 
+		</a></div>
+	<admin-countries ng-if="admin.viewState == 'Países'"></admin-countries>
+	<admin-products ng-if="admin.viewState == 'Productos'"></admin-products>
+</div>
+
+<pop-up></pop-up>
+
+
+
+
+
+
+
+
+

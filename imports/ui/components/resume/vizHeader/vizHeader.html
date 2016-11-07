@@ -16,7 +16,7 @@
 
     <div ng-if="vizHeader.vizController.fullscreen !== null"
          ng-click="vizHeader.changeViewFrame()">
-          <span class="lnr" ng-class="{'lnr-arrow-left' : (vizHeader.viewFrameState == 'expanded') , 'lnr-frame-expand' : (vizHeader.viewFrameState == 'contracted' || vizHeader.viewFrameState == 'changing') }"></span>
+          <span class="lnr" ng-class="{'lnr-arrow-left' : (vizHeader.viewFrameState == 'expanded') , 'lnr-frame-expand' : (vizHeader.viewFrameState == 'contracted') }"></span>
     </div>
 
     <div ng-if="vizHeader.vizController.collapsed !== null" 

@@ -1,0 +1,45 @@
+admin{
+	display: block;
+	background-color: $light-gray;
+	padding-bottom: $margin;
+	overflow: hidden;
+	div.data-container{
+		background-color: white;
+		margin: $margin*2;
+
+		color: $dark-blue;
+		@include box-shadow($shadow);
+		&:after{
+			content:"";
+			display:block;
+			clear:both;
+		}
+		div.header{
+			padding: $margin;
+			border-bottom: 1px solid $light-gray;
+			background-color: $dark-blue;
+			color: white;
+		}
+		a.btn-reverse{
+			color:white;
+			border-color: white;
+			float: right;
+			position: relative; top: -6px;
+			@media #{$gt-sm}{
+				&:hover{
+					color: $dark-blue;
+					background-color: white;
+				}
+				
+			}
+		}
+	}
+}
+
+
+
+
+
+
+
+

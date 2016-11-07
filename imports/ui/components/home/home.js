@@ -3,6 +3,7 @@ import angularMeteor from 'angular-meteor';
 
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
+import { Roles } from 'meteor/alanning:roles';
 
 import template from './home.html';
 
@@ -20,13 +21,20 @@ class Home {
 		this.root = $rootScope;
 		this.state = $state;
 
-		this.root.variables = {
-			productos : '',
-			importadores : [{id : '', name : ''}],
-			exportadores : [{id : '', name : ''}],
-			fecha : ''
+		this.root.filter = {
+			product : '',
+			importers : [''],
+			exporters: [''],
+			years : {start: '', end:''}
 		};
 
+		this.root.isAdmin = false;
+
+		Meteor.call('isInRole', 
+			(error, response) => {
+				this.root.isAdmin = response;
+			}
+		);
 	}
 
 	logout(){
@@ -90,31 +98,6 @@ function config ($stateProvider) {
 	.state('home.favoritos', {
 		url : 'favoritos',
 		template : '<favoritos></favoritos>'
-	})
-
-	.state('home.fecha', {
-		url : 'fecha',
-		template : '<fecha></fecha>'
-	})
-
-	.state('home.importadores', {
-		url : 'importadores',
-		template : '<importadores></importadores>'
-	})
-
-	.state('home.exportadores', {
-		url : 'exportadores',
-		template : '<exportadores></exportadores>'
-	})
-
-	.state('home.codigo', {
-		url : 'codigo',
-		template : '<codigo></codigo>'
-	})
-
-	.state('home.precios', {
-		url : 'precios',
-		template : '<precios></precios>'
 	});
 }
 

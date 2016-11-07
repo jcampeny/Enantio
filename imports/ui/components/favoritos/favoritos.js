@@ -5,6 +5,7 @@ import matchMedia from 'angular-media-queries';
 
 import { Meteor } from 'meteor/meteor';
 
+import { Favorites } from '../../../api/favorites/index'
 import template from './favoritos.html';
 
 
@@ -29,51 +30,15 @@ class Favoritos {
 				this.deleteFavorite(data.item);
 		});
 
-		this.favorites = [
-			{
-				id : 'IURBGIJERBGER',
-				day : {text : 'LU', number : '14'},
-				name : 'Favorito A',
-				color : 'yellow'
-			},
-			{
-				id : 'GE9O57W48574B',
-				day : {text : 'VI', number : '10'},
-				name : 'Favorito B',
-				color : 'magenta'
-			},
-			{
-				id : '4B29NO7BVWB54',
-				day : {text : 'MI', number : '08'},
-				name : 'Favorito C',
-				color : 'turquoise'
-			},
-			{
-				id : 'RWTNREYNJTYJMTYM',
-				day : {text : 'SA', number : '03'},
-				name : 'Favorito D',
-				color : 'blue'
-			},
-			{
-				id : 'ASFHGTHRYJ',
-				day : {text : 'VI', number : '10'},
-				name : 'Favorito B',
-				color : 'purple'
-			},
-			{
-				id : 'YJ56356Y56J',
-				day : {text : 'MI', number : '08'},
-				name : 'Favorito C',
-				color : 'turquoise'
-			},
-			{
-				id : '4B6536BU45',
-				day : {text : 'DO', number : '29'},
-				name : 'Favorito R',
-				color : 'blue'
-			}
-		];
+		this.subscribe('favorites');
 
+		this.helpers({
+			favorites(){
+				return Favorites.find({}); 
+			}
+		});
+
+		this.order = 'name';
 	}
 
 	onSwipeLeft (event) {
@@ -99,8 +64,11 @@ class Favoritos {
 	}
 
 	deleteFavorite (favorito) {
-		$('#'+ favorito.id).addClass('removed');
-		console.log('favorito deleteado: ' + favorito.id);
+		Meteor.call('removeFavorite', favorito._id, 
+			(err, res)=>{
+				console.log(err);
+			}
+		);
 	}
 
 	openPopUp (favorito){
@@ -111,8 +79,27 @@ class Favoritos {
 		});
 	}
 
+	useFavorite (favorito){
+		this.root.$broadcast('favoriteFilterSelected', {
+			filter : favorito.filter
+		});
+	}
+
 };
 
+function getMonth(){
+	return function(date){
+		const parseDate = new Date(date);
+		const monthString = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEPT', 'OCT', 'NOV', 'DIC'];
+		return monthString[parseDate.getMonth()];
+	}
+}
+function getDay(){
+	return function(date){
+		const parseDate = new Date(date);
+		return parseDate.getDate();
+	}
+}
 const name = 'favoritos';
 
 export default angular.module(name, [
@@ -123,4 +110,6 @@ export default angular.module(name, [
 	template,
 	controllerAs : name,
 	controller : Favoritos
-});
+})
+.filter('getMonth', getMonth)
+.filter('getDay', getDay);

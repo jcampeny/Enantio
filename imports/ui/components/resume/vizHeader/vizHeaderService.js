@@ -63,7 +63,8 @@ class VizHeaderService
 					deferred.resolve('contracted');
 					$('[viz]').css({
 						'top' : '',
-						'position' : ''
+						'position' : '',
+            'z-index': ''
 					});
 				}
 			);			
@@ -143,8 +144,12 @@ class VizHeaderService
   					e.css({
   						'transition' : '',
   						'max-width' : 'calc(100% - ' + originalMargin * 2 + 'px)',
-  						'position' : ''
+  						'position' : '',
+              'z-index':''
   					});
+            if($(window).width() < 960)
+              e.css({'z-index':'25'});
+
   					deferred.resolve('expanded');
   				}
   			},

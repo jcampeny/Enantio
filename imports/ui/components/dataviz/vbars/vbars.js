@@ -7,14 +7,15 @@ import * as d3 from "d3";
 
 import { Meteor } from 'meteor/meteor';
 
+import {name as FiltersService} from '../filtersService';
 
 class VBars {
-	constructor($scope, $reactive, $q, $timeout){
+	constructor($scope, $reactive, $q, $timeout, filtersService){
 		'ngInject';
 		$reactive(this).attach($scope);
 
 		this.q = $q;
-		// this.formatService = formatService;
+		this.filtersService = filtersService;
 
 		this.elementName = "vbars";
 		this.padding = {x:70, y:45};
@@ -171,7 +172,8 @@ class VBars {
 const name = 'vbars';
 
 export default angular.module(name, [
-	angularMeteor
+	angularMeteor,
+	FiltersService
 ]).component(name, {
 	controllerAs : name,
 	controller : VBars 
