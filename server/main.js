@@ -4,3 +4,4 @@ import '../imports/api/users';
 import '../imports/api/images';
 
 import '../imports/api/countries';
+import '../imports/api/data';
