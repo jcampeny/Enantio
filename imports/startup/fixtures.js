@@ -8,15 +8,15 @@ import { Products } from '../api/products';
 import { Favorites } from '../api/favorites';
 
 Meteor.startup(() => {
-    const adminUser = {
-        email : 'admin@admin.admin',
-        password : 'admin1234',
-        username : 'Admin',
-        profile : { name : 'Enantio Admin'}
-    };
+    // const adminUser = {
+    //     email : 'superadmin@admin.admin',
+    //     password : 'admin1234',
+    //     username : 'superadmin',
+    //     profile : { name : 'Enantio Admin'}
+    // };
 
-    //var id = Accounts.createUser(adminUser);
-    //Roles.addUsersToRoles(id, 'admin', 'admin-group');
+    // var id = Accounts.createUser(adminUser);
+    // Roles.addUsersToRoles(id, 'admin', 'admin-group');
 
 
     if(Favorites.find({}).count() === 0){
