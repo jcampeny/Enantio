@@ -112,6 +112,9 @@ date-picker{
 						}
 						&.actual{
 							position: relative;	
+						}
+
+						&.incomplete{
 							&:after{
 								content: "";
 								position: absolute;

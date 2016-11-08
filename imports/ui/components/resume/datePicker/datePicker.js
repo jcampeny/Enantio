@@ -3,18 +3,23 @@ import angularMeteor from 'angular-meteor';
 
 import template from './datePicker.html';
 
+import {name as FiltersService} from '../../dataviz/filtersService';
+
 class DatePicker {
-	constructor ($scope, $reactive) {
+	constructor ($scope, $rootScope, $reactive, filtersService) {
 		'ngInject';
 
 		$reactive(this).attach($scope);
+
+		this.filtersService = filtersService;
+		this.root = $rootScope;
 
 		this.isDatePickerOpen = false;
 		this.temporalDate = angular.copy(this.selectedDate);
 
 		//get actual date
 		const currentDate = new Date();
-		this.currentYear = currentDate.getFullYear();
+		this.currentYear = currentDate.getFullYear() - 1;
 
 		this.datePanel = this.datePanelConstructor();
 
@@ -23,6 +28,11 @@ class DatePicker {
 				this.closeDatePicker(event);
 				$scope.$apply();				
 			}
+		});
+
+		this.root.$on('refreshDBData', (event) => {
+		    this.temporalDate = this.filtersService.years;
+		    this.selectedDate = this.filtersService.years;
 		});
 
 	}
@@ -67,6 +77,10 @@ class DatePicker {
 			this.temporalDate.start = this.temporalDate.end;
 
 		this.selectedDate = angular.copy(this.temporalDate);
+		
+		this.filtersService.years = this.selectedDate;
+		this.root.$broadcast('refreshDBData');
+
 		this.closeDatePicker(event);
 	}
 	createYearPanel(lastYear, reverse = false){

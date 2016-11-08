@@ -1,16 +1,21 @@
 import angular from 'angular';
+import angularMeteor from 'angular-meteor';
+
 import { Meteor } from 'meteor/meteor';
 
 class FiltersService
 {
   	constructor(){
   		'ngInject';
+  		// $reactive(this).attach($scope);
 
   		this.product = null;
   		this.importers = [];
   		this.exporters = [];
   		this.years = {start: 2008, end: 2015};
   		this.aggregateLevel = 2;
+
+
 
   	}
 
@@ -32,40 +37,48 @@ class FiltersService
 		this.aggregateLevel = filters.aggregateLevel;
   	}
 
-  	getProductFilter(){
-  		return this.product;
-  	}
+ //  	getProductFilter(){
+ //  		return this.product;
+ //  	}
 	
-	setProductFilter(product){
-		this.product = product;
-	}
+	// setProductFilter(product){
+	// 	this.product = product;
+	// }
 
-  	getImportersFilter(){
-  		return this.importers;
-  	}
+ //  	getImportersFilter(){
+ //  		return this.importers;
+ //  	}
 	
-	setImportersFilter(importers){
-		this.importers = importers;
-	}
+	// setImportersFilter(importers){
+	// 	this.importers = importers;
+	// }
 
-  	getExportersFilter(){
-  		return this.exporters;
-  	}
+ //  	getExportersFilter(){
+ //  		return this.exporters;
+ //  	}
 	
-	setExportersFilter(exporters){
-		this.exporters = exporters;
-	}
+	// setExportersFilter(exporters){
+	// 	this.exporters = exporters;
+	// }
 
-  	getYearFilter(){
-  		return this.year;
-  	}
+ //  	getYearFilter(){
+ //  		return this.year;
+ //  	}
 	
-	setYearFilter(year){
-		this.year = year;
-	}
+	// setYearFilter(year){
+	// 	this.year = year;
+	// }
+
+ //  	getAggregateFilter(){
+ //  		return this.aggregateLevel;
+ //  	}
+	
+	// setAggregateFilter(aggregateLevel){
+	// 	this.aggregateLevel = aggregateLevel;
+	// }
 }
 
 const name = 'filtersService';
 
-export default angular.module(name, [])
+export default angular.module(name, [angularMeteor])
 	.service(name, FiltersService);

@@ -7,16 +7,18 @@ import * as d3 from "d3";
 
 import { Meteor } from 'meteor/meteor';
 
+import {name as FiltersService} from '../filtersService';
 import { Products } from '../../../../api/products/index';
 
 
 class Treemap {
-	constructor($scope, $reactive, $q, $timeout){
+	constructor($scope, $rootScope, $reactive, $q, $timeout, filtersService){
 		'ngInject';
 		$reactive(this).attach($scope);
 
 		this.q = $q;
-		// this.formatService = formatService;
+		this.filtersService = filtersService;
+		this.root = $rootScope;
 
 		this.elementName = "treemap";
 		this.element = $(this.elementName);
@@ -36,10 +38,10 @@ class Treemap {
 		// }).format("$,d");
 
 		this.nest = d3.nest()
-	  	    .key(function(d) { return d.cmdCode; })
+	  	    .key(function(d) { return d._id; })
 	  	    // .key(function(d) { return d.Destination; })
 	  	    // .key(function(d) { return d.Ticket_class_description; })
-	  	    .rollup(function(d) { return d3.sum(d, function(d) { return d.TradeValue; }); });
+	  	    .rollup(function(d) { return d3.sum(d, function(d) { return d.total; }); });
 
 	  	this.treemap = null;
 
@@ -64,17 +66,24 @@ class Treemap {
 	  				self.renderTimeout = $timeout(() => { 
 	  					self.width  = self.element.width();
 	  					self.height = parseInt(self.element.css('paddingTop'));
-	  					self.removeChart();
-	  					self.renderChart(); 
+	  					self.refreshChart();
 	  				},400);
 	  		});   
 	  	}
+
+	  	this.handleRootEvents();
+	}
+
+	refreshChart(){
+		this.removeChart();
+		this.renderChart(); 
 	}
 
 	removeChart(element){
 		d3.select(this.elementName)
 		    .selectAll(".node")
 		    .remove();
+		d3.select("#treeTooltip").remove();
 	}
 
 	loadData(){
@@ -83,21 +92,30 @@ class Treemap {
 		let min = Infinity;
 		let max = -Infinity;
 
-		d3.request("data/dataset_agg2.json")
-		  .mimeType("application/json")
-		  .response(function(xhr) { return JSON.parse(xhr.responseText); })
-		  .get((data) => {
-		  	self.data = data.dataset;
-		    deferred.resolve();
-		});
+		Meteor.call('dataProducts', 
+			this.filtersService.product,
+    		this.filtersService.importers,
+    		this.filtersService.exporters,
+    		this.filtersService.aggregateLevel,
+    		this.filtersService.years,
+	      	(error,result) => {
+		        if (error) {
+		          console.log(error);
+		        } else {
+		          	console.log('DataProducts arrived!');
+		          	self.data = result;
+		            deferred.resolve();
+		        }
+	      	}
+	    );
 		return deferred.promise;
 	}
 
 	renderChart(){
 		let self = this;
-		let maxValue = d3.max(this.data, function(d) { return d.TradeValue; });	
-		let totalValue = d3.sum(this.data, function(d) { return parseFloat(d.TradeValue); });	
-		var tooltip = d3.select(this.elementName).append('div').attr("id", "mapTooltip");
+		let maxValue = d3.max(this.data, function(d) { return d.total; });	
+		let totalValue = d3.sum(this.data, function(d) { return parseFloat(d.total); });	
+		var tooltip = d3.select(this.elementName).append('div').attr("class", "chartTooltip").attr("id","treeTooltip");
 
 	  	this.treemap = d3.treemap()
 		    .size([this.width, this.height])
@@ -124,7 +142,7 @@ class Treemap {
 					// 	return parseInt(d);
 					// });
 				  	let product = Products.findOne({code: d.data.key.toString()});
-				  	let productName = product.name_es;
+				  	let productName = product.name.es;
 				  	if(productName.length > 15){
 				  		productName = productName.substring(0,15).trim()+"...";
 				  	}
@@ -134,7 +152,7 @@ class Treemap {
 				      "<tr class='tooltip-item'><td class='item-left'>Código NC: </td><td class='item-right'>"+d.data.key+"</td></tr>"+
 				      "<tr class='tooltip-item'><td class='item-left'>Descripción: </td><td class='item-right'>"+productName+"</td></tr>"+
 				      "<tr class='tooltip-item'><td class='item-left'>% of total: </td><td class='item-right'>"+(Math.round(parseFloat(d.data.value)/totalValue * 10000) / 100)+"%</td></tr>"+
-				      "<tr class='tooltip-item'><td class='item-left'># Fob: </td><td class='item-right'>"+d.data.value.toLocaleString()+"</td></tr></table>";
+				      "<tr class='tooltip-item'><td class='item-left'>€ Fob: </td><td class='item-right'>"+d.data.value.toLocaleString()+"</td></tr></table>";
 
 				    let containerWidth = parseInt($(this).width());
 				    let tooltipHeight = parseInt(tooltip.style("height")) <= 0 ? 130 : parseInt(tooltip.style("height"));
@@ -151,6 +169,14 @@ class Treemap {
 				})
 				.on('mouseout', function() {
 				    tooltip.classed('show', false);
+				})
+				.on('click',(d) => {
+					if(self.filtersService.aggregateLevel < 6){
+						self.filtersService.aggregateLevel = self.filtersService.aggregateLevel+2;
+						self.filtersService.product = d.data.key;
+						self.root.$broadcast('refreshDBData');	
+					}
+					
 				});
 
 		  	node.append("div")
@@ -167,12 +193,20 @@ class Treemap {
 		      	.attr("class", "node-value")
 		      	.text(function(d) { 
 			      	if($("#node-"+d.data.key).width() >= 65 && $("#node-"+d.data.key).height() >= 35){
-						return Products.findOne({code: d.data.key.toString()}).name_es; 
+						return Products.findOne({code: d.data.key.toString()}).name.es; 
 			      	}else{
 			      		return "";
 			      	}		      	
 		      	});
 
+	}
+
+	handleRootEvents(){
+		this.root.$on('refreshDBData', (event) => {
+	  		this.loadData().then(()=>{
+    			this.refreshChart(); 
+    		});
+		});
 	}
 }
 

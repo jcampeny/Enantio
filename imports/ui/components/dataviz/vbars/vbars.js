@@ -1,7 +1,7 @@
 import angular from 'angular';
 import angularMeteor from 'angular-meteor';
 
-// import {name as FormatService} from './formatService';
+import { Data } from '../../../../api/data/index';
 
 import * as d3 from "d3";
 
@@ -10,26 +10,26 @@ import { Meteor } from 'meteor/meteor';
 import {name as FiltersService} from '../filtersService';
 
 class VBars {
-	constructor($scope, $reactive, $q, $timeout, filtersService){
+	constructor($scope, $rootScope, $reactive, $q, $timeout, filtersService){
 		'ngInject';
 		$reactive(this).attach($scope);
 
+		this.root = $rootScope;
 		this.q = $q;
 		this.filtersService = filtersService;
+		this.data 	= [];
 
 		this.elementName = "vbars";
 		this.padding = {x:70, y:45};
 		this.element = $(this.elementName);
 		this.width  = this.element.width() - 2*this.padding.x;
 		
-		this.data 	= [];
-
 		this.xScale = null;
 		this.yScale = null;
 		this.svg = null;
 		self = this;
 
-		this.loadData(this.type).then(()=>{
+		this.loadData().then(()=>{
 			this.height = parseInt(this.element.css('paddingTop')) - 2*this.padding.y; //Calcular esto después de renderizar el espacio
 		  	this.renderChart(); 
 
@@ -42,6 +42,8 @@ class VBars {
 					this.renderTimeout = $timeout(() => { this.refreshChart();},400);
 			});     
 		});
+
+		this.handleRootEvents();
 	}
 
 	refreshChart(){
@@ -61,23 +63,41 @@ class VBars {
 		let min = Infinity;
 		let max = -Infinity;
 
-		d3.request("data/dataset_anual.json")
-		  .mimeType("application/json")
-		  .response(function(xhr) { return JSON.parse(xhr.responseText); })
-		  .get((data) => {
-		  	self.data = data.dataset;
-		    deferred.resolve();
-		});
+		Meteor.call('dataYears', 
+			this.filtersService.product,
+    		this.filtersService.importers,
+    		this.filtersService.exporters,
+    		this.filtersService.aggregateLevel,
+    		this.filtersService.years,
+	      	(error,result) => {
+		        if (error) {
+		          console.log(error);
+		        } else {
+		          	console.log('DataYears arrived!');
+		          	self.data = result.sort(function(a,b){
+		          		return a._id - b._id;
+		          	});
+		            deferred.resolve();
+		        }
+	      	}
+	    );
+		// d3.request("data/dataset_anual.json")
+		//   .mimeType("application/json")
+		//   .response(function(xhr) { return JSON.parse(xhr.responseText); })
+		//   .get((data) => {
+		//   	self.data = data.dataset;
+		//     deferred.resolve();
+		// });
 		return deferred.promise;
 	}
 
 	renderChart(){
 		let self = this;
-		let maxValue = d3.max(this.data, function(d) { return d.TradeValue; });	
+		let maxValue = d3.max(this.data, function(d) { return d.total; });	
 		var tooltip = d3.select(this.elementName).append('div').attr("id", "mapTooltip");
 
 		this.xScale = d3.scaleBand()
-			.domain(this.data.map(function(d) { return d.yr; }))
+			.domain(this.data.map(function(d) { return d._id; }))
 		    .range([0, this.width])
 		    .paddingInner(0.6)
 		    .paddingOuter(0.8);
@@ -99,10 +119,10 @@ class VBars {
 				    .enter()
 				    .append("rect")
 					.attr("class", "bar")
-					.attr("x", (d) => { return this.xScale(d.yr); })
+					.attr("x", (d) => { return this.xScale(d._id); })
 					.attr("width", this.xScale.bandwidth())
-					.attr("y", (d) => { return this.yScale(d.TradeValue); })
-					.attr("height", (d) => { return this.height - this.yScale(d.TradeValue); })
+					.attr("y", (d) => { return this.yScale(d.total); })
+					.attr("height", (d) => { return this.height - this.yScale(d.total); })
 					.on('mouseover', function(d,i){
 						// let mouse = d3.mouse(this.svg.node()).map(function(d) {
 						// 	return parseInt(d);
@@ -110,12 +130,12 @@ class VBars {
 					  
 					    let tooltipDif = 0;
 					    if(i>0){
-					    	tooltipDif = Math.round(((d.TradeValue-self.data[i-1].TradeValue)/self.data[i-1].TradeValue) * 10000)/100;
+					    	tooltipDif = Math.round(((d.total-self.data[i-1].total)/self.data[i-1].total) * 10000)/100;
 					    }
 
 					    let tooltipContent = 
 					      "<table><tr class='tooltip-item'><td class='item-left'>% Dif: </td><td class='item-right'>"+tooltipDif+"</td></tr>"+
-					      "<tr class='tooltip-item'><td class='item-left'>€ Fob: </td><td class='item-right'>"+d.TradeValue.toLocaleString()+"</td></tr></table>";
+					      "<tr class='tooltip-item'><td class='item-left'>€ Fob: </td><td class='item-right'>"+d.total.toLocaleString()+"</td></tr></table>";
 
 
 					    let containerWidth = parseInt(self.svg.style("width"));
@@ -130,6 +150,10 @@ class VBars {
 					})
 					.on('mouseout', function() {
 					    tooltip.classed('show', false);
+					})
+					.on('click',function(d){
+						self.filtersService.years = {start:d._id, end:d._id};
+						self.root.$broadcast('refreshDBData');
 					});
 
 		this.svg.append("g")
@@ -166,6 +190,14 @@ class VBars {
 				.attr("height",0.5);
 
 
+	}
+
+	handleRootEvents(){
+		this.root.$on('refreshDBData', (event) => {
+	  		this.loadData().then(()=>{
+    			this.refreshChart(); 
+    		});
+		});
 	}
 }
 

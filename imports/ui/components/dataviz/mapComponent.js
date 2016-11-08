@@ -3,14 +3,18 @@ import * as d3 from "d3";
 import * as topojson from "topojson";
 import countriesMap from './countries_110.json';
 
+import { Countries } from '../../../api/countries/index';
+import {name as FiltersService} from './filtersService';
+
 class MapComponent
 {
-	constructor($reactive, $scope, $q, $timeout, $rootScope){
+	constructor($reactive, $scope, $q, $timeout, $rootScope, filtersService){
 		'ngInject';
 
     $reactive(this).attach($scope);
     
     this.root = $rootScope;
+    this.filtersService = filtersService;
     this.q = $q;
     this.element = $(this.type);
 
@@ -23,36 +27,35 @@ class MapComponent
     this.width      = this.element.width();
     this.height     = this.element.height();
     this.totalValue = 0;
+    this.currentZoom = 1;
 
     this.setupMap(this.width, this.width*0.6);
+    var self = this;
 
-    this.loadData(this.type).then(()=>{
-      this.renderMap(this.type, this.width); 
+    var subscriptionHandle = this.subscribe('countries', () => [], {
+        onReady: () => {
+          self.loadData(self.type).then(()=>{
+            self.renderMap(self.type, self.width); 
 
-      this.renderTimeout;
+            self.renderTimeout;
 
-      $scope.$watch(
-        ()=>this.element.width() + this.element.height(), 
-        ()=>{
-          $timeout.cancel(this.renderTimeout);
-          this.renderTimeout = $timeout(() => { this.refreshMap(); },400);
-        });     
+            $scope.$watch(
+              ()=>self.element.width() + self.element.height(), 
+              ()=>{
+                $timeout.cancel(self.renderTimeout);
+                self.renderTimeout = $timeout(() => { self.refreshMap(); },400);
+              });     
+          });
+        }
+      });
+    this.helpers({
+      countries(){
+        return Countries.find({});
+      }
     });
 
     this.handleRootEvents();
 	}
-
-  zoomIn(){
-    console.log('zoom in');
-  }
-
-  zoomOut(){
-    console.log('zoom out');
-  }
-
-  triggerLaso(){
-    console.log('active lasso');
-  }
 
   refreshMap(){
     this.width      = this.element.width();
@@ -79,6 +82,7 @@ class MapComponent
 
   removeMap(element){
     this.svg.remove();
+    d3.select("#mapTooltip").remove();
   }
 
   loadData(type){
@@ -87,42 +91,47 @@ class MapComponent
     // let parser = d3.dsvFormat(";");
     var min = Infinity;
     var max = -Infinity;
+    self.totalValue = 0;
+    this.dataNest   = {};
 
-    // d3.request("data/annual_comtrade_2008_spain.csv")
-    //   .mimeType("text/plain")
-    //   .response(function(xhr) { return parser.parse(xhr.responseText); })
-    d3.request("data/dataset.json")
-      .mimeType("application/json")
-      .response(function(xhr) { return JSON.parse(xhr.responseText); })
-      .get((data) => {
-        let tradeFlow = "-1";
-        if(type === "importadores"){
-          tradeFlow = "1";
-        }else if(type === "exportadores"){
-          tradeFlow = "2";
-        }
-
-        angular.forEach(data.dataset, (d) => {
-          if(d.rgCode == tradeFlow && d.pt3ISO === "WLD"){
-            if(!self.dataNest[d.rt3ISO]){
-              self.dataNest[d.rt3ISO] = { countryName : d.rtTitle };
+    let methodName = "";
+    if(this.type === "importadores"){
+        methodName = "dataImporters";
+    }else if(this.type === "exportadores"){
+        methodName = "dataExporters";
+    }
+    
+    Meteor.call(methodName, 
+        this.filtersService.product,
+        this.filtersService.importers,
+        this.filtersService.exporters,
+        this.filtersService.aggregateLevel,
+        this.filtersService.years,
+          (error,result) => {
+            if (error) {
+              console.log(error);
+            } else {
+                console.log(methodName+" arrived!");
+                angular.forEach(result, (d) => {
+                    let country = self.getCountryFromCode(d._id);
+                    if(country !== null && !self.dataNest[country.iso]){
+                      self.dataNest[country.iso] = { 
+                        countryName : country.name.es,
+                        total : d.total
+                      };
+                    }
+                    min = Math.min(min, parseFloat(d.total));
+                    max = Math.max(max, parseFloat(d.total));
+                    self.totalValue += parseFloat(d.total);
+                });
+                console.log(min+"--"+max);
+                self.valueScale = d3.scaleLinear()
+                  .domain([min, max])
+                  .range([1, 15]);
+                deferred.resolve();
             }
-            if(!self.dataNest[d.rt3ISO]['agg_'+d.aggrLevel]){
-              self.dataNest[d.rt3ISO]['agg_'+d.aggrLevel] = parseFloat(d.TradeValue);
-            }else{
-              self.dataNest[d.rt3ISO]['agg_'+d.aggrLevel] += parseFloat(d.TradeValue);
-            }
-            min = Math.min(min, parseFloat(d.TradeValue));
-            max = Math.max(max, parseFloat(d.TradeValue));
-            self.totalValue += parseFloat(d.TradeValue);
           }
-        });
-
-        self.valueScale = d3.scaleLinear()
-          .domain([min, max])
-          .range([1, 15]);
-        deferred.resolve();
-      });
+        );
       return deferred.promise;
   }
 	
@@ -167,7 +176,12 @@ class MapComponent
           return 'circle_'+d.properties.iso_a3;
         })
         .attr("transform", (d) => {
-          return "translate(" + this.path.centroid(d) + ")";   
+          let country = self.getCountryFromIso(d.properties.iso_a3);
+          if(country !== null && country.coordinates.lng && country.coordinates.lat){
+            let point = [country.coordinates.lng, country.coordinates.lat];
+            return "translate(" + self.projection(point) + ")";   
+          }
+          
         })
         .attr("r",0)
         .attr("fill",(d)=>{
@@ -192,7 +206,7 @@ class MapComponent
               tooltipText = "País de origen";
             }
 
-            var tooltipPercent = Math.round(parseFloat(self.dataNest[d.properties.iso_a3].agg_0 / self.totalValue) * 10000) / 100;
+            var tooltipPercent = Math.round(parseFloat(self.dataNest[d.properties.iso_a3].total / self.totalValue) * 10000) / 100;
 
             var tooltipContent = 
               "<table><tr class='tooltip-item'><td class='item-left'>"+tooltipText+": </td><td class='item-right'>"+country.countryName+"</td></tr>"+
@@ -211,18 +225,29 @@ class MapComponent
         .on('mouseout', function() {
             tooltip.classed('show', false);
         })
+        .on('click',(d) => {
+          if(self.type === "importadores"){
+            self.filtersService.importers = [self.getCountryFromIso(d.properties.iso_a3).code];
+            self.root.$broadcast('refreshDBData');
+
+          }else if(self.type === "exportadores"){
+            self.filtersService.exporters = [self.getCountryFromIso(d.properties.iso_a3).code];
+            self.root.$broadcast('refreshDBData');
+          }
+        })
         .transition()
         .duration(1000)
         .attr("r",(d) => {
           if(self.dataNest[d.properties.iso_a3]){
-            return this.valueScale(self.dataNest[d.properties.iso_a3].agg_0);  
+            return this.valueScale(self.dataNest[d.properties.iso_a3].total);  
           }else{
             return 0;
           }
         });
 
-    var zoom = d3.zoom()
+    this.zoom = d3.zoom()
         .scaleExtent([1, 8])
+        // .translateExtent([[0,0],[180,180]])
         .on("zoom",() => {
           var s = d3.event.transform.k;
           var t = [d3.event.transform.x, d3.event.transform.y];
@@ -235,11 +260,42 @@ class MapComponent
 
           d3.selectAll('.land').style("stroke-width", 0.5 / s + "px");
           dPath.attr("transform","translate("+ t[0] + ", " + t[1] + ")scale("+s+")");            
-          circles.attr("transform","translate("+ t[0] + ", " + t[1] + ")scale("+s+")");            
+          circles.attr("transform","translate("+ t[0] + ", " + t[1] + ")scale("+s+")");
+
+          circles.selectAll(".circle")
+            .data(dataFeatures, function(d){
+              return d.properties.iso_a3;
+            })
+            .attr("r",(d) => {
+                if(self.dataNest[d.properties.iso_a3]){
+                  return (1/s) * this.valueScale(self.dataNest[d.properties.iso_a3].total);  
+                }else{
+                  return 0;
+                }
+            });
+
       });
 
     //set handle function to this.svg element
-    this.svg.call(zoom);
+    this.svg.call(this.zoom);
+  }
+
+  zoomIn(){
+    if(this.currentZoom < 8){
+      this.currentZoom++
+      this.zoom.scaleTo(this.svg.transition().duration(400), this.currentZoom);   
+    }
+  }
+
+  zoomOut(){
+    if(this.currentZoom >1){
+      this.currentZoom--;
+      this.zoom.scaleTo(this.svg.transition().duration(400), this.currentZoom);   
+    }
+  }
+
+  triggerLaso(){
+    console.log('active lasso');
   }
 
   handleRootEvents (){
@@ -276,6 +332,36 @@ class MapComponent
         this.triggerLaso();      
       }
     });
+
+    this.root.$on('refreshDBData', (event) => {
+        this.loadData(this.type).then(()=>{
+          this.refreshMap();
+        });
+    });
+  }
+
+  getCountryFromCode(code){
+    let c = null;
+
+    angular.forEach(this.countries, function(country){
+      if(country.code == code){
+        c = country;
+      }
+    });
+
+    return c;
+  }
+
+  getCountryFromIso(iso){
+    let c = null;
+
+    angular.forEach(this.countries, function(country){
+      if(country.iso == iso){
+        c = country;
+      }
+    });
+
+    return c;
   }
 }
 

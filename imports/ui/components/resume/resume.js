@@ -45,8 +45,8 @@ class Resume {
 		}
 		/*new Date().getFullYear()*/
 		this.date = {
-			start : '2014',
-			end : '2016'
+			start : 2008,
+			end : 2015
 		};
 
 		this.fecha        = new headerController('fecha', 'Fecha', null, toggleLock, null, 'home.fecha', false, this.date);
