@@ -8,6 +8,7 @@ import { name as Importadores } from '../dataviz/importadores/importadores';
 import { name as Exportadores } from '../dataviz/exportadores/exportadores';
 import { name as VBars } from '../dataviz/vbars/vbars';
 import { name as Treemap } from '../dataviz/treemap/treemap';
+import { name as Prices } from '../dataviz/prices/prices';
 
 
 class Resume {
@@ -66,7 +67,8 @@ export default angular.module(name, [
 	Importadores,
 	Exportadores,
 	VBars,
-	Treemap
+	Treemap,
+	Prices
 ]).component(name, {
 	template,
 	controllerAs : name,

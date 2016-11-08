@@ -6,8 +6,10 @@ import { Products } from '../../../../api/products/index';
 import template from './inputTagProduct.html';
 import { name as ProductNavigation} from './productNavigation/productNavigation';
 
+import {name as FiltersService} from '../../dataviz/filtersService';
+
 class InputTagProduct {
-	constructor ($scope, $reactive, $rootScope) {
+	constructor ($scope, $reactive, $rootScope, filtersService) {
 		'ngInject';
 
 		$reactive(this).attach($scope);
@@ -23,6 +25,7 @@ class InputTagProduct {
 		this.unSelected = true;
 		
 		this.root = $rootScope;
+		this.filtersService = filtersService;
 
 		this.helpers({
 			products(){
@@ -105,6 +108,10 @@ class InputTagProduct {
 			this.root.$broadcast('closeProducts', {
 				event : event
 			});
+
+			this.filtersService.product = product.code;
+			this.filtersService.aggregateLevel = parseInt(product.level);
+			this.root.$broadcast('refreshDBData');
 		}
 	}
 
@@ -112,6 +119,10 @@ class InputTagProduct {
 		var index = this.productAreSelected(product).item;
 
 		this.selected.splice(index,1);
+
+		this.filtersService.product = null;
+		this.filtersService.aggregateLevel = 2;
+		this.root.$broadcast('refreshDBData');
 	}
 
 

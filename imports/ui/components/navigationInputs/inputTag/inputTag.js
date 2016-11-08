@@ -4,9 +4,10 @@ import angularMeteor from 'angular-meteor';
 import { Countries } from '../../../../api/countries/index';
 import template from './inputTag.html';
 
+import {name as FiltersService} from '../../dataviz/filtersService';
 
 class InputTag {
-	constructor ($scope, $reactive, $rootScope) {
+	constructor ($scope, $reactive, $rootScope, filtersService) {
 		'ngInject';
 
 		$reactive(this).attach($scope);
@@ -17,8 +18,10 @@ class InputTag {
 
 		this.limit = 5;
 		this.expanded = false;
+		this.name = $scope.name;
 
 		this.root = $rootScope;
+		this.filtersService = filtersService;
 
 		this.helpers({
 			countries(){
@@ -68,6 +71,13 @@ class InputTag {
 			this.root.$broadcast('closeCountries', {
 				event : event
 			});
+
+			if(this.name === "importador"){
+				this.filtersService.importers.push(country.code);
+			}else if(this.name === "exportador"){
+				this.filtersService.exporters.push(country.code);
+			}
+			this.root.$broadcast('refreshDBData');
 		}
 	}
 
@@ -75,6 +85,15 @@ class InputTag {
 		var index = this.countryAreSelected(country).item;
 
 		this.selected.splice(index,1);
+
+		if(this.name === "importador"){
+			var i = this.filtersService.importers.indexOf(country.code);
+			this.filtersService.importers.splice(i,1);
+		}else if(this.name === "exportador"){
+			var i = this.filtersService.exporters.indexOf(country.code);
+			this.filtersService.exporters.splice(i,1);
+		}
+		this.root.$broadcast('refreshDBData');
 	}
 
 	countryAreSelected (country) {

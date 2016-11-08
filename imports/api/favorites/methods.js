@@ -18,7 +18,7 @@ export function insertFavorite(newFavorite) {
 	}).count();
 
 	if(favoriteRepeated > 0){
-		throw new Meteor.Error(400, 'Esta nombre ya existe');
+		throw new Meteor.Error(400, 'Este nombre ya existe');
 	}
 
 	Favorites.insert(newFavorite);

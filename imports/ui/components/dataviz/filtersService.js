@@ -30,10 +30,10 @@ class FiltersService
   	}
 
   	setFilters(filters){
-		this.product = filters.product;
-		this.importers = filters.importers;
-		this.exporters = filters.exporters;
-		this.years = filters.years;
+		this.product        = filters.product;
+		this.importers      = filters.importers;
+		this.exporters      = filters.exporters;
+		this.years          = filters.years;
 		this.aggregateLevel = filters.aggregateLevel;
   	}
 

@@ -28,6 +28,15 @@
 		.item-right{
 			flex-grow:1;
 			text-align: right;	
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
+	}
+}
+
+.chartTooltip{
+	&.show {
+		margin-top:-25px;
 	}
 }

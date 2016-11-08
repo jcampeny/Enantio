@@ -55,6 +55,7 @@ class VBars {
 
 	removeChart(element){
 	  this.svg.remove();
+	  d3.select("#vbarsTooltip").remove();
 	}
 
 	loadData(){
@@ -94,7 +95,7 @@ class VBars {
 	renderChart(){
 		let self = this;
 		let maxValue = d3.max(this.data, function(d) { return d.total; });	
-		var tooltip = d3.select(this.elementName).append('div').attr("id", "mapTooltip");
+		var tooltip = d3.select(this.elementName).append('div').attr("class", "chartTooltip").attr("id", "vbarsTooltip");
 
 		this.xScale = d3.scaleBand()
 			.domain(this.data.map(function(d) { return d._id; }))

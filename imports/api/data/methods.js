@@ -8,8 +8,10 @@ export function dataYears(product, importers, exporters, aggregateLevel, years) 
 			{$match: {'$and': getMatch(product, importers, exporters, aggregateLevel, years)}},
 			{$group: { _id : "$period", total: { $sum: "$trade_value" } }}
 		];
-		console.log("years");
+
+		console.log("DataYears");
 		console.log(getMatch(product, importers, exporters, aggregateLevel, years));
+
 		return Data.aggregate(pipeline);
 	}
 }
@@ -22,7 +24,7 @@ export function dataImporters(product, importers, exporters, aggregateLevel, yea
 			{$group: { _id : "$reporter", total: { $sum: "$trade_value" } }}
 		];
 
-		console.log("importers");
+		console.log("DataImporters");
 		console.log(getMatch(product, importers, exporters, aggregateLevel, years, "importers"));
 
 		return Data.aggregate(pipeline);
@@ -37,7 +39,7 @@ export function dataExporters(product, importers, exporters, aggregateLevel, yea
 			{$group: { _id : "$reporter", total: { $sum: "$trade_value" } }}
 		];
 
-		console.log("exporters");
+		console.log("DataExporters");
 		console.log(getMatch(product, importers, exporters, aggregateLevel, years, "exporters"));
 
 		return Data.aggregate(pipeline);
@@ -51,6 +53,27 @@ export function dataProducts(product, importers, exporters, aggregateLevel, year
 			{$match: {'$and': getMatch(product, importers, exporters, aggregateLevel, years)}},
 			{$group: { _id : "$commodity_code", total: { $sum: "$trade_value" } }}
 		];
+
+		console.log("DataProducts");
+		console.log(getMatch(product, importers, exporters, aggregateLevel, years));
+
+		return Data.aggregate(pipeline);
+	}
+}
+
+export function dataPrices(product, importers, exporters, aggregateLevel, years) {
+	if (Meteor.isServer){
+
+		let pipeline = [
+			{$match: {'$and': getMatch(product, importers, exporters, aggregateLevel, years)}},
+			{$group: { _id : {qty:'$qty',unit:'$qty_unit'}, value_total: { $sum: "$trade_value" }, qty:{$sum:"$qty"},weight:{$sum:"$netweight"} }},
+			{$project : {_id:1, qty:1, value_total:1, precio_unit:{$cond: { if: { $ne: [ "$qty", 0 ] }, then: {$divide:["$value_total","$qty"]}, else: 0 }}}},
+			{$group: {_id:{precio_unit:'$precio_unit', unit:'$_id.unit'}, value_total:{$sum:'$value_total'}, cantidad:{$sum:'$qty'}}},
+			{$sort: {'_id.precio_unit':1}}
+		];
+
+		console.log("DataPrices");
+		console.log(getMatch(product, importers, exporters, aggregateLevel, years));
 
 		return Data.aggregate(pipeline);
 	}
@@ -129,5 +152,6 @@ Meteor.methods({
   dataYears,
   dataImporters,
   dataExporters,
-  dataProducts
+  dataProducts,
+  dataPrices
 });

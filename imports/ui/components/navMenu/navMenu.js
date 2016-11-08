@@ -9,8 +9,10 @@ import template from './navMenu.html';
 
 import { Favorites } from '../../../api/favorites/index';
 
+import {name as FiltersService} from '../dataviz/filtersService';
+
 class NavMenu {
-	constructor ($scope, $reactive, $rootScope, screenSize, $state, $timeout) {
+	constructor ($scope, $reactive, $rootScope, screenSize, $state, $timeout, filtersService) {
 		'ngInject';
 
 		$reactive(this).attach($scope);
@@ -26,6 +28,7 @@ class NavMenu {
 			}
 		});
 
+		this.filtersService = filtersService;
 		this.root = $rootScope;
 		this.state = $state;
 		this.timeout = $timeout;
@@ -188,7 +191,7 @@ class NavMenu {
 			date : new Date(),
 			name : this.favoritos.name,
 			color : this.favoritos.color,
-			filter : this.root.filter
+			filter : this.filtersService.getFilters()
 		};
 
 		Meteor.call('insertFavorite', newFavorite, 

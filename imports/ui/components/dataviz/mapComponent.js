@@ -82,7 +82,7 @@ class MapComponent
 
   removeMap(element){
     this.svg.remove();
-    d3.select("#mapTooltip").remove();
+    d3.select("#mapTooltip"+this.type).remove();
   }
 
   loadData(type){
@@ -124,7 +124,9 @@ class MapComponent
                     max = Math.max(max, parseFloat(d.total));
                     self.totalValue += parseFloat(d.total);
                 });
-                console.log(min+"--"+max);
+                if(min == max){
+                  min = min/2;
+                }
                 self.valueScale = d3.scaleLinear()
                   .domain([min, max])
                   .range([1, 15]);
@@ -145,7 +147,7 @@ class MapComponent
     let dPath = this.svg.append('g').attr("id","mapFeatures");
     let circles = this.svg.append('g').attr("id","mapCircles");
 
-    let tooltip = d3.select(this.type).append('div').attr("id", "mapTooltip");
+    let tooltip = d3.select(this.type).append('div').attr("class", "chartTooltip").attr("id", "mapTooltip"+this.type);
 
     let dataFeatures = topojson.feature(countriesMap, countriesMap.objects.countries_110_geo).features;
 

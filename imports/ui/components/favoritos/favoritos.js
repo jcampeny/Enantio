@@ -8,14 +8,18 @@ import { Meteor } from 'meteor/meteor';
 import { Favorites } from '../../../api/favorites/index'
 import template from './favoritos.html';
 
+import {name as FiltersService} from '../dataviz/filtersService';
+
 
 class Favoritos {
-	constructor ($scope, $reactive, $rootScope, screenSize) {
+	constructor ($scope, $state, $reactive, $rootScope, screenSize, filtersService) {
 		'ngInject';
 
 		$reactive(this).attach($scope);
 
 		this.root = $rootScope;
+		this.state = $state;
+		this.filtersService = filtersService;
 
 		this.isMobile = screenSize.is('xs, sm');
 		this.isDesktop = !screenSize.is('xs, sm');
@@ -80,9 +84,10 @@ class Favoritos {
 	}
 
 	useFavorite (favorito){
-		this.root.$broadcast('favoriteFilterSelected', {
-			filter : favorito.filter
-		});
+		//TO-DO: set filterService 
+		this.filtersService.setFilters(favorito.filter);
+		this.root.$broadcast('refreshDBData');
+		this.state.go('home.resumen');
 	}
 
 };

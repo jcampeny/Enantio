@@ -1,0 +1,12 @@
+<div class="prices-filters">
+	<div class="prices-filters-left">
+		<label>Mostrar rango desde:</label>
+		<input ng-model="prices.show_range.ini" type="text"/>
+		<label>hasta:</label>
+		<input ng-model="prices.show_range.end" type="text"/>
+	</div>
+	<div class="prices-filters-right">
+		<select ng-model="prices.current_unit" ng-options="o as o.abr for o in prices.units_availables"></select>
+	</div>
+</div>
+<div class="prices-chart"></div>

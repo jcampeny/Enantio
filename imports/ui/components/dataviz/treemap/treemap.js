@@ -132,7 +132,11 @@ class Treemap {
 		    .data(rootH.leaves())
 		    .enter().append("div")
 		    	.attr("id",function(d){ return "node-"+d.data.key; })
-				.attr("class", function(d){ return "node color-"+d.data.key.substring(0,1)+" subcolor-"+d.data.key.substring(1,2);})
+				.attr("class", function(d){ 
+					if(d.data.key){
+						return "node color-"+d.data.key.substring(0,1)+" subcolor-"+d.data.key.substring(1,2);	
+					}
+				})
 				.style("left", function(d) { return d.x0 + "px"; })
 				.style("top", function(d) { return d.y0 + "px"; })
 				.style("width", function(d) { return d.x1 - d.x0 + "px"; })
@@ -142,30 +146,33 @@ class Treemap {
 					// 	return parseInt(d);
 					// });
 				  	let product = Products.findOne({code: d.data.key.toString()});
-				  	let productName = product.name.es;
-				  	if(productName.length > 15){
-				  		productName = productName.substring(0,15).trim()+"...";
+				  	if(product){
+				  			let productName = product.name.es;
+				  			if(productName.length > 15){
+				  				productName = productName.substring(0,15).trim()+"...";
+				  			}
+
+				  		  let tooltipContent = 
+				  		    "<table><tr class='tooltip-item'><td class='item-left'>Alias: </td><td class='item-right'>"+productName+"</td></tr>"+
+				  		    "<tr class='tooltip-item'><td class='item-left'>Código NC: </td><td class='item-right'>"+d.data.key+"</td></tr>"+
+				  		    "<tr class='tooltip-item'><td class='item-left'>Descripción: </td><td class='item-right'>"+productName+"</td></tr>"+
+				  		    "<tr class='tooltip-item'><td class='item-left'>% of total: </td><td class='item-right'>"+(Math.round(parseFloat(d.data.value)/totalValue * 10000) / 100)+"%</td></tr>"+
+				  		    "<tr class='tooltip-item'><td class='item-left'>€ Fob: </td><td class='item-right'>"+d.data.value.toLocaleString()+"</td></tr></table>";
+
+				  		  let containerWidth = parseInt($(this).width());
+				  		  let tooltipHeight = parseInt(tooltip.style("height")) <= 0 ? 130 : parseInt(tooltip.style("height"));
+				  		  let tooltipWdith = parseInt(tooltip.style("width")) <= 0 ? 200 : parseInt(tooltip.style("width"));
+
+				  		  let tooltipLeft = parseInt($(this).css("left")) + (parseInt($(this).css("width")) / 2 - (tooltipWdith/2));
+				  		  let tooltipTop = parseInt($(this).css("top")) - tooltipHeight;
+
+				  		  tooltip
+				  		      .attr('style', 'left:' + (tooltipLeft) +'px; top:' + (tooltipTop) + 'px; transform:translate(0,20px)')
+				  		      .html(tooltipContent);
+
+				  		  tooltip.classed('show', true);
 				  	}
-
-				    let tooltipContent = 
-				      "<table><tr class='tooltip-item'><td class='item-left'>Alias: </td><td class='item-right'>"+productName+"</td></tr>"+
-				      "<tr class='tooltip-item'><td class='item-left'>Código NC: </td><td class='item-right'>"+d.data.key+"</td></tr>"+
-				      "<tr class='tooltip-item'><td class='item-left'>Descripción: </td><td class='item-right'>"+productName+"</td></tr>"+
-				      "<tr class='tooltip-item'><td class='item-left'>% of total: </td><td class='item-right'>"+(Math.round(parseFloat(d.data.value)/totalValue * 10000) / 100)+"%</td></tr>"+
-				      "<tr class='tooltip-item'><td class='item-left'>€ Fob: </td><td class='item-right'>"+d.data.value.toLocaleString()+"</td></tr></table>";
-
-				    let containerWidth = parseInt($(this).width());
-				    let tooltipHeight = parseInt(tooltip.style("height")) <= 0 ? 130 : parseInt(tooltip.style("height"));
-				    let tooltipWdith = parseInt(tooltip.style("width")) <= 0 ? 200 : parseInt(tooltip.style("width"));
-
-				    let tooltipLeft = parseInt($(this).css("left")) + (parseInt($(this).css("width")) / 2 - (tooltipWdith/2));
-				    let tooltipTop = parseInt($(this).css("top")) - tooltipHeight;
-
-				    tooltip
-				        .attr('style', 'left:' + (tooltipLeft) +'px; top:' + (tooltipTop) + 'px; transform:translate(0,20px)')
-				        .html(tooltipContent);
-
-				    tooltip.classed('show', true);
+				  	
 				})
 				.on('mouseout', function() {
 				    tooltip.classed('show', false);
@@ -193,10 +200,12 @@ class Treemap {
 		      	.attr("class", "node-value")
 		      	.text(function(d) { 
 			      	if($("#node-"+d.data.key).width() >= 65 && $("#node-"+d.data.key).height() >= 35){
-						return Products.findOne({code: d.data.key.toString()}).name.es; 
-			      	}else{
-			      		return "";
-			      	}		      	
+			      		let product = Products.findOne({code: d.data.key.toString()});
+			      		if(product){
+			      			return product.name.es; 	
+			      		}	
+			      	}
+			      	return "";		      	
 		      	});
 
 	}

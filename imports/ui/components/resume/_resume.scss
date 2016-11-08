@@ -22,13 +22,14 @@ resume {
 				@media #{$gt-sm} {
 					height: 45px;
 				}*/
-				vbars, importadores, exportadores, treemap, precios{padding-top: calc(0% + 0px) !important;}
+				overflow:hidden;
+				vbars, importadores, exportadores, treemap, prices{padding-top: calc(0% + 0px) !important;}
 			}
 
 			/********************************
 					FOR PROTOTYPE
 			********************************/
-			vbars, importadores, exportadores, treemap, precios{
+			vbars, importadores, exportadores, treemap, prices{
 				display : block;
 				overflow: hidden;
 				background-size: contain;
@@ -38,10 +39,12 @@ resume {
 				@include transition(all $transition);
 			}
 			vbars {padding-top: 59%;overflow:visible;}
+			prices {padding-top: 70%;overflow:visible;}
 			treemap {padding-top: 170%;overflow:visible;}
 
 			@media #{$gt-sm} {
 				vbars {padding-top: 20%;}
+				prices {padding-top: 27%;}
 				treemap {padding-top: 20%;margin: 30px;}
 			}
 

@@ -1,0 +1,82 @@
+prices {
+	position: relative;
+	svg{
+	    position: absolute;
+	    top: 30px;
+	    left: 0;
+	}
+
+	path{
+		&.domain{
+			stroke: none;
+		}
+	}
+
+	.tick{
+		line{
+			display:none;
+		}
+		text{
+			fill:$dark-gray;
+			font-size:9px;
+		}
+	}
+
+	.bar{
+		fill: $viz-green;
+		@include opacity(0.6);
+	}
+	.tick-lines{
+		.tick-line{
+			shape-rendering : crispEdges;
+			@include opacity(0.2);
+		}
+	}
+
+	#mapTooltip{
+		&.show {
+			@include transform(translate(0,-20px));
+		}
+	}
+
+	.prices-filters{
+		position:absolute; 
+		top:5px;
+		left:10px;
+		width: calc(100% - 20px);
+
+		input, select{
+			width: 35px;
+			font-size: 11px;
+			padding: 2px 0;
+			border: 1px solid #CECECE;
+			text-align:center;
+			color:#CECECE;
+			background:#FFFFFF;
+		}
+
+		select{
+			padding: 4px 9px;
+		    width: 60px;
+		    border-radius: 0;
+		    -webkit-appearance: none;
+		}
+
+		label{
+			color:#9B9B9B;
+			font-size:12px;
+		}
+
+		.prices-filters-left{
+			display:inline-block;
+			width:49%;
+			text-align: left;
+		}
+
+		.prices-filters-right{
+			display:inline-block;
+			width:49%;
+			text-align: right;
+		}
+	}
+}
