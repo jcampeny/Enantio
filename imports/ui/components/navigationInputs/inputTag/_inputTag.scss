@@ -31,6 +31,8 @@ input-tag {
 		div[country-tags] {
 			display: inline-block;
 			white-space: nowrap;
+			width:70%;
+			@media #{$gt-sm}{ width: 100%;}
 			div[countries-selected] {
 				display: inline-block;
 				background-color : $dark-blue;
