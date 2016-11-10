@@ -52,10 +52,8 @@
       <a class="btn-dark-blue" flex ng-click="navMenu.saveFavorite()">Guardar</a>
       <a class="btn-dark-blue" flex ng-click="navMenu.toggleMenu()">Cancelar</a>      
     </li>
-    <li class="create-favorite" ng-class="{'show' : navMenu.favoritos.name}">
-
+    <li class="create-favorite" ng-class="{'show' : navMenu.favoritos.name}" ng-click="navMenu.saveFavorite()">
         <img src="img/checkmark.png">
-          
     </li>
 
   </ul>
