@@ -134,6 +134,11 @@ class ProductNavigation {
 		this.menuState = false;
 	}
 
+	closeAndBack(event = null){
+		this.closeMenu(event);
+		this.root.$broadcast('openProducts', {event});
+	}
+
 	useProduct (product){
 		this.closeMenu();
 		this.result = product;

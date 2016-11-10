@@ -132,6 +132,10 @@ class NavigationInputs {
 		this.root.$on('closeCountries', (event, data) => {
 			this.onSectionSelected('', data.event);
 		});
+
+		this.root.$on('openProducts', (event, data) => {
+			this.onSectionSelected('producto', data.event);
+		});
 	}
 };
 

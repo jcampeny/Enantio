@@ -3,6 +3,7 @@
     <li>Productos
       <span class="lnr lnr-cross" ng-click="productNavigation.closeMenu($event)"></span>
       <span class="lnr lnr-arrow-left" ng-if="productNavigation.levelChildrens > 0" ng-click="productNavigation.goBack($event)"></span>
+      <span class="lnr lnr-arrow-left" ng-if="productNavigation.levelChildrens === 0" ng-click="productNavigation.closeAndBack($event)"></span>
     </li>
 
     <!-- Parent products -->
