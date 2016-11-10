@@ -1,0 +1,81 @@
+<section class="all-content-to-export">
+  <!-- VBARS -->
+  <div class="header-logo-print"><img src="/img/logo.png" alt="logo enantio"></div>
+  <div class="content">
+    <div class="title">Periodo</div>
+    <div class="information">{{exports.root.filter.years.start}} - {{exports.root.filter.years.end}}</div>
+    <div class="title">Producto</div>
+    <div class="information">{{exports.root.filter.product.code}} {{exports.root.filter.product.name.es}}</div>
+    <div class="title">Importador</div>
+    <div class="information"><span ng-repeat="country in exports.root.filter.importers"><span ng-if="!$first"> - </span>{{country.name.es}}</span> </div>
+    <div class="title">Exportador</div>
+    <div class="information"><span ng-repeat="country in exports.root.filter.exporters"><span ng-if="!$first"> - </span>{{country.name.es}}</span> </div>
+  </div>
+  <h4>Fecha</h4>
+  <vbars></vbars>
+  <div class="page-break"></div>
+
+  <!-- IMPORTADORES -->
+  <div class="header-logo-print"><img src="/img/logo.png" alt="logo enantio"></div>
+  <div class="content">
+    <div class="title">Periodo</div>
+    <div class="information">{{exports.root.filter.years.start}} - {{exports.root.filter.years.end}}</div>
+    <div class="title">Producto</div>
+    <div class="information">{{exports.root.filter.product.code}} {{exports.root.filter.product.name.es}}</div>
+    <div class="title">Importador</div>
+    <div class="information"><span ng-repeat="country in exports.root.filter.importers"><span ng-if="!$first"> - </span>{{country.name.es}}</span></div>
+    <div class="title">Exportador</div>
+    <div class="information"><span ng-repeat="country in exports.root.filter.exporters"><span ng-if="!$first"> - </span>{{country.name.es}}</span></div>
+  </div>
+  <h4>Importadores</h4>
+  <importadores></importadores>
+  <div class="page-break"></div>
+
+  <!-- EXPORTADORES -->
+  <div class="header-logo-print"><img src="/img/logo.png" alt="logo enantio"></div>
+  <div class="content">
+    <div class="title">Periodo</div>
+    <div class="information">{{exports.root.filter.years.start}} - {{exports.root.filter.years.end}}</div>
+    <div class="title">Producto</div>
+    <div class="information">{{exports.root.filter.product.code}} {{exports.root.filter.product.name.es}}</div>
+    <div class="title">Importador</div>
+    <div class="information"><span ng-repeat="country in exports.root.filter.importers"><span ng-if="!$first"> - </span>{{country.name.es}}</span></div>
+    <div class="title">Exportador</div>
+    <div class="information"><span ng-repeat="country in exports.root.filter.exporters"><span ng-if="!$first"> - </span>{{country.name.es}}</span></div>
+  </div>
+  <h4>Exportadores</h4>
+  <exportadores></exportadores>
+  <div class="page-break"></div>
+
+  <!-- TREEMAP -->
+  <div class="header-logo-print"><img src="/img/logo.png" alt="logo enantio"></div>
+  <div class="content">
+    <div class="title">Periodo</div>
+    <div class="information">{{exports.root.filter.years.start}} - {{exports.root.filter.years.end}}</div>
+    <div class="title">Producto</div>
+    <div class="information">{{exports.root.filter.product.code}} {{exports.root.filter.product.name.es}}</div>
+    <div class="title">Importador</div>
+    <div class="information"><span ng-repeat="country in exports.root.filter.importers"><span ng-if="!$first"> - </span>{{country.name.es}}</span></div>
+    <div class="title">Exportador</div>
+    <div class="information"><span ng-repeat="country in exports.root.filter.exporters"><span ng-if="!$first"> - </span>{{country.name.es}}</span></div>
+  </div>
+  <h4>Producto</h4>
+  <treemap></treemap>
+  <div class="page-break"></div>
+
+  <!-- PRICES -->
+  <div class="header-logo-print"><img src="/img/logo.png" alt="logo enantio"></div>
+  <div class="content">
+    <div class="title">Periodo</div>
+    <div class="information">{{exports.root.filter.years.start}} - {{exports.root.filter.years.end}}</div>
+    <div class="title">Producto</div>
+    <div class="information">{{exports.root.filter.product.code}} {{exports.root.filter.product.name.es}}</div>
+    <div class="title">Importador</div>
+    <div class="information"><span ng-repeat="country in exports.root.filter.importers"><span ng-if="!$first"> - </span>{{country.name.es}}</span></div>
+    <div class="title">Exportador</div>
+    <div class="information"><span ng-repeat="country in exports.root.filter.exporters"><span ng-if="!$first"> - </span>{{country.name.es}}</span></div>
+  </div>
+  <h4>Precio</h4>
+  <prices></prices>
+  <div class="page-break"></div>
+</section>

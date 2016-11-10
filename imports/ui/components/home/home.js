@@ -10,6 +10,7 @@ import template from './home.html';
 import {name as Navigation} from '../navigation/navigation';
 import {name as Resume} from '../resume/resume';
 import {name as Favoritos} from '../favoritos/favoritos';
+import {name as Exports} from '../exports/exports';
 import {name as PopUp} from '../popUp/popUp';
 
 class Home {
@@ -64,7 +65,8 @@ export default angular.module(name, [
 	Navigation,
 	Resume,
 	Favoritos,
-	PopUp
+	PopUp,
+	Exports
 ]).component(name, {
 	template,
 	controllerAs : name,
@@ -98,6 +100,11 @@ function config ($stateProvider) {
 	.state('home.favoritos', {
 		url : 'favoritos',
 		template : '<favoritos></favoritos>'
+	})
+
+	.state('home.exports', {
+		url : 'exports',
+		template : '<exports></exports>'
 	});
 }
 

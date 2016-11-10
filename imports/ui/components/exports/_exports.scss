@@ -1,0 +1,57 @@
+exports{
+	importadores,
+	exportadores{
+		display: block;
+		padding-top:60%;
+		overflow: hidden;
+	}
+
+	vbars-chart,
+	treemap-chart,
+	prices-chart{
+		padding-top: 40%;
+		width: 100%;
+		display: block;
+	}
+	section{
+		width: 600px !important;
+		position: relative;
+		padding: $margin;
+		background-color: white;
+		color: $dark-blue;
+		div.content{
+			border-bottom: 1px solid;
+			padding-bottom: $margin;
+			margin-bottom: $margin*2;
+			line-height: 30px;
+			&:after{
+				content: "";
+				display: block;
+				clear: both;
+			}
+			div.title{
+				float: left;
+				width: 20%;
+				font-weight: bold;
+			}
+			div.information{
+				float: left;
+				width: 80%;
+			}
+		}
+		tr{line-height: 25px;}
+		.header-logo-print{
+			img {
+				display: block;
+				margin-top: 10px;
+				padding-bottom: 30px;
+				width: 20%;
+			}			
+		}
+
+	}
+}
+@media #{'print'} {
+    header, zoom-controller{display:none !important;}
+    .page-break {page-break-after: always;}
+}
