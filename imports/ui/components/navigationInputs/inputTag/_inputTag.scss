@@ -178,3 +178,17 @@ label.activated {
 		opacity : 0;
 	}
 }
+@media (max-width: 960px){
+	section.active{
+		div{
+			div[input-container]{
+				label{left:-50%; position: relative;}
+			}
+		}
+		div.active{
+			div[input-container]{
+				label{left:0% !important;}
+			}
+		}
+	}	
+}
