@@ -6,16 +6,21 @@ import * as d3 from "d3";
 import { Data } from '../../../../api/data/index';
 
 import {name as FiltersService} from '../filtersService';
+import {name as DataTableService} from '../dataTableService';
+import {name as DataTable} from '../dataTable/dataTable';
+
 import template from './prices.html';
 
 class Prices {
-	constructor($scope, $rootScope, $reactive, $q, $timeout, filtersService){
+	constructor($scope, $rootScope, $reactive, $q, $timeout, filtersService, dataTableService){
 		'ngInject';
 		$reactive(this).attach($scope);
 
 		this.root = $rootScope;
 		this.q = $q;
 		this.filtersService = filtersService;
+		this.dataTableService = dataTableService;
+
 		this.data 	= [];
 		this.unit_data = {};
 		this.units_availables = [];
@@ -77,6 +82,18 @@ class Prices {
 			12: {id:12, abr: "m3", label: "Metros cúbicos"},
 			13: {id:13, abr: "quilates", label: "Peso en quilates"},
 		};
+
+		this.showTable = false;
+
+		this.root.$on('showTable_precio', (event) => {
+		  self.showTable = true;
+		});
+
+		this.root.$on('hideTable_precio', (event) => {
+		  self.showTable = false;
+		});
+
+		this.handleRootEvents();
 	}
 
 	refreshChart(){
@@ -180,6 +197,11 @@ class Prices {
 		if(self.data.length <= 0){
 			return;
 		}
+		let tableData = angular.copy(self.data);
+		tableData.sort(function(a,b){
+			return b.total - a.total;
+		});
+		this.dataTableService.setData("precio",{data:tableData});
 
 		let maxValue = d3.max(this.data, function(d) { return d.total; });	
 		var tooltip = d3.select(this.elementName).append('div').attr("class", "chartTooltip").attr("id", "pricesTooltip");
@@ -286,7 +308,9 @@ const name = 'prices';
 
 export default angular.module(name, [
 	angularMeteor,
-	FiltersService
+	FiltersService,
+	DataTableService,
+	DataTable
 ]).component(name, {
 	template,
 	controllerAs : name,

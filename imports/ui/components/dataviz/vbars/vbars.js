@@ -8,18 +8,23 @@ import * as d3 from "d3";
 import { Meteor } from 'meteor/meteor';
 
 import {name as FiltersService} from '../filtersService';
+import {name as DataTableService} from '../dataTableService';
+import {name as DataTable} from '../dataTable/dataTable';
+
+import template from './vbars.html';
 
 class VBars {
-	constructor($scope, $rootScope, $reactive, $q, $timeout, filtersService){
+	constructor($scope, $rootScope, $reactive, $q, $timeout, filtersService, dataTableService){
 		'ngInject';
 		$reactive(this).attach($scope);
 
 		this.root = $rootScope;
 		this.q = $q;
 		this.filtersService = filtersService;
+		this.dataTableService = dataTableService;
 		this.data 	= [];
 
-		this.elementName = "vbars";
+		this.elementName = "vbars-chart";
 		this.padding = {x:70, y:45};
 		this.element = $(this.elementName);
 		this.width  = this.element.width() - 2*this.padding.x;
@@ -27,7 +32,7 @@ class VBars {
 		this.xScale = null;
 		this.yScale = null;
 		this.svg = null;
-		self = this;
+		var self = this;
 
 		this.loadData().then(()=>{
 			this.height = parseInt(this.element.css('paddingTop')) - 2*this.padding.y; //Calcular esto después de renderizar el espacio
@@ -41,6 +46,16 @@ class VBars {
 					$timeout.cancel(this.renderTimeout);
 					this.renderTimeout = $timeout(() => { this.refreshChart();},400);
 			});     
+		});
+
+		this.showTable = false;
+
+		this.root.$on('showTable_fecha', (event) => {
+		  self.showTable = true;
+		});
+
+		this.root.$on('hideTable_fecha', (event) => {
+		  self.showTable = false;
 		});
 
 		this.handleRootEvents();
@@ -78,6 +93,7 @@ class VBars {
 		          	self.data = result.sort(function(a,b){
 		          		return a._id - b._id;
 		          	});
+		          	self.dataTableService.setData('fecha', {data:self.data});
 		            deferred.resolve();
 		        }
 	      	}
@@ -206,8 +222,11 @@ const name = 'vbars';
 
 export default angular.module(name, [
 	angularMeteor,
-	FiltersService
+	FiltersService,
+	DataTableService,
+	DataTable
 ]).component(name, {
+	template,
 	controllerAs : name,
 	controller : VBars 
 });

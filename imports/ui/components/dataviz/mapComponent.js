@@ -5,16 +5,18 @@ import countriesMap from './countries_110.json';
 
 import { Countries } from '../../../api/countries/index';
 import {name as FiltersService} from './filtersService';
+import {name as DataTableService} from './dataTableService';
 
 class MapComponent
 {
-	constructor($reactive, $scope, $q, $timeout, $rootScope, filtersService){
+	constructor($reactive, $scope, $q, $timeout, $rootScope, filtersService, dataTableService){
 		'ngInject';
 
     $reactive(this).attach($scope);
     
     this.root = $rootScope;
     this.filtersService = filtersService;
+    this.dataTableService = dataTableService;
     this.q = $q;
     this.element = $(this.type);
 
@@ -112,6 +114,11 @@ class MapComponent
               console.log(error);
             } else {
                 console.log(methodName+" arrived!");
+
+                let dataTable = {
+                  data: []
+                };
+
                 angular.forEach(result, (d) => {
                     let country = self.getCountryFromCode(d._id);
                     if(country !== null && !self.dataNest[country.iso]){
@@ -119,11 +126,19 @@ class MapComponent
                         countryName : country.name.es,
                         total : d.total
                       };
+                      dataTable.data.push({countryName : country.name.es, total : d.total});
                     }
                     min = Math.min(min, parseFloat(d.total));
                     max = Math.max(max, parseFloat(d.total));
                     self.totalValue += parseFloat(d.total);
                 });
+
+                dataTable.total = self.totalValue;
+                dataTable.data.sort(function(a,b){
+                  return b.total - a.total;
+                });
+                self.dataTableService.setData(this.type, dataTable);
+
                 if(min == max){
                   min = min/2;
                 }

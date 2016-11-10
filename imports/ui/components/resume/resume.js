@@ -10,7 +10,6 @@ import { name as VBars } from '../dataviz/vbars/vbars';
 import { name as Treemap } from '../dataviz/treemap/treemap';
 import { name as Prices } from '../dataviz/prices/prices';
 
-
 class Resume {
 	constructor ($scope, $reactive, $rootScope) {
 		'ngInject';

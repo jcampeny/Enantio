@@ -46,10 +46,21 @@ class VizHeader {
 			.then((succes) => {
 				this.viewFrameState = succes;
 				this.refreshMenu();
+
+				console.log('showTable_'+this.vizController.id);
+				this.root.$broadcast('showTable_'+this.vizController.id);
 			});
+	}
+	showTable (){
+		console.log('showTable_'+this.vizController.id);
+		this.root.$broadcast('showTable_'+this.vizController.id);
+	}
+	showMapa (){
+		this.root.$broadcast('hideTable_'+this.vizController.id);
 	}
 
 	contract () {
+		this.root.$broadcast('hideTable_'+this.vizController.id);
 		this.service.contract(this.vizController.id)
 			.then((succes) => {
 				this.viewFrameState = succes;

@@ -51,7 +51,7 @@ export function dataProducts(product, importers, exporters, aggregateLevel, year
 
 		let pipeline = [
 			{$match: {'$and': getMatch(product, importers, exporters, aggregateLevel, years)}},
-			{$group: { _id : "$commodity_code", total: { $sum: "$trade_value" } }}
+			{$group: { _id : "$commodity_code", total: { $sum: "$trade_value" }, total_qty:{$sum:'$qty'} }}
 		];
 
 		console.log("DataProducts");

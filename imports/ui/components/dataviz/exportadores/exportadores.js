@@ -9,11 +9,21 @@ import template from './exportadores.html';
 
 
 class Exportadores {
-	constructor($scope, $reactive){
+	constructor($scope, $rootScope, $reactive){
 		'ngInject';
-
 		$reactive(this).attach($scope);
-		let self = this;
+		var self = this;
+		this.root = $rootScope;
+
+		this.showTable = false;
+
+		this.root.$on('showTable_exportadores', (event) => {
+		  self.showTable = true;
+		});
+
+		this.root.$on('hideTable_exportadores', (event) => {
+		  self.showTable = false;
+		});
 	}
 }
 

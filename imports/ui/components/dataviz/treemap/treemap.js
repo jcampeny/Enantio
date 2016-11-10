@@ -8,19 +8,24 @@ import * as d3 from "d3";
 import { Meteor } from 'meteor/meteor';
 
 import {name as FiltersService} from '../filtersService';
+import {name as DataTableService} from '../dataTableService';
+import {name as DataTable} from '../dataTable/dataTable';
+
 import { Products } from '../../../../api/products/index';
 
+import template from './treemap.html';
 
 class Treemap {
-	constructor($scope, $rootScope, $reactive, $q, $timeout, filtersService){
+	constructor($scope, $rootScope, $reactive, $q, $timeout, filtersService, dataTableService){
 		'ngInject';
 		$reactive(this).attach($scope);
 
 		this.q = $q;
 		this.filtersService = filtersService;
+		this.dataTableService = dataTableService;
 		this.root = $rootScope;
 
-		this.elementName = "treemap";
+		this.elementName = "treemap-chart";
 		this.element = $(this.elementName);
 		this.width  = this.element.width();
 		
@@ -71,6 +76,16 @@ class Treemap {
 	  		});   
 	  	}
 
+	  	this.showTable = false;
+
+	  	this.root.$on('showTable_codigo', (event) => {
+	  	  self.showTable = true;
+	  	});
+
+	  	this.root.$on('hideTable_codigo', (event) => {
+	  	  self.showTable = false;
+	  	});
+
 	  	this.handleRootEvents();
 	}
 
@@ -104,6 +119,14 @@ class Treemap {
 		        } else {
 		          	console.log('DataProducts arrived!');
 		          	self.data = result;
+		          	self.data.sort(function(a,b){ return b.total - a.total});
+		          	angular.forEach(self.data, function(d){
+		          		let product = Products.findOne({code: d._id});
+		          		if(product){
+		          			d.desc =  product.name.es;
+		          		}
+		          	});
+		          	self.dataTableService.setData("codigo",{data:self.data});
 		            deferred.resolve();
 		        }
 	      	}
@@ -145,33 +168,31 @@ class Treemap {
 					// let mouse = d3.mouse(this.svg.node()).map(function(d) {
 					// 	return parseInt(d);
 					// });
-				  	let product = Products.findOne({code: d.data.key.toString()});
-				  	if(product){
-				  			let productName = product.name.es;
-				  			if(productName.length > 15){
-				  				productName = productName.substring(0,15).trim()+"...";
-				  			}
+				  	
+		  			let productName = "";
+		  			if(d.data.desc && d.data.desc > 15){
+		  				productName = d.data.desc.substring(0,15).trim()+"...";
+		  			}
 
-				  		  let tooltipContent = 
-				  		    "<table><tr class='tooltip-item'><td class='item-left'>Alias: </td><td class='item-right'>"+productName+"</td></tr>"+
-				  		    "<tr class='tooltip-item'><td class='item-left'>Código NC: </td><td class='item-right'>"+d.data.key+"</td></tr>"+
-				  		    "<tr class='tooltip-item'><td class='item-left'>Descripción: </td><td class='item-right'>"+productName+"</td></tr>"+
-				  		    "<tr class='tooltip-item'><td class='item-left'>% of total: </td><td class='item-right'>"+(Math.round(parseFloat(d.data.value)/totalValue * 10000) / 100)+"%</td></tr>"+
-				  		    "<tr class='tooltip-item'><td class='item-left'>€ Fob: </td><td class='item-right'>"+d.data.value.toLocaleString()+"</td></tr></table>";
+		  		  	let tooltipContent = 
+			  		    "<table><tr class='tooltip-item'><td class='item-left'>Alias: </td><td class='item-right'>"+productName+"</td></tr>"+
+			  		    "<tr class='tooltip-item'><td class='item-left'>Código NC: </td><td class='item-right'>"+d.data.key+"</td></tr>"+
+			  		    "<tr class='tooltip-item'><td class='item-left'>Descripción: </td><td class='item-right'>"+productName+"</td></tr>"+
+			  		    "<tr class='tooltip-item'><td class='item-left'>% of total: </td><td class='item-right'>"+(Math.round(parseFloat(d.data.value)/totalValue * 10000) / 100)+"%</td></tr>"+
+			  		    "<tr class='tooltip-item'><td class='item-left'>€ Fob: </td><td class='item-right'>"+d.data.value.toLocaleString()+"</td></tr></table>";
 
-				  		  let containerWidth = parseInt($(this).width());
-				  		  let tooltipHeight = parseInt(tooltip.style("height")) <= 0 ? 130 : parseInt(tooltip.style("height"));
-				  		  let tooltipWdith = parseInt(tooltip.style("width")) <= 0 ? 200 : parseInt(tooltip.style("width"));
+			  		let containerWidth = parseInt($(this).width());
+			  		let tooltipHeight = parseInt(tooltip.style("height")) <= 0 ? 130 : parseInt(tooltip.style("height"));
+			  		let tooltipWdith = parseInt(tooltip.style("width")) <= 0 ? 200 : parseInt(tooltip.style("width"));
 
-				  		  let tooltipLeft = parseInt($(this).css("left")) + (parseInt($(this).css("width")) / 2 - (tooltipWdith/2));
-				  		  let tooltipTop = parseInt($(this).css("top")) - tooltipHeight;
+			  		let tooltipLeft = parseInt($(this).css("left")) + (parseInt($(this).css("width")) / 2 - (tooltipWdith/2));
+		  		    let tooltipTop = parseInt($(this).css("top")) - tooltipHeight;
 
-				  		  tooltip
-				  		      .attr('style', 'left:' + (tooltipLeft) +'px; top:' + (tooltipTop) + 'px; transform:translate(0,20px)')
-				  		      .html(tooltipContent);
+		  		    tooltip
+		  		    	.attr('style', 'left:' + (tooltipLeft) +'px; top:' + (tooltipTop) + 'px; transform:translate(0,20px)')
+		  		     	.html(tooltipContent);
 
-				  		  tooltip.classed('show', true);
-				  	}
+		  		  	tooltip.classed('show', true);
 				  	
 				})
 				.on('mouseout', function() {
@@ -222,8 +243,11 @@ class Treemap {
 const name = 'treemap';
 
 export default angular.module(name, [
-	angularMeteor
+	angularMeteor,
+	DataTableService,
+	DataTable
 ]).component(name, {
+	template,
 	controllerAs : name,
 	controller : Treemap 
 });

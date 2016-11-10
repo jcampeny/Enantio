@@ -1,0 +1,38 @@
+table-data-component {
+	width:100%;
+
+	table{
+		width: 96%;
+		margin-left:2%;
+
+		th{
+			color:#34393E;
+			font-weight: bold;
+			font-size:12px;
+		}
+
+		td{
+			color:#34393E;
+			font-weight: 400;
+			font-size:10px;
+		}
+
+		.column{
+			width: 20%;
+			padding: 0 10px;
+			text-align: right;
+
+			&.column__id,&.column_countryName{
+				width: 30%;
+				text-align:left;
+			}
+			&.column_desc{
+				width: 40%;
+				text-align:left;	
+			}
+		}
+		
+
+		
+	}
+}

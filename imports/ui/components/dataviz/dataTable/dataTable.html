@@ -1,0 +1,13 @@
+<table>
+	<tr>
+		<th class="column column_{{c.column}}" ng-repeat="c in tableDataComponent.columns" ng-bind-html="tableDataComponent.trustHtml(c.label)"></th>
+	</tr>
+	<tr ng-repeat="d in tableDataComponent.data.data">
+		<td class="column column_{{c.column}}" ng-repeat="c in tableDataComponent.columns">
+			<span ng-if="c.column !== '_calc'" ng-bind-html="tableDataComponent.trustHtml(d[c.column])"></span>
+			<span ng-if="c.column === '_calc'" ng-bind-html="tableDataComponent.calc(d.total)"></span>
+			<span ng-if="c.column === '_calcFecha'" ng-bind-html="tableDataComponent.calcFecha($parent.$parent.$index)"></span>
+		</td>
+	</tr>
+
+</table>
