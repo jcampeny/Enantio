@@ -103,12 +103,13 @@ favoritos {
 				margin-left: $margin*3;
 				padding-top: $margin;
 				padding-bottom: $margin/2;
+				text-align: center;
 				@include transition(all $transition);
 				span {@include transition(all $transition);}
 				span:last-child{
 					position: relative;
 					top: -3px;
-					left: -6px;					
+					left: -1px;					
 				}
 			}
 			div[name]{
