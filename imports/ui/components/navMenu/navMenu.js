@@ -12,7 +12,7 @@ import { Favorites } from '../../../api/favorites/index';
 import {name as FiltersService} from '../dataviz/filtersService';
 
 class NavMenu {
-	constructor ($scope, $reactive, $rootScope, screenSize, $state, $timeout, filtersService) {
+	constructor ($scope, $reactive, $rootScope, screenSize, $state, $timeout, filtersService, $location) {
 		'ngInject';
 
 		$reactive(this).attach($scope);
@@ -31,6 +31,7 @@ class NavMenu {
 		this.filtersService = filtersService;
 		this.root = $rootScope;
 		this.state = $state;
+		this.location = $location;
 		this.timeout = $timeout;
 		this.scope = $scope;
 		this.menuState = false;
@@ -66,17 +67,24 @@ class NavMenu {
 	}
 
 	expandViz(id, forced = false){
-		if(this.expanded != id || forced){
-			if(this.expanded === '' || forced){
-				this.expanded = id;
-				this.root.$broadcast('expandViz', {
-					id : this.expanded
-				});
-			} else {
-				this.expanded = id;
-				this.contractViz(true);
+		if(this.expanded !== 'favoritos'){
+			if(this.expanded != id || forced){
+				if(this.expanded === '' || forced){
+					this.expanded = id;
+					this.root.$broadcast('expandViz', {
+						id : this.expanded
+					});
+				} else {
+					this.expanded = id;
+					this.contractViz(true);
+				}			
 			}			
+		} else {
+			this.location.url('/');
+			this.expanded = 'changing';
+			this.expandViz(id);
 		}
+
 	}
 
 	contractViz(forced = false){			
