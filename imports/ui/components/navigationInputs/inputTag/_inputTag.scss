@@ -32,6 +32,7 @@ input-tag {
 			display: inline-block;
 			white-space: nowrap;
 			width:70%;
+			@media (max-width: 960px) { margin: 0px 11px; }
 			@media #{$gt-sm}{ width: 100%;}
 			div[countries-selected] {
 				display: inline-block;
@@ -158,6 +159,11 @@ div.active{
 		@media (max-width: 960px) {
 			max-width: 100px !important;
 
+		}
+	}
+	div[country-tags]{
+		@media (max-width: 960px)  {
+			margin: 0px 0px !important;
 		}
 	}
 
