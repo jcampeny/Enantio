@@ -1,12 +1,12 @@
 
 <div class="body-white no-point" nav-menu page-navigation ng-if="navMenu.menu == 'page-navigation'">
   <ul>
-    <li ng-class="{'active' : navMenu.expanded === ''}" ng-click="navMenu.contractViz()">Resumen</li>
+    <li ng-class="{'active' : navMenu.expanded === ''}" ng-click="navMenu.contractViz()" ui-sref="home.resumen">Resumen</li>
     <li ng-class="{'active' : navMenu.expanded === 'importadores'}" ng-click="navMenu.expandViz('importadores')">Importadores</li>
     <li ng-class="{'active' : navMenu.expanded === 'exportadores'}" ng-click="navMenu.expandViz('exportadores')">Exportadores</li>
     <li ng-class="{'active' : navMenu.expanded === 'codigo'}" ng-click="navMenu.expandViz('codigo')">Productos</li>
     <li ng-class="{'active' : navMenu.expanded === 'precio'}" ng-click="navMenu.expandViz('precio')">Precios</li>
-    <li ui-sref="home.favoritos">Favoritos <span class="fav-count">{{navMenu.favoritesCount}}</span></li>
+    <li ng-class="{'active' : navMenu.expanded === 'favoritos'}" ui-sref="home.favoritos" ng-click="navMenu.expanded = 'favoritos'">Favoritos <span class="fav-count">{{navMenu.favoritesCount}}</span></li>
   </ul>
 </div>
 
